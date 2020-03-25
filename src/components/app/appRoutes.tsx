@@ -2,7 +2,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "../home";
 import NotFound from "../notfound";
 import React, { FC } from "react";
-import TodosContext from "../../containers";
+import TodosContext from "../todos";
 
 const AppRoutes: FC = () => {
   return (

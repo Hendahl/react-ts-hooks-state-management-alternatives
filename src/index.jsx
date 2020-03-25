@@ -5,14 +5,17 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import React from "react";
 import ReactDOM from "react-dom";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
+import { Provider } from "./context/store";
 
 const theme = appTheme({ appDrawer: { breakpoint: "md" } });
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <App />
-  </ThemeProvider>,
+  <Provider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </Provider>,
   document.getElementById("root")
 );
 
