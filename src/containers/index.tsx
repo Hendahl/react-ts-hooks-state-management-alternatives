@@ -1,14 +1,12 @@
 import React, { FC } from "react";
-import store from "../../redux/store";
-import Todos from "../../components/redux";
-import { Provider } from "react-redux";
+import Todos from "../components/todos";
+import { Provider } from "../context/store";
 
 const ProviderContainer: FC = () => {
   return (
-    <Provider store={store}>
+    <Provider>
       <Todos />
     </Provider>
   );
 };
-
 export default ProviderContainer;

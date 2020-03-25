@@ -1,30 +1,20 @@
-import * as actions from "../../redux/todos/actions";
+import * as actions from "../../constants/actions";
 import Add from "./add";
 import Box from "@material-ui/core/Box";
 import Filter from "./filter";
 import List from "@material-ui/core/List";
-import Progress from "../shared/progress";
-import React, { FC, useEffect } from "react";
+import Progress from "./progress";
+import React, { FC, useContext, useEffect } from "react";
 import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-
-interface TodosProps {
-  todos: Todos;
-}
+import { Context } from "../../context/store";
 
 const Todos: FC = () => {
-  const typedUseSelector: TypedUseSelectorHook<TodosProps> = useSelector;
-  const todos = typedUseSelector(state => state.todos);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(actions.getTodos());
-  }, [dispatch]);
+  const { todos, dispatch } = useContext(Context);
 
   useEffect(() => {
     if (todos.isUpdating) {
-      dispatch(actions.updateTodos());
+      dispatch({ type: actions.UPDATE_TODOS });
     }
   }, [todos, dispatch]);
 
@@ -32,13 +22,13 @@ const Todos: FC = () => {
     <>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
-          Todos - Redux
+          Todos - Context
         </Box>
       </Typography>
       <Progress isUpdating={todos.isUpdating} />
       <List>
         <Add />
-        {todos.visible.map(todo => (
+        {todos.visible.map((todo: Todo) => (
           <Todo key={todo.id} todo={todo} />
         ))}
         <Filter />

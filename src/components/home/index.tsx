@@ -13,14 +13,6 @@ const Home: FC = () => {
         </Typography>
         <Box m={3}>
           <Typography variant="h5" component="h3" gutterBottom>
-            <Link color="primary" component={RouterLink} to="/basic">
-              Basic
-            </Link>
-          </Typography>
-          <Typography variant="body1" gutterBottom paragraph={true}>
-            React State and Effect with classic component "Prop Drilling"
-          </Typography>
-          <Typography variant="h5" component="h3" gutterBottom>
             <Link color="primary" component={RouterLink} to="/context">
               Context
             </Link>
@@ -29,23 +21,10 @@ const Home: FC = () => {
             React Context and Reducer to pass data and actions through the
             components.
           </Typography>
-          <Typography variant="h5" component="h3" gutterBottom>
-            <Link color="primary" component={RouterLink} to="/redux">
-              Redux
-            </Link>
-          </Typography>
           <Typography variant="body1" gutterBottom paragraph={true}>
-            Redux Store, Actions and Reducers to pass data and actions through
-            the components.
-          </Typography>
-          <Typography variant="h5" component="h3" gutterBottom>
-            <Link color="primary" component={RouterLink} to="/Mobx">
-              MobX
+            <Link href="https://github.com/Hendahl/react-ts-hooks-state-management-alternatives">
+              See other state management options here
             </Link>
-          </Typography>
-          <Typography variant="body1" gutterBottom paragraph={true}>
-            React Context as Store for MobX-state-Tree Models and Actions to
-            pass data and actions through the components.
           </Typography>
         </Box>
       </Box>
