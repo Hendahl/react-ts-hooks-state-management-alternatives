@@ -1,6 +1,6 @@
 import * as filter from "../constants/filter";
 
-const LSKEY = "react-hooks-todos";
+const LSKEY = "react-hooks-todos-all";
 
 export const uuid = () => {
   return Date.now() + Math.floor(Math.random() * 50);
