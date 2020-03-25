@@ -40,36 +40,6 @@ const AppMenu: FC = () => {
           </ListItemIcon>
           <ListItemText className={classes.listItemText} primary="Basic" />
         </ListItem>
-        <ListItem
-          component={Link}
-          selected={currentPath === "/context" ? true : false}
-          to="/context"
-        >
-          <ListItemIcon>
-            <CodeIcon />
-          </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="Context" />
-        </ListItem>
-        <ListItem
-          component={Link}
-          selected={currentPath === "/redux" ? true : false}
-          to="/redux"
-        >
-          <ListItemIcon>
-            <CodeIcon />
-          </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="Redux" />
-        </ListItem>
-        <ListItem
-          component={Link}
-          selected={currentPath === "/mobx" ? true : false}
-          to="/mobx"
-        >
-          <ListItemIcon>
-            <CodeIcon />
-          </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="MobX" />
-        </ListItem>
       </List>
       <Divider />
       <List>

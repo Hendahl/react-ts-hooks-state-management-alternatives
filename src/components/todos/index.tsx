@@ -3,7 +3,7 @@ import Add from "./add";
 import Box from "@material-ui/core/Box";
 import Filter from "./filter";
 import List from "@material-ui/core/List";
-import Progress from "../shared/progress";
+import Progress from "./progress";
 import React, { FC, useEffect, useState } from "react";
 import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
