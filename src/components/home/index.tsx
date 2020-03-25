@@ -9,50 +9,45 @@ const Home: FC = () => {
     <>
       <Box textAlign="center" m={1}>
         <Typography variant="h3" component="h2">
-          About this App
+          Home
         </Typography>
         <Box m={3}>
-          <Typography variant="body1" gutterBottom paragraph={true}>
-            A classic React TypeScript Todo App with alternative state
-            management side by side.
+          <Typography variant="h5" component="h3" gutterBottom>
+            <Link color="primary" component={RouterLink} to="/basic">
+              Basic
+            </Link>
           </Typography>
           <Typography variant="body1" gutterBottom paragraph={true}>
-            Lorum Ipsum @TODO
+            React State and Effect with classic component "Prop Drilling"
+          </Typography>
+          <Typography variant="h5" component="h3" gutterBottom>
+            <Link color="primary" component={RouterLink} to="/context">
+              Context
+            </Link>
+          </Typography>
+          <Typography variant="body1" gutterBottom paragraph={true}>
+            React Context and Reducer to pass data and actions through the
+            components.
+          </Typography>
+          <Typography variant="h5" component="h3" gutterBottom>
+            <Link color="primary" component={RouterLink} to="/redux">
+              Redux
+            </Link>
+          </Typography>
+          <Typography variant="body1" gutterBottom paragraph={true}>
+            Redux Store, Actions and Reducers to pass data and actions through
+            the components.
+          </Typography>
+          <Typography variant="h5" component="h3" gutterBottom>
+            <Link color="primary" component={RouterLink} to="/Mobx">
+              MobX
+            </Link>
+          </Typography>
+          <Typography variant="body1" gutterBottom paragraph={true}>
+            React Context as Store for MobX-state-Tree Models and Actions to
+            pass data and actions through the components.
           </Typography>
         </Box>
-        <Typography variant="h5" component="h3" gutterBottom>
-          <Link color="primary" component={RouterLink} to="/basic">
-            Basic React Hooks
-          </Link>
-        </Typography>
-
-        <Typography variant="body1" gutterBottom paragraph={true}>
-          React State and Effect
-        </Typography>
-        <Typography variant="h5" component="h3" gutterBottom>
-          <Link color="primary" component={RouterLink} to="/context">
-            React Context & Reducer
-          </Link>
-        </Typography>
-        <Typography variant="body1" gutterBottom paragraph={true}>
-          React Hooks Context and Reducer
-        </Typography>
-        <Typography variant="h5" component="h3" gutterBottom>
-          <Link color="primary" component={RouterLink} to="/redux">
-            Redux State Container
-          </Link>
-        </Typography>
-        <Typography variant="body1" gutterBottom paragraph={true}>
-          Redux, Thunk & dev tools
-        </Typography>
-        <Typography variant="h5" component="h3" gutterBottom>
-          <Link color="primary" component={RouterLink} to="/Mobx">
-            MobX State management
-          </Link>
-        </Typography>
-        <Typography variant="body1" gutterBottom paragraph={true}>
-          MobX, MobX-lite and MobX-state-Tree
-        </Typography>
       </Box>
     </>
   );
