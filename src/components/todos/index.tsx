@@ -9,7 +9,14 @@ import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
 import * as filter from "../../constants/filter";
 
-const Todos: FC = () => {
+interface TodosProps {
+  handleDelete: Delete;
+  handleEdit: Edit;
+  todo: Todo;
+  todos: Todos;
+}
+
+const Todos: FC<TodosProps> = () => {
   const [todos, setTodos] = useState<Todos>(utils.getStoredTodos());
 
   useEffect(() => {
@@ -17,13 +24,14 @@ const Todos: FC = () => {
       setTodos({
         ...todos,
         isUpdating: false,
-        visible: todos.visibilityFilter === filter.ALL_TODOS
-        ? todos.payload
-        : todos.payload.filter(todo =>
-          todos.visibilityFilter === filter.COMPLETED_TODOS
-              ? todo.completed
-              : !todo.completed
-          )
+        visible:
+          todos.visibilityFilter === filter.ALL_TODOS
+            ? todos.payload
+            : todos.payload.filter(_todo =>
+                todos.visibilityFilter === filter.COMPLETED_TODOS
+                  ? _todo.completed
+                  : !_todo.completed
+              )
       });
       utils.setStoredTodos(todos);
     }
@@ -32,8 +40,8 @@ const Todos: FC = () => {
   const handleAdd: Add = title => {
     setTodos({
       ...todos,
-      countAll: ++ todos.countAll,
-      payload:[
+      countAll: ++todos.countAll,
+      payload: [
         { id: utils.uuid(), completed: false, title: title },
         ...todos.payload
       ],
@@ -45,14 +53,14 @@ const Todos: FC = () => {
   const handleDelete: Delete = todo => {
     setTodos({
       ...todos,
-      countAll: -- todos.countAll,
-      payload:todos.payload.filter(_todo => _todo.id !== todo.id),
+      countAll: --todos.countAll,
+      payload: todos.payload.filter(_todo => _todo.id !== todo.id),
       isUpdating: true
     });
   };
 
   const handleDeleteAll: DeleteAll = () => {
-    const defaultValues = utils.initialTodos
+    const defaultValues = utils.initialTodos;
     utils.setStoredTodos({
       ...defaultValues
     });
@@ -62,11 +70,11 @@ const Todos: FC = () => {
   };
 
   const handleEdit: Edit = todo => {
-    const payloadState: Todo[] = [...todos.payload]
+    const payloadState: Todo[] = [...todos.payload];
     setTodos({
       ...todos,
-      countCompleted:payloadState.filter(_todo => _todo.completed).length,
-      payload:todos.payload.map(_todo =>
+      countCompleted: payloadState.filter(_todo => _todo.completed).length,
+      payload: payloadState.map(_todo =>
         _todo.id === todo.id ? { ...todo, completed: !todo.completed } : _todo
       ),
       isUpdating: true
@@ -74,15 +82,17 @@ const Todos: FC = () => {
   };
 
   const handleAll: EditAll = isAllCompleted => {
-    const payloadState: Todo[] = [...todos.payload.map(todo =>
-      todo.completed === !isAllCompleted
-        ? { ...todo, completed: isAllCompleted }
-        : todo
-    )]
+    const payloadState: Todo[] = [
+      ...todos.payload.map(todo =>
+        todo.completed === !isAllCompleted
+          ? { ...todo, completed: isAllCompleted }
+          : todo
+      )
+    ];
     setTodos({
       ...todos,
-      countCompleted:payloadState.filter(_todo => _todo.completed).length,
-      payload:payloadState,
+      countCompleted: payloadState.filter(_todo => _todo.completed).length,
+      payload: payloadState,
       isUpdating: true
     });
   };
@@ -92,7 +102,7 @@ const Todos: FC = () => {
       ...todos,
       visibilityFilter: visibilityFilter,
       isUpdating: true
-    })
+    });
   };
 
   return (
@@ -109,18 +119,18 @@ const Todos: FC = () => {
           handleAdd={handleAdd}
           handleAll={handleAll}
         />
-        {todos.visible.map(todo => (
+        {todos.visible.map(_todo => (
           <Todo
             handleDelete={handleDelete}
             handleEdit={handleEdit}
-            key={todo.id}
-            todo={todo}
+            key={_todo.id}
+            todo={_todo}
           />
         ))}
         <Filter
-          todos={todos}
           handleDeleteAll={handleDeleteAll}
           handleFilter={handleFilter}
+          todos={todos}
         />
       </List>
     </>
