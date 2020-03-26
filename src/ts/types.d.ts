@@ -26,7 +26,7 @@ type AddState = {
 };
 
 type Add = (title: string) => void;
-type Filter = (filter: string) => void;
+type Filter = (visibilityFilter: string) => void;
 type Delete = (todo: Todo) => void;
 type DeleteAll = () => void;
 type Edit = (todo: Todo) => void;
@@ -40,7 +40,7 @@ type Action =
   | { type: "DELETE_TODO"; id: number }
   | { type: "DELETE_TODOS" }
   | { type: "EDIT_TODO"; id: number }
-  | { type: "EDIT_TODOS"; completed: boolean }
+  | { type: "EDIT_TODOS"; isAllCompleted: boolean }
   | { type: "GET_TODOS" }
-  | { type: "SET_FILTER"; filter: string }
+  | { type: "SET_FILTER"; visibilityFilter: string }
   | { type: "UPDATE_TODOS" };

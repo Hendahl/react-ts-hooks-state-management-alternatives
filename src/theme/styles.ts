@@ -7,11 +7,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(3)
     },
     listItemText: {
-      color: "#FFFFFF"
+      color: "#000000"
     },
-
     listItem: {
-      borderBottom: "2px solid #ffffff1f"
+      borderBottom: "2px solid #00000"
     },
     title: {
       fontSize: "2rem"

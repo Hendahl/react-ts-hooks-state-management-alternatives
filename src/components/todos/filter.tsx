@@ -13,7 +13,10 @@ const Filter: FC = (): ReactElement => {
 
   const handleFilter = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    dispatch({ type: actions.SET_FILTER, filter: e.currentTarget.id });
+    dispatch({
+      type: actions.SET_FILTER,
+      visibilityFilter: e.currentTarget.id
+    });
   };
 
   const handleDeleteAll = () => {

@@ -38,7 +38,7 @@ const AppMenu: FC = () => {
           <ListItemIcon>
             <CodeIcon />
           </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="Context" />
+          <ListItemText className={classes.listItemText} primary="Todos" />
         </ListItem>
       </List>
       <Divider />

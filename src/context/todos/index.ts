@@ -1,31 +1,90 @@
 import * as actions from "../../constants/actions";
-import * as select from "../../selectors";
+import * as filter from "../../constants/filter";
+import * as utils from "../../utils";
 
 const reducer = (todos: Todos, action: Action) => {
   switch (action.type) {
     case actions.ADD_TODO: {
-      return select.addTodo(todos, action.title);
+      return {
+        ...todos,
+        countAll: ++todos.countAll,
+        payload: [
+          { id: utils.uuid(), completed: false, title: action.title },
+          ...todos.payload
+        ],
+        isUpdating: true,
+        visibilityFilter: filter.ALL_TODOS
+      };
     }
     case actions.DELETE_TODO: {
-      return select.deleteTodo(todos, action.id);
+      return {
+        ...todos,
+        countAll: --todos.countAll,
+        payload: todos.payload.filter(_todo => _todo.id !== action.id),
+        isUpdating: true
+      };
     }
     case actions.DELETE_TODOS: {
-      return select.deleteTodos();
+      const defaultValues = utils.initialTodos;
+      utils.setStoredTodos({
+        ...defaultValues
+      });
+      return {
+        ...defaultValues
+      };
     }
     case actions.EDIT_TODO: {
-      return select.editTodo(todos, action.id);
+      const payloadState: Todo[] = [...todos.payload];
+      return {
+        ...todos,
+        countCompleted: payloadState.filter(_todo => _todo.completed).length,
+        payload: payloadState.map(_todo =>
+          _todo.id === action.id
+            ? { ..._todo, completed: !_todo.completed }
+            : _todo
+        ),
+        isUpdating: true
+      };
     }
     case actions.EDIT_TODOS: {
-      return select.editTodos(todos, action.completed);
+      const payloadState: Todo[] = [
+        ...todos.payload.map(todo =>
+          todo.completed === !action.isAllCompleted
+            ? { ...todo, completed: action.isAllCompleted }
+            : todo
+        )
+      ];
+      return {
+        ...todos,
+        countCompleted: payloadState.filter(_todo => _todo.completed).length,
+        payload: payloadState,
+        isUpdating: true
+      };
     }
     case actions.GET_TODOS: {
-      return select.getStoredTodos();
+      return utils.getStoredTodos();
     }
     case actions.SET_FILTER: {
-      return select.setFilter(todos, action.filter);
+      return {
+        ...todos,
+        visibilityFilter: action.visibilityFilter,
+        isUpdating: true
+      };
     }
     case actions.UPDATE_TODOS: {
-      return select.updateTodos(todos);
+      utils.setStoredTodos(todos);
+      return {
+        ...todos,
+        isUpdating: false,
+        visible:
+          todos.visibilityFilter === filter.ALL_TODOS
+            ? todos.payload
+            : todos.payload.filter(_todo =>
+                todos.visibilityFilter === filter.COMPLETED_TODOS
+                  ? _todo.completed
+                  : !_todo.completed
+              )
+      };
     }
     default:
       return todos;
