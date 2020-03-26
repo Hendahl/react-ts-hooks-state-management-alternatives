@@ -31,3 +31,4 @@ type DeleteAll = () => void;
 type Edit = (todo: Todo) => void;
 type EditAll = (completed: boolean) => void;
 type Filter = (visibilityFilter: string) => void;
+type Update  = () => void;
