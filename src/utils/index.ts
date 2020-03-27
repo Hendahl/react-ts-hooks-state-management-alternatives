@@ -27,10 +27,10 @@ export const setStoredTodos = (payload: Todos) => {
 export const setVisibileTodos = (payload: Todo[], visibilityFilter: string) => {
   return visibilityFilter === filter.ALL_TODOS
     ? payload
-    : payload.filter(todo =>
+    : payload.filter(_todo =>
         visibilityFilter === filter.COMPLETED_TODOS
-          ? todo.completed
-          : !todo.completed
+          ? _todo.completed
+          : !_todo.completed
       );
 };
 
@@ -44,13 +44,13 @@ export const updateTodos = (todos: Todos) => {
 };
 
 export const deleteTodo = (todos: Todos, id: number) => {
-  const updatedPayload = todos.payload.filter(todo => todo.id !== id);
+  const payloadState = todos.payload.filter(_todo => _todo.id !== id);
   return {
     ...todos,
     countAll: todos.countAll - 1,
-    countCompleted: updatedPayload.length,
-    payload: updatedPayload.filter(todo => todo.id !== id),
-    visible: setVisibileTodos(updatedPayload, todos.visibilityFilter),
+    countCompleted: payloadState.length,
+    payload: payloadState.filter(_todo => _todo.id !== id),
+    visible: setVisibileTodos(payloadState, todos.visibilityFilter),
     isUpdating: true
   };
 };
@@ -65,53 +65,53 @@ export const deleteTodos = () => {
 };
 
 export const addTodo = (todos: Todos, title: string) => {
-  const updatedPayload = [
+  const payloadState = [
     { id: uuid(), completed: false, title: title },
     ...todos.payload
   ];
   return {
     ...todos,
     countAll: todos.countAll + 1,
-    payload: updatedPayload,
+    payload: payloadState,
     visibilityFilter: filter.ALL_TODOS,
     isUpdating: true,
-    visible: setVisibileTodos(updatedPayload, todos.visibilityFilter)
+    visible: setVisibileTodos(payloadState, todos.visibilityFilter)
   };
 };
 
 export const editTodo = (todos: Todos, id: number) => {
-  const updatedPayload = todos.payload.map(todo =>
-    todo.id === id ? { ...todo, completed: !todo.completed } : todo
+  const payloadState = todos.payload.map(_todo =>
+    _todo.id === id ? { ..._todo, completed: !_todo.completed } : _todo
   );
   return {
     ...todos,
-    countCompleted: updatedPayload.filter(todo => todo.completed).length,
-    payload: updatedPayload,
+    countCompleted: payloadState.filter(_todo => _todo.completed).length,
+    payload: payloadState,
     isUpdating: true,
-    visible: setVisibileTodos(updatedPayload, todos.visibilityFilter)
+    visible: setVisibileTodos(payloadState, todos.visibilityFilter)
   };
 };
 
 export const editTodos = (todos: Todos, isAllCompleted: boolean) => {
-  const updatedPayload = todos.payload.map(todo =>
-    todo.completed === !isAllCompleted
-      ? { ...todo, completed: isAllCompleted }
-      : todo
+  const payloadState = todos.payload.map(_todo =>
+    _todo.completed === !isAllCompleted
+      ? { ..._todo, completed: isAllCompleted }
+      : _todo
   );
   return {
     ...todos,
-    countCompleted: updatedPayload.filter(todo => todo.completed).length,
-    payload: updatedPayload,
+    countCompleted: payloadState.filter(_todo => _todo.completed).length,
+    payload: payloadState,
     isUpdating: true,
-    visible: setVisibileTodos(updatedPayload, todos.visibilityFilter)
+    visible: setVisibileTodos(payloadState, todos.visibilityFilter)
   };
 };
 
-export const setFilter = (todos: Todos, filter: string) => {
+export const setFilter = (todos: Todos, visibilityFilter: string) => {
   return {
     ...todos,
-    visibilityFilter: filter,
+    visibilityFilter: visibilityFilter,
     isUpdating: true,
-    visible: setVisibileTodos(todos.payload, filter)
+    visible: setVisibileTodos(todos.payload, visibilityFilter)
   };
 };

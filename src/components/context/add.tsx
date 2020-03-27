@@ -36,7 +36,10 @@ const Add: FC = (): ReactElement => {
 
   const handleAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
-    dispatch({ type: actions.EDIT_TODOS, completed: state.isAllCompleted });
+    dispatch({
+      type: actions.EDIT_TODOS,
+      isAllCompleted: state.isAllCompleted
+    });
   };
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {

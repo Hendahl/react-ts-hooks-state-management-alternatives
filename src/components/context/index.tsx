@@ -28,8 +28,8 @@ const Todos: FC = () => {
       <Progress isUpdating={todos.isUpdating} />
       <List>
         <Add />
-        {todos.visible.map((todo: Todo) => (
-          <Todo key={todo.id} todo={todo} />
+        {todos.visible.map((_todo: Todo) => (
+          <Todo key={_todo.id} todo={_todo} />
         ))}
         <Filter />
       </List>

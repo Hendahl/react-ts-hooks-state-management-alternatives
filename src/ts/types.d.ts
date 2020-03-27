@@ -1,8 +1,8 @@
 type Classes = {
   listItem: string;
+  listItemText: string;
   title: string;
   titleCompleted: string;
-  listItemText: string;
 };
 
 type Todo = {
@@ -12,21 +12,21 @@ type Todo = {
 };
 
 type Todos = {
-  visibilityFilter: string;
-  payload: Todo[];
   countAll: number;
   countCompleted: number;
   isUpdating: boolean;
+  payload: Todo[];
+  visibilityFilter: string;
   visible: Todo[];
 };
 
 type AddState = {
-  title: string;
   isAllCompleted: boolean;
+  title: string;
 };
 
 type Add = (title: string) => void;
-type Filter = (filter: string) => void;
+type Filter = (visibiltityFilter: string) => void;
 type Delete = (todo: Todo) => void;
 type DeleteAll = () => void;
 type Edit = (todo: Todo) => void;
@@ -40,7 +40,7 @@ type Action =
   | { type: "DELETE_TODO"; id: number }
   | { type: "DELETE_TODOS" }
   | { type: "EDIT_TODO"; id: number }
-  | { type: "EDIT_TODOS"; completed: boolean }
+  | { type: "EDIT_TODOS"; isAllCompleted: boolean }
   | { type: "GET_TODOS" }
-  | { type: "SET_FILTER"; filter: string }
+  | { type: "SET_FILTER"; visibiltityFilter: string }
   | { type: "UPDATE_TODOS" };

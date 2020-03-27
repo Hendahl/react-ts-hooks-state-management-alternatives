@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, Dispatch, ReactNode } from "react";
-import * as select from "../selectors";
+import * as utils from "../utils";
 import reducer from "./todos";
 
 type ContextType = {
@@ -7,10 +7,10 @@ type ContextType = {
   dispatch: Dispatch<Action>;
 };
 
-export const Context = createContext<ContextType>(select.getStoredTodos());
+export const Context = createContext<ContextType>(utils.getStoredTodos());
 
 export const Provider = (props: { children: ReactNode }) => {
-  const [todos, dispatch] = useReducer(reducer, select.getStoredTodos());
+  const [todos, dispatch] = useReducer(reducer, utils.getStoredTodos());
   return (
     <Context.Provider value={{ todos, dispatch }}>
       {props.children}

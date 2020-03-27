@@ -1,4 +1,4 @@
-import * as select from "../../selectors";
+import * as utils from "../../utils";
 import {
   applySnapshot,
   destroy,
@@ -37,29 +37,29 @@ export const Todos = types
   })
   .actions(self => ({
     addTodo(title: string) {
-      applySnapshot(self, select.addTodo(getSnapshot(self), title));
+      applySnapshot(self, utils.addTodo(getSnapshot(self), title));
     },
     editTodos(isAllCompleted: boolean) {
-      applySnapshot(self, select.editTodos(getSnapshot(self), isAllCompleted));
+      applySnapshot(self, utils.editTodos(getSnapshot(self), isAllCompleted));
     },
     editTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
-      applySnapshot(self, select.editTodo(getSnapshot(self), todo.id));
+      applySnapshot(self, utils.editTodo(getSnapshot(self), todo.id));
     },
     deleteTodo(todo: SnapshotIn<TodoModel>) {
-      applySnapshot(self, select.deleteTodo(getSnapshot(self), todo.id));
+      applySnapshot(self, utils.deleteTodo(getSnapshot(self), todo.id));
       destroy(todo);
     },
     deleteTodos() {
-      applySnapshot(self, select.deleteTodos());
+      applySnapshot(self, utils.deleteTodos());
     },
-    setFilter(filter: string) {
-      applySnapshot(self, select.setFilter(getSnapshot(self), filter));
+    setFilter(visibilityFilter: string) {
+      applySnapshot(self, utils.setFilter(getSnapshot(self), visibilityFilter));
     },
     updateTodos() {
-      applySnapshot(self, select.updateTodos(getSnapshot(self)));
+      applySnapshot(self, utils.updateTodos(getSnapshot(self)));
     },
     getTodos() {
-      applySnapshot(self, select.getStoredTodos());
+      applySnapshot(self, utils.getStoredTodos());
     }
   }));
 

@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import App from "./index";
 
 describe("Components", () => {
-  test("renders learn react link", () => {
+  test("Renders React Hooks Todos", () => {
     const { getByText } = render(<App />);
     const headerText = getByText(/React Hooks Todos/i);
     expect(headerText).toBeInTheDocument();

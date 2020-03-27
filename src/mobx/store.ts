@@ -1,4 +1,4 @@
-import * as select from "../selectors";
+import * as utils from "../utils";
 import { createContext, useContext } from "react";
 import { Instance, onSnapshot, types } from "mobx-state-tree";
 import { Todos } from "./todos";
@@ -7,10 +7,10 @@ const RootModel = types.model({
   todos: Todos
 });
 
-export const store = RootModel.create({ todos: select.getStoredTodos() });
+export const store = RootModel.create({ todos: utils.getStoredTodos() });
 
 onSnapshot(store, snapshot => {
-  select.setStoredTodos(snapshot.todos);
+  utils.setStoredTodos(snapshot.todos);
   //console.log(snapshot.todos);
 });
 

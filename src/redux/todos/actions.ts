@@ -26,7 +26,7 @@ export const editTodo: Edit = todo => {
 
 export const editTodos: EditAll = completed => {
   return (dispatch: (arg0: Action) => void) => {
-    dispatch({ type: actions.EDIT_TODOS, completed: completed });
+    dispatch({ type: actions.EDIT_TODOS, isAllCompleted: completed });
   };
 };
 export const getTodos = () => {
@@ -41,8 +41,8 @@ export const updateTodos = () => {
   };
 };
 
-export const setFilter: Filter = filter => {
+export const setFilter: Filter = visibilityFilter => {
   return (dispatch: (arg0: Action) => void) => {
-    dispatch({ type: actions.SET_FILTER, filter: filter });
+    dispatch({ type: actions.SET_FILTER, visibiltityFilter: visibilityFilter });
   };
 };

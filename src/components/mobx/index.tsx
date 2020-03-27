@@ -32,8 +32,8 @@ const Todos: FC = observer(() => {
       <Progress isUpdating={todos.isUpdating} />
       <List>
         <Add />
-        {todos.visible.map(todo => (
-          <Todo key={todo.id} todo={todo} />
+        {todos.visible.map(_todo => (
+          <Todo key={_todo.id} todo={_todo} />
         ))}
         <Filter />
       </List>

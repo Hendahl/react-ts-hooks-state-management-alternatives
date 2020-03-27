@@ -1,4 +1,4 @@
-import * as select from "../../selectors";
+import * as utils from "../../utils";
 import Add from "./add";
 import Box from "@material-ui/core/Box";
 import Filter from "./filter";
@@ -9,36 +9,36 @@ import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
 
 const Todos: FC = () => {
-  const [todos, setTodos] = useState<Todos>(select.getStoredTodos());
+  const [todos, setTodos] = useState<Todos>(utils.getStoredTodos());
 
   useEffect(() => {
     if (todos.isUpdating) {
-      setTodos(select.updateTodos(todos));
+      setTodos(utils.updateTodos(todos));
     }
   }, [todos]);
 
   const handleAdd: Add = title => {
-    setTodos(select.addTodo(todos, title));
+    setTodos(utils.addTodo(todos, title));
   };
 
   const handleDelete: Delete = todo => {
-    setTodos(select.deleteTodo(todos, todo.id));
+    setTodos(utils.deleteTodo(todos, todo.id));
   };
 
   const handleDeleteAll: DeleteAll = () => {
-    setTodos(select.deleteTodos());
+    setTodos(utils.deleteTodos());
   };
 
   const handleEdit: Edit = todo => {
-    setTodos(select.editTodo(todos, todo.id));
+    setTodos(utils.editTodo(todos, todo.id));
   };
 
   const handleAll: EditAll = completed => {
-    setTodos(select.editTodos(todos, completed));
+    setTodos(utils.editTodos(todos, completed));
   };
 
   const handleFilter: Filter = visibilityFilter => {
-    setTodos(select.setFilter(todos, visibilityFilter));
+    setTodos(utils.setFilter(todos, visibilityFilter));
   };
 
   return (
@@ -55,12 +55,12 @@ const Todos: FC = () => {
           handleAdd={handleAdd}
           handleAll={handleAll}
         />
-        {todos.visible.map(todo => (
+        {todos.visible.map(_todo => (
           <Todo
             handleDelete={handleDelete}
             handleEdit={handleEdit}
-            key={todo.id}
-            todo={todo}
+            key={_todo.id}
+            todo={_todo}
           />
         ))}
         <Filter
