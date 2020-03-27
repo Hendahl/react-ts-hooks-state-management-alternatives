@@ -1,3 +1,9 @@
+/*
+ * Note ! To keep basic functions togheter for this demo, we are using this utils.
+ * For more less complex and recommended way - >
+ * take a look in every specifik branch basic, redux, context, mobx
+ */
+
 import * as filter from "../constants/filter";
 
 const LSKEY = "react-hooks-todos-all";
@@ -24,33 +30,31 @@ export const setStoredTodos = (payload: Todos) => {
   return localStorage.setItem(LSKEY, JSON.stringify(payload));
 };
 
-export const setVisibileTodos = (payload: Todo[], visibilityFilter: string) => {
-  return visibilityFilter === filter.ALL_TODOS
-    ? payload
-    : payload.filter(_todo =>
-        visibilityFilter === filter.COMPLETED_TODOS
-          ? _todo.completed
-          : !_todo.completed
-      );
-};
-
 export const updateTodos = (todos: Todos) => {
-  const updatedData = {
+  const payloadState: Todo[] = [...todos.payload];
+  const todosState = {
     ...todos,
-    isUpdating: false
+    isUpdating: false,
+    visible:
+      todos.visibilityFilter === filter.ALL_TODOS
+        ? payloadState
+        : payloadState.filter(_todo =>
+            todos.visibilityFilter === filter.COMPLETED_TODOS
+              ? _todo.completed
+              : !_todo.completed
+          )
   };
-  setStoredTodos(updatedData);
-  return updatedData;
+  setStoredTodos(todosState);
+  return todosState;
 };
 
 export const deleteTodo = (todos: Todos, id: number) => {
   const payloadState = todos.payload.filter(_todo => _todo.id !== id);
   return {
     ...todos,
-    countAll: todos.countAll - 1,
+    countAll: --todos.countAll,
     countCompleted: payloadState.length,
     payload: payloadState.filter(_todo => _todo.id !== id),
-    visible: setVisibileTodos(payloadState, todos.visibilityFilter),
     isUpdating: true
   };
 };
@@ -74,8 +78,7 @@ export const addTodo = (todos: Todos, title: string) => {
     countAll: todos.countAll + 1,
     payload: payloadState,
     visibilityFilter: filter.ALL_TODOS,
-    isUpdating: true,
-    visible: setVisibileTodos(payloadState, todos.visibilityFilter)
+    isUpdating: true
   };
 };
 
@@ -87,8 +90,7 @@ export const editTodo = (todos: Todos, id: number) => {
     ...todos,
     countCompleted: payloadState.filter(_todo => _todo.completed).length,
     payload: payloadState,
-    isUpdating: true,
-    visible: setVisibileTodos(payloadState, todos.visibilityFilter)
+    isUpdating: true
   };
 };
 
@@ -102,8 +104,7 @@ export const editTodos = (todos: Todos, isAllCompleted: boolean) => {
     ...todos,
     countCompleted: payloadState.filter(_todo => _todo.completed).length,
     payload: payloadState,
-    isUpdating: true,
-    visible: setVisibileTodos(payloadState, todos.visibilityFilter)
+    isUpdating: true
   };
 };
 
@@ -111,7 +112,6 @@ export const setFilter = (todos: Todos, visibilityFilter: string) => {
   return {
     ...todos,
     visibilityFilter: visibilityFilter,
-    isUpdating: true,
-    visible: setVisibileTodos(todos.payload, visibilityFilter)
+    isUpdating: true
   };
 };

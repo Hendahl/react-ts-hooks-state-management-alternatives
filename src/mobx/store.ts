@@ -10,7 +10,8 @@ const RootModel = types.model({
 export const store = RootModel.create({ todos: utils.getStoredTodos() });
 
 onSnapshot(store, snapshot => {
-  utils.setStoredTodos(snapshot.todos);
+  store.todos.updateTodos();
+  //utils.setStoredTodos(snapshot.todos);
   //console.log(snapshot.todos);
 });
 

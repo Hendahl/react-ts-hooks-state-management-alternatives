@@ -1,4 +1,5 @@
 import * as utils from "../../utils";
+import * as filter from "../../constants/filter";
 import {
   applySnapshot,
   destroy,
@@ -28,35 +29,83 @@ type TodoModel = Instance<typeof Todo>;
 
 export const Todos = types
   .model({
-    countAll: types.number,
-    countCompleted: types.number,
     payload: types.optional(types.array(Todo), []),
     isUpdating: types.boolean,
-    visibilityFilter: types.string,
-    visible: types.optional(types.array(Todo), [])
+    visibilityFilter: types.string
   })
+  .views(self => ({
+    get countCompleted() {
+      return self.payload.filter(_todo => _todo.completed).length;
+    },
+    get countAll() {
+      return self.payload.length;
+    },
+    get visibleTodos() {
+      return self.visibilityFilter === filter.ALL_TODOS
+        ? self.payload
+        : self.payload.filter(_todo =>
+            self.visibilityFilter === filter.COMPLETED_TODOS
+              ? _todo.completed
+              : !_todo.completed
+          );
+    }
+  }))
   .actions(self => ({
     addTodo(title: string) {
-      applySnapshot(self, utils.addTodo(getSnapshot(self), title));
+      const id = utils.uuid();
+      const newTodo = {
+        id,
+        title,
+        completed: false
+      };
+      self.payload.push(newTodo);
+      self.visibilityFilter = filter.ALL_TODOS;
+      self.isUpdating = true;
     },
     editTodos(isAllCompleted: boolean) {
-      applySnapshot(self, utils.editTodos(getSnapshot(self), isAllCompleted));
+      const updatedState = self.payload.map(_todo =>
+        _todo.completed === !isAllCompleted
+          ? { ..._todo, completed: isAllCompleted }
+          : _todo
+      );
+      self.payload.replace(updatedState);
+      self.isUpdating = true;
     },
     editTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
-      applySnapshot(self, utils.editTodo(getSnapshot(self), todo.id));
+      const updatedState = self.payload.map(_todo =>
+        _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
+      );
+      self.payload.replace(updatedState);
+      self.isUpdating = true;
     },
     deleteTodo(todo: SnapshotIn<TodoModel>) {
-      applySnapshot(self, utils.deleteTodo(getSnapshot(self), todo.id));
       destroy(todo);
+      self.payload.replace(self.payload.filter(_todo => _todo.id !== todo.id));
+      self.isUpdating = true;
     },
     deleteTodos() {
       applySnapshot(self, utils.deleteTodos());
     },
-    setFilter(visibilityFilter: string) {
-      applySnapshot(self, utils.setFilter(getSnapshot(self), visibilityFilter));
+    setFilter(visibiltityFilter: string) {
+      self.visibilityFilter = visibiltityFilter;
+      self.isUpdating = true;
     },
     updateTodos() {
-      applySnapshot(self, utils.updateTodos(getSnapshot(self)));
+      /*
+      This is not a Mobx Pattern just for this demo app, take a look in the mobx branch to see how it should be done
+      */
+      if (self.isUpdating) {
+        self.isUpdating = false;
+        const todosState = {
+          countAll: self.countAll,
+          countCompleted: self.countCompleted,
+          payload: getSnapshot(self).payload,
+          visibilityFilter: self.visibilityFilter,
+          isUpdating: self.isUpdating,
+          visible: []
+        };
+        utils.updateTodos(todosState);
+      }
     },
     getTodos() {
       applySnapshot(self, utils.getStoredTodos());
