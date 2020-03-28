@@ -79,6 +79,7 @@ const Add: FC<AddProps> = ({
       <ListItemSecondaryAction>
         <IconButton
           aria-label="Add"
+          color={"primary"}
           disabled={state.title === ""}
           edge="end"
           onClick={onAdd}

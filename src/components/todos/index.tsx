@@ -8,6 +8,7 @@ import React, { FC, useEffect, useState } from "react";
 import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
 import * as filter from "../../constants/filter";
+import Container from "@material-ui/core/Container";
 
 interface TodosProps {
   handleDelete: Delete;
@@ -21,13 +22,15 @@ const Todos: FC<TodosProps> = () => {
 
   useEffect(() => {
     if (todos.isUpdating) {
+      const payloadState: Todo[] = [...todos.payload];
       setTodos({
         ...todos,
+        countCompleted: payloadState.filter(_todo => _todo.completed).length,
         isUpdating: false,
         visible:
           todos.visibilityFilter === filter.ALL_TODOS
-            ? todos.payload
-            : todos.payload.filter(_todo =>
+            ? payloadState
+            : payloadState.filter(_todo =>
                 todos.visibilityFilter === filter.COMPLETED_TODOS
                   ? _todo.completed
                   : !_todo.completed
@@ -73,7 +76,6 @@ const Todos: FC<TodosProps> = () => {
     const payloadState: Todo[] = [...todos.payload];
     setTodos({
       ...todos,
-      countCompleted: payloadState.filter(_todo => _todo.completed).length,
       payload: payloadState.map(_todo =>
         _todo.id === todo.id ? { ...todo, completed: !todo.completed } : _todo
       ),
@@ -91,7 +93,6 @@ const Todos: FC<TodosProps> = () => {
     ];
     setTodos({
       ...todos,
-      countCompleted: payloadState.filter(_todo => _todo.completed).length,
       payload: payloadState,
       isUpdating: true
     });
@@ -106,7 +107,7 @@ const Todos: FC<TodosProps> = () => {
   };
 
   return (
-    <>
+    <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
           Todos - Basic
@@ -133,7 +134,7 @@ const Todos: FC<TodosProps> = () => {
           todos={todos}
         />
       </List>
-    </>
+    </Container>
   );
 };
 

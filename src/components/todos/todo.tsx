@@ -6,7 +6,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import React, { FC } from "react";
 import Switch from "@material-ui/core/Switch";
-import { useStyles } from "../../theme/styles";
+import { useStyles } from "../../theme";
 
 interface TodoProps {
   handleDelete: Delete;
@@ -17,17 +17,25 @@ interface TodoProps {
 const Todo: FC<TodoProps> = ({ handleDelete, handleEdit, todo }) => {
   const classes = useStyles();
   return (
-    <ListItem className={classes.listItem} role={undefined} button>
+    <ListItem
+      role={undefined}
+      button
+      divider={true}
+      onClick={() => handleEdit(todo)}
+    >
       <ListItemIcon>
         <Switch
           checked={todo.completed}
           color="primary"
           onChange={() => handleEdit(todo)}
           value="completed"
+          size="small"
         />
       </ListItemIcon>
       <ListItemText
-        className={todo.completed ? classes.titleCompleted : classes.title}
+        className={
+          todo.completed ? classes.listItemTextCompleted : classes.listItemText
+        }
         primary={todo.title}
         secondary={todo.id}
       />
@@ -43,5 +51,4 @@ const Todo: FC<TodoProps> = ({ handleDelete, handleEdit, todo }) => {
     </ListItem>
   );
 };
-
 export default Todo;
