@@ -37,7 +37,6 @@ const reducer = (todos: Todos, action: Action) => {
       const payloadState: Todo[] = [...todos.payload];
       return {
         ...todos,
-        countCompleted: payloadState.filter(_todo => _todo.completed).length,
         payload: payloadState.map(_todo =>
           _todo.id === action.id
             ? { ..._todo, completed: !_todo.completed }
@@ -56,7 +55,6 @@ const reducer = (todos: Todos, action: Action) => {
       ];
       return {
         ...todos,
-        countCompleted: payloadState.filter(_todo => _todo.completed).length,
         payload: payloadState,
         isUpdating: true
       };
@@ -72,14 +70,16 @@ const reducer = (todos: Todos, action: Action) => {
       };
     }
     case actions.UPDATE_TODOS: {
+      const payloadState: Todo[] = [...todos.payload];
       utils.setStoredTodos(todos);
       return {
         ...todos,
+        countCompleted: payloadState.filter(_todo => _todo.completed).length,
         isUpdating: false,
         visible:
           todos.visibilityFilter === filter.ALL_TODOS
-            ? todos.payload
-            : todos.payload.filter(_todo =>
+            ? payloadState
+            : payloadState.filter(_todo =>
                 todos.visibilityFilter === filter.COMPLETED_TODOS
                   ? _todo.completed
                   : !_todo.completed

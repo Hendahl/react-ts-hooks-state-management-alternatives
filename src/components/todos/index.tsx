@@ -8,6 +8,7 @@ import React, { FC, useContext, useEffect } from "react";
 import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
 import { Context } from "../../context/store";
+import Container from "@material-ui/core/Container";
 
 const Todos: FC = () => {
   const { todos, dispatch } = useContext(Context);
@@ -19,7 +20,7 @@ const Todos: FC = () => {
   }, [todos, dispatch]);
 
   return (
-    <>
+    <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
           Todos - Context
@@ -33,7 +34,7 @@ const Todos: FC = () => {
         ))}
         <Filter />
       </List>
-    </>
+    </Container>
   );
 };
 

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useStyles } from "../../theme/styles";
+import { useStyles } from "../../theme";
 import { withRouter } from "react-router-dom";
 import CodeIcon from "@material-ui/icons/Code";
 import Divider from "@material-ui/core/Divider";
@@ -20,17 +20,18 @@ const AppMenu: FC = () => {
     <>
       <List>
         <ListItem
-          color="primary"
+          className={classes.listItem}
           component={Link}
           selected={currentPath === "/" ? true : false}
           to="/"
         >
           <ListItemIcon>
-            <HomeIcon />
+            <HomeIcon color="primary" />
           </ListItemIcon>
           <ListItemText className={classes.listItemText} primary="Home" />
         </ListItem>
         <ListItem
+          className={classes.listItem}
           component={Link}
           selected={currentPath === "/context" ? true : false}
           to="/context"
@@ -44,12 +45,13 @@ const AppMenu: FC = () => {
       <Divider />
       <List>
         <ListItem
+          className={classes.listItem}
           button
           component="a"
           href="https://github.com/Hendahl/react-ts-hooks-state-management-alternatives.git"
         >
           <ListItemIcon>
-            <GitHubIcon />
+            <GitHubIcon color="primary" />
           </ListItemIcon>
           <ListItemText className={classes.listItemText} primary="GitHub" />
         </ListItem>

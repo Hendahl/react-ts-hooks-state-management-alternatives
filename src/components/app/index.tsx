@@ -1,60 +1,19 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import {
-  makeStyles,
-  useTheme,
-  Theme,
-  createStyles
-} from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
 import AppMenu from "./appMenu";
 import AppRoutes from "./appRoutes";
 import Container from "@material-ui/core/Container";
-import React, { FC, useState } from "react";
-import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import React, { FC, useState } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex"
-    },
-    drawer: {
-      [theme.breakpoints.up("sm")]: {
-        width: drawerWidth,
-        flexShrink: 0
-      }
-    },
-    appBar: {
-      [theme.breakpoints.up("sm")]: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth
-      }
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up("sm")]: {
-        display: "none"
-      }
-    },
-    // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-      width: drawerWidth
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3)
-    }
-  })
-);
+import { BrowserRouter as Router } from "react-router-dom";
+import { useStyles } from "../../theme";
+import { useTheme } from "@material-ui/core/styles";
 
 const App: FC = () => {
   const classes = useStyles();
@@ -123,12 +82,10 @@ const App: FC = () => {
             </Drawer>
           </Hidden>
         </nav>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Container component="main" maxWidth="xs">
-            <AppRoutes />
-          </Container>
-        </main>
+        <div className={classes.toolbar} />
+        <Container className={classes.content} component="main">
+          <AppRoutes />
+        </Container>
       </div>
     </Router>
   );

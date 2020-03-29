@@ -5,6 +5,6 @@ describe("utils", () => {
   it("uuid", () => {
     const id = utils.uuid();
     expect(id).toBeGreaterThan(1585058456482);
-    expect(id).toBeLessThan(99999999999999999);
+    expect(id).toBeLessThan(999999999999999);
   });
 });
