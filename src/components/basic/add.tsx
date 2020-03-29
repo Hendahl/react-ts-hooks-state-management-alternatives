@@ -51,7 +51,6 @@ const Add: FC<AddProps> = ({
       setState({ ...state, title: "" });
     }
   };
-
   return (
     <ListItem>
       <ListItemIcon>
@@ -79,6 +78,7 @@ const Add: FC<AddProps> = ({
       <ListItemSecondaryAction>
         <IconButton
           aria-label="Add"
+          color="primary"
           disabled={state.title === ""}
           edge="end"
           onClick={onAdd}

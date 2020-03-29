@@ -8,7 +8,7 @@ import React, { FC } from "react";
 import Switch from "@material-ui/core/Switch";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
-import { useStyles } from "../../theme/styles";
+import { useStyles } from "../../theme";
 
 interface TodoProps {
   todo: Todo;
@@ -19,17 +19,20 @@ const Todo: FC<TodoProps> = observer(({ todo }) => {
   const { todos } = useStore();
 
   return (
-    <ListItem role={undefined} button className={classes.listItem}>
+    <ListItem role={undefined} button divider={true}>
       <ListItemIcon>
         <Switch
           checked={todo.completed}
           onChange={() => todos.editTodo(todo)}
           color="primary"
           value="completed"
+          size="small"
         />
       </ListItemIcon>
       <ListItemText
-        className={todo.completed ? classes.titleCompleted : classes.title}
+        className={
+          todo.completed ? classes.listItemTextCompleted : classes.listItemText
+        }
         primary={todo.title}
         secondary={todo.id}
       />

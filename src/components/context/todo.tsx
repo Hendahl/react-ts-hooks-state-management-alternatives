@@ -8,7 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import React, { FC, useContext } from "react";
 import Switch from "@material-ui/core/Switch";
 import { Context } from "../../context/store";
-import { useStyles } from "../../theme/styles";
+import { useStyles } from "../../theme";
 
 interface TodoProps {
   todo: Todo;
@@ -26,17 +26,20 @@ const Todo: FC<TodoProps> = ({ todo }) => {
   };
 
   return (
-    <ListItem role={undefined} button className={classes.listItem}>
+    <ListItem role={undefined} button divider={true}>
       <ListItemIcon>
         <Switch
           checked={todo.completed}
           color="primary"
           onChange={() => handleEdit()}
           value="completed"
+          size="small"
         />
       </ListItemIcon>
       <ListItemText
-        className={todo.completed ? classes.titleCompleted : classes.title}
+        className={
+          todo.completed ? classes.listItemTextCompleted : classes.listItemText
+        }
         primary={todo.title}
         secondary={todo.id}
       />

@@ -8,6 +8,7 @@ import React, { FC, useEffect } from "react";
 import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import Container from "@material-ui/core/Container";
 
 interface TodosProps {
   todos: Todos;
@@ -29,7 +30,7 @@ const Todos: FC = () => {
   }, [todos, dispatch]);
 
   return (
-    <>
+    <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
           Todos - Redux
@@ -43,7 +44,7 @@ const Todos: FC = () => {
         ))}
         <Filter />
       </List>
-    </>
+    </Container>
   );
 };
 

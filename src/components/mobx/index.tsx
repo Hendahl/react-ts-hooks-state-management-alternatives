@@ -8,6 +8,7 @@ import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
+import Container from "@material-ui/core/Container";
 
 const Todos: FC = observer(() => {
   const { todos } = useStore();
@@ -17,7 +18,7 @@ const Todos: FC = observer(() => {
   }, [todos]);
 
   return (
-    <>
+    <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
           Todos - MobX
@@ -31,7 +32,7 @@ const Todos: FC = observer(() => {
         ))}
         <Filter />
       </List>
-    </>
+    </Container>
   );
 });
 

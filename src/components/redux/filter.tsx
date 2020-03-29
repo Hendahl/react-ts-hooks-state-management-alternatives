@@ -68,6 +68,7 @@ const Filter: FC = (): ReactElement => {
             </Button>
           </ButtonGroup>
           <IconButton
+            color="primary"
             edge="end"
             aria-label="Delete all"
             onClick={handleDeleteAll}

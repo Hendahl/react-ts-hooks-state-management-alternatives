@@ -1,27 +1,15 @@
 import App from "../../components/app";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import orange from "@material-ui/core/colors/orange";
-import React, { useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import { createMuiTheme, useMediaQuery } from "@material-ui/core";
+import { themeOverrides } from "../../theme";
+import { useMediaQuery } from "@material-ui/core";
 
-const AppContainer = () => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: light)");
-  const theme = useMemo(
-    () =>
-      createMuiTheme({
-        palette: {
-          type: prefersDarkMode ? "dark" : "light",
-          primary: {
-            main: orange[500]
-          }
-        },
-        typography: {
-          fontSize: 14
-        }
-      }),
-    [prefersDarkMode]
-  );
+const AppContainer: FC = () => {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const theme = useMemo(() => themeOverrides(prefersDarkMode), [
+    prefersDarkMode
+  ]);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -77,9 +77,10 @@ const Add: FC = (): ReactElement => {
       />
       <ListItemSecondaryAction>
         <IconButton
-          edge="end"
           aria-label="Add"
+          color="primary"
           disabled={state.title === ""}
+          edge="end"
           onClick={handleAdd}
         >
           <AddIcon />

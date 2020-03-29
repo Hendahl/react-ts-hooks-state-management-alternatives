@@ -62,6 +62,7 @@ const Filter: FC = observer(() => {
             </Button>
           </ButtonGroup>
           <IconButton
+            color="primary"
             edge="end"
             aria-label="Delete all"
             onClick={handleDeleteAll}

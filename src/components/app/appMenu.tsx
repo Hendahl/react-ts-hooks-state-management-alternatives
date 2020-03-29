@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useStyles } from "../../theme/styles";
+import { useStyles } from "../../theme";
 import { withRouter } from "react-router-dom";
 import CodeIcon from "@material-ui/icons/Code";
 import Divider from "@material-ui/core/Divider";
@@ -22,66 +22,72 @@ const AppMenu: FC = () => {
         <ListItem
           color="primary"
           component={Link}
+          className={classes.listItem}
           selected={currentPath === "/" ? true : false}
           to="/"
         >
           <ListItemIcon>
-            <HomeIcon />
+            <HomeIcon color="primary" />
           </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="Home" />
+          <ListItemText primary="Home" />
         </ListItem>
         <ListItem
           component={Link}
+          className={classes.listItem}
           selected={currentPath === "/basic" ? true : false}
           to="/basic"
         >
           <ListItemIcon>
-            <CodeIcon />
+            <CodeIcon color="primary" />
           </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="Basic" />
+          <ListItemText primary="Basic" />
         </ListItem>
         <ListItem
           component={Link}
+          className={classes.listItem}
           selected={currentPath === "/context" ? true : false}
           to="/context"
         >
           <ListItemIcon>
-            <CodeIcon />
+            <CodeIcon color="primary" />
           </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="Context" />
+          <ListItemText primary="Context" />
         </ListItem>
         <ListItem
           component={Link}
+          className={classes.listItem}
           selected={currentPath === "/redux" ? true : false}
           to="/redux"
         >
           <ListItemIcon>
-            <CodeIcon />
+            <CodeIcon color="primary" />
           </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="Redux" />
+          <ListItemText primary="Redux" />
         </ListItem>
         <ListItem
           component={Link}
+          className={classes.listItem}
           selected={currentPath === "/mobx" ? true : false}
           to="/mobx"
         >
           <ListItemIcon>
-            <CodeIcon />
+            <CodeIcon color="primary" />
           </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="MobX" />
+          <ListItemText primary="MobX" />
         </ListItem>
       </List>
       <Divider />
       <List>
         <ListItem
+          className={classes.listItem}
           button
           component="a"
           href="https://github.com/Hendahl/react-ts-hooks-state-management-alternatives.git"
         >
           <ListItemIcon>
-            <GitHubIcon />
+            <GitHubIcon color="primary" />
           </ListItemIcon>
-          <ListItemText className={classes.listItemText} primary="GitHub" />
+          <ListItemText primary="GitHub" />
         </ListItem>
       </List>
     </>
