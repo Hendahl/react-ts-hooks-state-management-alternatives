@@ -43,7 +43,7 @@ const Todos: FC<TodosProps> = () => {
   const handleAdd: Add = title => {
     setTodos({
       ...todos,
-      countAll: ++todos.countAll,
+      countAll: todos.countAll + 1,
       payload: [
         { id: utils.uuid(), completed: false, title: title },
         ...todos.payload
@@ -56,7 +56,7 @@ const Todos: FC<TodosProps> = () => {
   const handleDelete: Delete = todo => {
     setTodos({
       ...todos,
-      countAll: --todos.countAll,
+      countAll: todos.countAll - 1,
       payload: todos.payload.filter(_todo => _todo.id !== todo.id),
       isUpdating: true
     });

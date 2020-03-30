@@ -5,6 +5,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import React, { FC, FormEvent, ReactElement } from "react";
+import { useStyles } from "../../theme";
 
 interface FilterProps {
   handleDeleteAll: DeleteAll;
@@ -17,6 +18,7 @@ const Filter: FC<FilterProps> = ({
   handleFilter,
   todos
 }: FilterProps): ReactElement => {
+  const classes = useStyles();
   const onFilter = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     handleFilter(e.currentTarget.id);
@@ -30,7 +32,7 @@ const Filter: FC<FilterProps> = ({
             aria-label="text primary button group"
             color="primary"
             variant="text"
-            style={{ margin: "0 auto" }}
+            className={classes.buttonGroup}
           >
             <Button
               disabled={

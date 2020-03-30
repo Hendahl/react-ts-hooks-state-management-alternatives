@@ -61,7 +61,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginTop: "4rem"
     },
     listItem: {
-      color: orange[500]
+      color: "white"
     },
     listItemText: {
       textDecoration: "inherit"
@@ -69,6 +69,9 @@ export const useStyles = makeStyles((theme: Theme) =>
     listItemTextCompleted: {
       textDecoration: "line-through",
       color: grey[300]
+    },
+    buttonGroup: {
+      margin: "0 auto"
     }
   })
 );
