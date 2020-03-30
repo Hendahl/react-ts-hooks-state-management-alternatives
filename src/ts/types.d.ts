@@ -26,11 +26,14 @@ type AddState = {
 };
 
 type Add = (title: string) => void;
-type Filter = (visibiltityFilter: string) => void;
 type Delete = (todo: Todo) => void;
 type DeleteAll = () => void;
+type Dispatch = (arg0: Action) => void;
 type Edit = (todo: Todo) => void;
 type EditAll = (completed: boolean) => void;
+type Filter = (visibiltityFilter: string) => void;
+type Get = () => void;
+type Update = () => void;
 
 type Action =
   | { type: "ACTIVE_TODOS" }

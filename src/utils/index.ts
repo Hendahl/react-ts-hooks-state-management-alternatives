@@ -32,7 +32,7 @@ export const setStoredTodos = (payload: Todos) => {
 
 export const updateTodos = (todos: Todos) => {
   const payloadState: Todo[] = [...todos.payload];
-  const todosState = {
+  const todosState: Todos = {
     ...todos,
     isUpdating: false,
     visible:
