@@ -7,7 +7,7 @@ const reducer = (todos: Todos, action: Action) => {
     case actions.ADD_TODO: {
       return {
         ...todos,
-        countAll: ++todos.countAll,
+        countAll: todos.countAll + 1,
         payload: [
           { id: utils.uuid(), completed: false, title: action.title },
           ...todos.payload
@@ -19,7 +19,7 @@ const reducer = (todos: Todos, action: Action) => {
     case actions.DELETE_TODO: {
       return {
         ...todos,
-        countAll: --todos.countAll,
+        countAll: todos.countAll - 1,
         payload: todos.payload.filter(_todo => _todo.id !== action.id),
         isUpdating: true
       };

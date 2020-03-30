@@ -7,8 +7,10 @@ import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import React, { FC, FormEvent, ReactElement, useContext } from "react";
 import { Context } from "../../context/store";
+import { useStyles } from "../../theme";
 
 const Filter: FC = (): ReactElement => {
+  const classes = useStyles();
   const { todos, dispatch } = useContext(Context);
 
   const handleFilter = (e: FormEvent<HTMLButtonElement>): void => {
@@ -31,7 +33,7 @@ const Filter: FC = (): ReactElement => {
             aria-label="text primary button group"
             color="primary"
             variant="text"
-            style={{ margin: "0 auto" }}
+            className={classes.buttonGroup}
           >
             <Button
               disabled={
