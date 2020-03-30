@@ -23,7 +23,7 @@ const Todos: FC<TodosProps> = () => {
   useEffect(() => {
     if (todos.isUpdating) {
       const payloadState: Todo[] = [...todos.payload];
-      setTodos({
+      const todosState: Todos = {
         ...todos,
         countCompleted: payloadState.filter(_todo => _todo.completed).length,
         isUpdating: false,
@@ -35,8 +35,9 @@ const Todos: FC<TodosProps> = () => {
                   ? _todo.completed
                   : !_todo.completed
               )
-      });
-      utils.setStoredTodos(todos);
+      };
+      setTodos(todosState);
+      utils.setStoredTodos(todosState);
     }
   }, [todos]);
 
