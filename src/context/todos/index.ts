@@ -71,8 +71,7 @@ const reducer = (todos: Todos, action: Action) => {
     }
     case actions.UPDATE_TODOS: {
       const payloadState: Todo[] = [...todos.payload];
-      utils.setStoredTodos(todos);
-      return {
+      const todosState: Todos = {
         ...todos,
         countCompleted: payloadState.filter(_todo => _todo.completed).length,
         isUpdating: false,
@@ -85,6 +84,8 @@ const reducer = (todos: Todos, action: Action) => {
                   : !_todo.completed
               )
       };
+      utils.setStoredTodos(todosState);
+      return todosState;
     }
     default:
       return todos;
