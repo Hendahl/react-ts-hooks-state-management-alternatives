@@ -7,8 +7,10 @@ import ListItem from "@material-ui/core/ListItem";
 import React, { FC, FormEvent } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
+import { useStyles } from "../../theme";
 
 const Filter: FC = observer(() => {
+  const classes = useStyles();
   const { todos } = useStore();
 
   const handleFilter = (e: FormEvent<HTMLButtonElement>): void => {
@@ -28,7 +30,7 @@ const Filter: FC = observer(() => {
             aria-label="text primary button group"
             color="primary"
             variant="text"
-            style={{ margin: "0 auto" }}
+            className={classes.buttonGroup}
           >
             <Button
               disabled={

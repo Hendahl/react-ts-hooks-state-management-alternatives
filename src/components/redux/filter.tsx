@@ -7,12 +7,14 @@ import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import React, { FC, FormEvent, ReactElement } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { useStyles } from "../../theme";
 
 interface FilterProps {
   todos: Todos;
 }
 
 const Filter: FC = (): ReactElement => {
+  const classes = useStyles();
   const typedUseSelector: TypedUseSelectorHook<FilterProps> = useSelector;
   const todos = typedUseSelector(state => state.todos);
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const Filter: FC = (): ReactElement => {
             aria-label="text primary button group"
             color="primary"
             variant="text"
-            style={{ margin: "0 auto" }}
+            className={classes.buttonGroup}
           >
             <Button
               disabled={
