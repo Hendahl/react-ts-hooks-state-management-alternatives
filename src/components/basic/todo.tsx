@@ -7,14 +7,15 @@ import ListItemText from "@material-ui/core/ListItemText";
 import React, { FC } from "react";
 import Switch from "@material-ui/core/Switch";
 import { useStyles } from "../../theme";
+import TodoDialog from "../shared/dialog";
 
 interface TodoProps {
   handleDelete: Delete;
-  handleEdit: Edit;
+  handleToggleCompleted: Edit;
   todo: Todo;
 }
 
-const Todo: FC<TodoProps> = ({ handleDelete, handleEdit, todo }) => {
+const Todo: FC<TodoProps> = ({ handleDelete, handleToggleCompleted, todo }) => {
   const classes = useStyles();
   return (
     <ListItem role={undefined} button divider={true}>
@@ -22,7 +23,7 @@ const Todo: FC<TodoProps> = ({ handleDelete, handleEdit, todo }) => {
         <Switch
           checked={todo.completed}
           color="primary"
-          onChange={() => handleEdit(todo)}
+          onChange={() => handleToggleCompleted(todo)}
           value="completed"
           size="small"
         />

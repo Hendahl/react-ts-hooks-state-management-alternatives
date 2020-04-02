@@ -12,10 +12,10 @@ const reducer = (todos: Todos, action: Action) => {
     case actions.DELETE_TODOS: {
       return utils.deleteTodos();
     }
-    case actions.EDIT_TODO: {
+    case actions.TOGGLE_TODO: {
       return utils.editTodo(todos, action.id);
     }
-    case actions.EDIT_TODOS: {
+    case actions.TOGGLE_TODOS: {
       return utils.editTodos(todos, action.isAllCompleted);
     }
     case actions.GET_TODOS: {

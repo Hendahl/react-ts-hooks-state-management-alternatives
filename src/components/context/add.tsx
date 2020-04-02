@@ -12,17 +12,24 @@ import React, {
   KeyboardEvent,
   ReactElement,
   useContext,
-  useState
+  useState,
+  useEffect
 } from "react";
 import TextField from "@material-ui/core/TextField";
 import { Context } from "../../context/store";
 
 const Add: FC = (): ReactElement => {
+  const { todos, dispatch } = useContext(Context);
   const [state, setState] = useState<AddState>({
     title: "",
-    isAllCompleted: true
+    isAllCompleted: false
   });
-  const { todos, dispatch } = useContext(Context);
+
+  useEffect(() => {
+    if (todos.payload[0]) {
+      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
+    }
+  }, [todos.payload]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setState({ ...state, title: e.target.value });
@@ -34,10 +41,10 @@ const Add: FC = (): ReactElement => {
     setState({ ...state, title: "" });
   };
 
-  const handleAll = (): void => {
+  const handleToggleAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
     dispatch({
-      type: actions.EDIT_TODOS,
+      type: actions.TOGGLE_TODOS,
       isAllCompleted: state.isAllCompleted
     });
   };
@@ -57,7 +64,7 @@ const Add: FC = (): ReactElement => {
           color={state.isAllCompleted ? "primary" : "inherit"}
           disabled={todos.countAll === 0}
           edge="end"
-          onClick={handleAll}
+          onClick={handleToggleAll}
         >
           <KeyboardArrowDownIcon />
         </IconButton>

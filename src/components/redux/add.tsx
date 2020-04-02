@@ -11,7 +11,8 @@ import React, {
   FormEvent,
   KeyboardEvent,
   ReactElement,
-  useState
+  useState,
+  useEffect
 } from "react";
 import TextField from "@material-ui/core/TextField";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
@@ -21,13 +22,19 @@ interface HeaderProps {
 }
 
 const Add: FC = (): ReactElement => {
+  const typedUseSelector: TypedUseSelectorHook<HeaderProps> = useSelector;
+  const todos = typedUseSelector(state => state.todos);
+  const dispatch = useDispatch();
   const [state, setState] = useState<AddState>({
     title: "",
     isAllCompleted: true
   });
-  const typedUseSelector: TypedUseSelectorHook<HeaderProps> = useSelector;
-  const todos = typedUseSelector(state => state.todos);
-  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (todos.payload[0]) {
+      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
+    }
+  }, [todos.payload]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setState({ ...state, title: e.target.value });
@@ -39,7 +46,7 @@ const Add: FC = (): ReactElement => {
     setState({ ...state, title: "" });
   };
 
-  const handleAll = (): void => {
+  const handleToggleAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
     dispatch(actions.editTodos(state.isAllCompleted));
   };
@@ -59,7 +66,7 @@ const Add: FC = (): ReactElement => {
           color={state.isAllCompleted ? "primary" : "inherit"}
           disabled={todos.countAll === 0}
           edge="end"
-          onClick={handleAll}
+          onClick={handleToggleAll}
         >
           <KeyboardArrowDownIcon />
         </IconButton>

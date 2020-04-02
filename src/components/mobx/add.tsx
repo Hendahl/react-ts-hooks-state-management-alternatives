@@ -10,7 +10,8 @@ import React, {
   FormEvent,
   KeyboardEvent,
   ReactElement,
-  useState
+  useState,
+  useEffect
 } from "react";
 import TextField from "@material-ui/core/TextField";
 import { useStore } from "../../mobx/store";
@@ -22,6 +23,12 @@ const Add: FC = (): ReactElement => {
     isAllCompleted: true
   });
 
+  useEffect(() => {
+    if (todos.payload[0]) {
+      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
+    }
+  }, [todos.payload]);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setState({ ...state, title: e.target.value });
   };
@@ -32,7 +39,7 @@ const Add: FC = (): ReactElement => {
     setState({ ...state, title: "" });
   };
 
-  const handleAll = (): void => {
+  const handleToggleAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
     todos.editTodos(state.isAllCompleted);
   };
@@ -52,7 +59,7 @@ const Add: FC = (): ReactElement => {
           color={state.isAllCompleted ? "primary" : "inherit"}
           disabled={todos.countAll === 0}
           edge="end"
-          onClick={handleAll}
+          onClick={handleToggleAll}
         >
           <KeyboardArrowDownIcon />
         </IconButton>

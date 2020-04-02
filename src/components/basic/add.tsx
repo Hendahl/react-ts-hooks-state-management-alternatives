@@ -10,33 +10,40 @@ import React, {
   FormEvent,
   KeyboardEvent,
   ReactElement,
-  useState
+  useState,
+  useEffect
 } from "react";
 import TextField from "@material-ui/core/TextField";
 
 interface AddProps {
-  countAll: number;
+  todos: Todos;
   handleAdd: Add;
-  handleAll: EditAll;
+  handleToggleAll: ToggleAll;
 }
 
 const Add: FC<AddProps> = ({
-  countAll,
+  todos,
   handleAdd,
-  handleAll
+  handleToggleAll
 }: AddProps): ReactElement => {
   const [state, setState] = useState<AddState>({
     title: "",
-    isAllCompleted: true
+    isAllCompleted: false
   });
+
+  useEffect(() => {
+    if (todos.payload[0]) {
+      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
+    }
+  }, [todos.payload]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setState({ ...state, title: e.target.value });
   };
 
-  const onEditAll = (): void => {
+  const onToggleAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
-    handleAll(state.isAllCompleted);
+    handleToggleAll(state.isAllCompleted);
   };
 
   const onAdd = (e: FormEvent<HTMLButtonElement>): void => {
@@ -57,9 +64,9 @@ const Add: FC<AddProps> = ({
         <IconButton
           aria-label="Toggle Completed"
           color={state.isAllCompleted ? "primary" : "inherit"}
-          disabled={countAll === 0}
+          disabled={todos.countAll === 0}
           edge="end"
-          onClick={onEditAll}
+          onClick={onToggleAll}
         >
           <KeyboardArrowDownIcon />
         </IconButton>

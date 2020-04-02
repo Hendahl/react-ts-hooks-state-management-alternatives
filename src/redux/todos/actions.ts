@@ -20,13 +20,13 @@ export const deleteTodos: DeleteAll = () => {
 
 export const editTodo: Edit = todo => {
   return (dispatch: Dispatch) => {
-    dispatch({ type: actions.EDIT_TODO, id: todo.id });
+    dispatch({ type: actions.TOGGLE_TODO, id: todo.id });
   };
 };
 
-export const editTodos: EditAll = completed => {
+export const editTodos: ToggleAll = completed => {
   return (dispatch: Dispatch) => {
-    dispatch({ type: actions.EDIT_TODOS, isAllCompleted: completed });
+    dispatch({ type: actions.TOGGLE_TODOS, isAllCompleted: completed });
   };
 };
 export const getTodos: Get = () => {

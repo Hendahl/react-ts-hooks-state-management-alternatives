@@ -30,7 +30,7 @@ type Delete = (todo: Todo) => void;
 type DeleteAll = () => void;
 type Dispatch = (arg0: Action) => void;
 type Edit = (todo: Todo) => void;
-type EditAll = (completed: boolean) => void;
+type ToggleAll = (completed: boolean) => void;
 type Filter = (visibiltityFilter: string) => void;
 type Get = () => void;
 type Update = () => void;
@@ -42,8 +42,8 @@ type Action =
   | { type: "COMPLETED_TODOS" }
   | { type: "DELETE_TODO"; id: number }
   | { type: "DELETE_TODOS" }
-  | { type: "EDIT_TODO"; id: number }
-  | { type: "EDIT_TODOS"; isAllCompleted: boolean }
+  | { type: "TOGGLE_TODO"; id: number }
+  | { type: "TOGGLE_TODOS"; isAllCompleted: boolean }
   | { type: "GET_TODOS" }
   | { type: "SET_FILTER"; visibiltityFilter: string }
   | { type: "UPDATE_TODOS" };

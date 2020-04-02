@@ -21,8 +21,8 @@ const Todo: FC<TodoProps> = ({ todo }) => {
   const handleDelete = () => {
     dispatch({ type: actions.DELETE_TODO, id: todo.id });
   };
-  const handleEdit = () => {
-    dispatch({ type: actions.EDIT_TODO, id: todo.id });
+  const handleToggleCompleted = () => {
+    dispatch({ type: actions.TOGGLE_TODO, id: todo.id });
   };
 
   return (
@@ -31,7 +31,7 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         <Switch
           checked={todo.completed}
           color="primary"
-          onChange={() => handleEdit()}
+          onChange={() => handleToggleCompleted()}
           value="completed"
           size="small"
         />

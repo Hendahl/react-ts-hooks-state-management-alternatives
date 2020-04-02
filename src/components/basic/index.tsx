@@ -12,14 +12,13 @@ import Container from "@material-ui/core/Container";
 
 interface TodosProps {
   handleDelete: Delete;
-  handleEdit: Edit;
+  handleToggleCompleted: Edit;
   todo: Todo;
   todos: Todos;
 }
 
 const Todos: FC<TodosProps> = () => {
   const [todos, setTodos] = useState<Todos>(utils.getStoredTodos());
-
   useEffect(() => {
     if (todos.isUpdating) {
       const payloadState: Todo[] = [...todos.payload];
@@ -72,7 +71,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleEdit: Edit = todo => {
+  const handleToggleCompleted: Edit = todo => {
     const payloadState: Todo[] = [...todos.payload];
     setTodos({
       ...todos,
@@ -83,7 +82,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleAll: EditAll = isAllCompleted => {
+  const handleToggleAll: ToggleAll = isAllCompleted => {
     const payloadState: Todo[] = [
       ...todos.payload.map(todo =>
         todo.completed === !isAllCompleted
@@ -116,14 +115,14 @@ const Todos: FC<TodosProps> = () => {
       <Progress isUpdating={todos.isUpdating} />
       <List>
         <Add
-          countAll={todos.countAll}
+          todos={todos}
           handleAdd={handleAdd}
-          handleAll={handleAll}
+          handleToggleAll={handleToggleAll}
         />
         {todos.visible.map(_todo => (
           <Todo
             handleDelete={handleDelete}
-            handleEdit={handleEdit}
+            handleToggleCompleted={handleToggleCompleted}
             key={_todo.id}
             todo={_todo}
           />
