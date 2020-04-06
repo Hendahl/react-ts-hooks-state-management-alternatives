@@ -20,7 +20,7 @@ const App: FC = () => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleDrawerToggle = () => {
+  const handleDrawerEdit = () => {
     setMobileOpen(!mobileOpen);
   };
 
@@ -43,7 +43,7 @@ const App: FC = () => {
               color="inherit"
               aria-label="open drawer"
               edge="start"
-              onClick={handleDrawerToggle}
+              onClick={handleDrawerEdit}
               className={classes.menuButton}
             >
               <MenuIcon />
@@ -59,7 +59,7 @@ const App: FC = () => {
               variant="temporary"
               anchor={theme.direction === "rtl" ? "right" : "left"}
               open={mobileOpen}
-              onClose={handleDrawerToggle}
+              onClose={handleDrawerEdit}
               classes={{
                 paper: classes.drawerPaper
               }}

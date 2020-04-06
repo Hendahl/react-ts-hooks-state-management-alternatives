@@ -24,16 +24,22 @@ type AddState = {
   isAllCompleted: boolean;
   title: string;
 };
+type EditState = {
+  isEditing: boolean;
+  title: string;
+};
 
 type Add = (title: string) => void;
 type Delete = (todo: Todo) => void;
 type DeleteAll = () => void;
 type Dispatch = (arg0: Action) => void;
 type Edit = (todo: Todo) => void;
-type ToggleAll = (completed: boolean) => void;
+type Edit = (todo: Todo) => void;
+type EditAll = (completed: boolean) => void;
 type Filter = (visibiltityFilter: string) => void;
 type Get = () => void;
 type Update = () => void;
+type Dialog = (todo: Todo) => void;
 
 type Action =
   | { type: "ACTIVE_TODOS" }

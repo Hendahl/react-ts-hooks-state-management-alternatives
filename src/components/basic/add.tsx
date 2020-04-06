@@ -18,13 +18,13 @@ import TextField from "@material-ui/core/TextField";
 interface AddProps {
   todos: Todos;
   handleAdd: Add;
-  handleToggleAll: ToggleAll;
+  handleEditAll: EditAll;
 }
 
 const Add: FC<AddProps> = ({
   todos,
   handleAdd,
-  handleToggleAll
+  handleEditAll
 }: AddProps): ReactElement => {
   const [state, setState] = useState<AddState>({
     title: "",
@@ -33,17 +33,20 @@ const Add: FC<AddProps> = ({
 
   useEffect(() => {
     if (todos.payload[0]) {
-      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
+      setState(state => ({
+        ...state,
+        isAllCompleted: !todos.payload[0].completed
+      }));
     }
-  }, [todos.payload]);
+  }, [todos]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setState({ ...state, title: e.target.value });
   };
 
-  const onToggleAll = (): void => {
+  const onEditAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
-    handleToggleAll(state.isAllCompleted);
+    handleEditAll(state.isAllCompleted);
   };
 
   const onAdd = (e: FormEvent<HTMLButtonElement>): void => {
@@ -62,11 +65,11 @@ const Add: FC<AddProps> = ({
     <ListItem>
       <ListItemIcon>
         <IconButton
-          aria-label="Toggle Completed"
+          aria-label="Edit Completed"
           color={state.isAllCompleted ? "primary" : "inherit"}
           disabled={todos.countAll === 0}
           edge="end"
-          onClick={onToggleAll}
+          onClick={onEditAll}
         >
           <KeyboardArrowDownIcon />
         </IconButton>

@@ -24,7 +24,7 @@ export const editTodo: Edit = todo => {
   };
 };
 
-export const editTodos: ToggleAll = completed => {
+export const editTodos: EditAll = completed => {
   return (dispatch: Dispatch) => {
     dispatch({ type: actions.TOGGLE_TODOS, isAllCompleted: completed });
   };

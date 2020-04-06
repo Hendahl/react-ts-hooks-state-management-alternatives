@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -7,52 +7,50 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const TodoDialog = () => {
-  const [open, setOpen] = useState(false);
+interface TodoDialogProps {
+  setIsDialogOpen: (isDialogOpen: boolean) => void;
+  todo: Todo;
+  handleEdit: (todo: Todo) => void;
+}
 
-  const handleClickOpen = () => {
-    setOpen(true);
+const TodoDialog: FC<TodoDialogProps> = ({
+  handleEdit,
+  setIsDialogOpen,
+  todo
+}) => {
+  const onEdit = () => {
+    handleEdit({
+      ...todo,
+      completed: todo.completed,
+      title: "TEST"
+    });
   };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open todo dialog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="todo-dialog-title"
-      >
-        <DialogTitle id="todo-dialog-title">Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog open={true} aria-labelledby="todo-dialog-title">
+      <DialogTitle id="todo-dialog-title">Edit </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          To subscribe to this website, please enter your email address here. We
+          will send updates occasionally.
+        </DialogContentText>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Email Address"
+          type="email"
+          fullWidth
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button color="primary" onClick={() => setIsDialogOpen(false)}>
+          Cancel
+        </Button>
+        <Button color="primary" onClick={onEdit}>
+          Save
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

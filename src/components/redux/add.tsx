@@ -32,7 +32,10 @@ const Add: FC = (): ReactElement => {
 
   useEffect(() => {
     if (todos.payload[0]) {
-      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
+      setState(state => ({
+        ...state,
+        isAllCompleted: !todos.payload[0].completed
+      }));
     }
   }, [todos.payload]);
 
@@ -46,7 +49,7 @@ const Add: FC = (): ReactElement => {
     setState({ ...state, title: "" });
   };
 
-  const handleToggleAll = (): void => {
+  const handleEditAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
     dispatch(actions.editTodos(state.isAllCompleted));
   };
@@ -62,11 +65,11 @@ const Add: FC = (): ReactElement => {
     <ListItem>
       <ListItemIcon>
         <IconButton
-          aria-label="Toggle Completed"
+          aria-label="Edit Completed"
           color={state.isAllCompleted ? "primary" : "inherit"}
           disabled={todos.countAll === 0}
           edge="end"
-          onClick={handleToggleAll}
+          onClick={handleEditAll}
         >
           <KeyboardArrowDownIcon />
         </IconButton>

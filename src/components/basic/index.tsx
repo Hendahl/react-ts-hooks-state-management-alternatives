@@ -12,7 +12,7 @@ import Container from "@material-ui/core/Container";
 
 interface TodosProps {
   handleDelete: Delete;
-  handleToggleCompleted: Edit;
+  handleEdit: Edit;
   todo: Todo;
   todos: Todos;
 }
@@ -24,84 +24,86 @@ const Todos: FC<TodosProps> = () => {
       const payloadState: Todo[] = [...todos.payload];
       setTodos({
         ...todos,
-        countCompleted: payloadState.filter(_todo => _todo.completed).length,
+        countCompleted: payloadState.filter((_todo) => _todo.completed).length,
         isUpdating: false,
         visible:
           todos.visibilityFilter === filter.ALL_TODOS
             ? payloadState
-            : payloadState.filter(_todo =>
+            : payloadState.filter((_todo) =>
                 todos.visibilityFilter === filter.COMPLETED_TODOS
                   ? _todo.completed
                   : !_todo.completed
-              )
+              ),
       });
       utils.setStoredTodos(todos);
     }
   }, [todos]);
 
-  const handleAdd: Add = title => {
+  const handleAdd: Add = (title) => {
     setTodos({
       ...todos,
       countAll: todos.countAll + 1,
       payload: [
         { id: utils.uuid(), completed: false, title: title },
-        ...todos.payload
+        ...todos.payload,
       ],
       isUpdating: true,
-      visibilityFilter: filter.ALL_TODOS
+      visibilityFilter: filter.ALL_TODOS,
     });
   };
 
-  const handleDelete: Delete = todo => {
+  const handleDelete: Delete = (todo) => {
     setTodos({
       ...todos,
       countAll: todos.countAll - 1,
-      payload: todos.payload.filter(_todo => _todo.id !== todo.id),
-      isUpdating: true
+      payload: todos.payload.filter((_todo) => _todo.id !== todo.id),
+      isUpdating: true,
     });
   };
 
   const handleDeleteAll: DeleteAll = () => {
     const defaultValues = utils.initialTodos;
     utils.setStoredTodos({
-      ...defaultValues
+      ...defaultValues,
     });
     setTodos({
-      ...defaultValues
+      ...defaultValues,
     });
   };
 
-  const handleToggleCompleted: Edit = todo => {
+  const handleEdit: Edit = (todo) => {
     const payloadState: Todo[] = [...todos.payload];
     setTodos({
       ...todos,
-      payload: payloadState.map(_todo =>
-        _todo.id === todo.id ? { ...todo, completed: !todo.completed } : _todo
+      payload: payloadState.map((_todo) =>
+        _todo.id === todo.id
+          ? { ...todo, completed: todo.completed, title: todo.title }
+          : _todo
       ),
-      isUpdating: true
+      isUpdating: true,
     });
   };
 
-  const handleToggleAll: ToggleAll = isAllCompleted => {
+  const handleEditAll: EditAll = (isAllCompleted) => {
     const payloadState: Todo[] = [
-      ...todos.payload.map(todo =>
+      ...todos.payload.map((todo) =>
         todo.completed === !isAllCompleted
           ? { ...todo, completed: isAllCompleted }
           : todo
-      )
+      ),
     ];
     setTodos({
       ...todos,
       payload: payloadState,
-      isUpdating: true
+      isUpdating: true,
     });
   };
 
-  const handleFilter: Filter = visibilityFilter => {
+  const handleFilter: Filter = (visibilityFilter) => {
     setTodos({
       ...todos,
       visibilityFilter: visibilityFilter,
-      isUpdating: true
+      isUpdating: true,
     });
   };
 
@@ -117,12 +119,12 @@ const Todos: FC<TodosProps> = () => {
         <Add
           todos={todos}
           handleAdd={handleAdd}
-          handleToggleAll={handleToggleAll}
+          handleEditAll={handleEditAll}
         />
-        {todos.visible.map(_todo => (
+        {todos.visible.map((_todo) => (
           <Todo
             handleDelete={handleDelete}
-            handleToggleCompleted={handleToggleCompleted}
+            handleEdit={handleEdit}
             key={_todo.id}
             todo={_todo}
           />
