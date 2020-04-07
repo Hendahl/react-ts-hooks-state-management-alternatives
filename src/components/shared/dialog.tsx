@@ -16,13 +16,13 @@ interface TodoDialogProps {
 const TodoDialog: FC<TodoDialogProps> = ({
   handleEdit,
   setIsDialogOpen,
-  todo
+  todo,
 }) => {
-  const onEdit = () => {
+  const handleEditDialog = () => {
     handleEdit({
       ...todo,
       completed: todo.completed,
-      title: "TEST"
+      title: "TEST",
     });
   };
   return (
@@ -46,7 +46,7 @@ const TodoDialog: FC<TodoDialogProps> = ({
         <Button color="primary" onClick={() => setIsDialogOpen(false)}>
           Cancel
         </Button>
-        <Button color="primary" onClick={onEdit}>
+        <Button color="primary" onClick={handleEditDialog}>
           Save
         </Button>
       </DialogActions>

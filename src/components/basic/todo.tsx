@@ -1,19 +1,17 @@
+import { useStyles } from "../../theme";
+import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import Switch from "@material-ui/core/Switch";
-import { useStyles } from "../../theme";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import React, {
   ChangeEvent,
   FC,
@@ -21,6 +19,8 @@ import React, {
   ReactElement,
   KeyboardEvent,
 } from "react";
+import Switch from "@material-ui/core/Switch";
+import TextField from "@material-ui/core/TextField";
 
 interface TodoProps {
   handleDelete: Delete;
@@ -39,33 +39,33 @@ const Todo: FC<TodoProps> = ({
     title: todo.title,
   });
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setEditState({ ...editState, title: e.target.value });
-  };
-
-  const onEdit = (isEditing: boolean): void => {
-    setEditState({
-      ...editState,
-      isEditing: isEditing,
-    });
-  };
-
-  const onToggle = () => {
+  const handleEditCompleted = () => {
     handleEdit({
       ...todo,
       completed: !todo.completed,
     });
   };
 
-  const onSaveEdit = (): void => {
+  const handleEditDialog = (isEditing: boolean): void => {
+    setEditState({
+      ...todo,
+      isEditing: isEditing,
+    });
+  };
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setEditState({ ...editState, title: e.target.value });
+  };
+
+  const handleEditTitle = (): void => {
     handleEdit({
       ...todo,
       title: editState.title,
     });
-    onEdit(false);
+    handleEditDialog(false);
   };
 
-  const onEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+  const handleEditTitleOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (
       e.key === "Enter" &&
       editState.title !== "" &&
@@ -75,7 +75,7 @@ const Todo: FC<TodoProps> = ({
         ...todo,
         title: editState.title,
       });
-      onEdit(false);
+      handleEditDialog(false);
     }
   };
 
@@ -93,29 +93,34 @@ const Todo: FC<TodoProps> = ({
             label="Title"
             fullWidth
             value={editState.title}
-            onChange={onChange}
-            onKeyPress={onEnter}
+            onChange={handleTitleChange}
+            onKeyPress={handleEditTitleOnEnter}
           />
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={() => onEdit(false)}>
+          <Button color="primary" onClick={() => handleEditDialog(false)}>
             Cancel
           </Button>
           <Button
             color="primary"
             disabled={editState.title === "" || editState.title === todo.title}
-            onClick={onSaveEdit}
+            onClick={handleEditTitle}
           >
             Save
           </Button>
         </DialogActions>
       </Dialog>
-      <ListItem role={undefined} button divider={true} onClick={onToggle}>
+      <ListItem
+        role={undefined}
+        button
+        divider={true}
+        onClick={handleEditCompleted}
+      >
         <ListItemIcon>
           <Switch
             checked={todo.completed}
             color="primary"
-            onChange={onToggle}
+            onChange={handleEditCompleted}
             value="completed"
             size="small"
           />
@@ -130,7 +135,11 @@ const Todo: FC<TodoProps> = ({
           secondary={todo.id}
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="edit" onClick={() => onEdit(true)}>
+          <IconButton
+            edge="end"
+            aria-label="edit"
+            onClick={() => handleEditDialog(true)}
+          >
             <EditIcon />
           </IconButton>
           <IconButton
