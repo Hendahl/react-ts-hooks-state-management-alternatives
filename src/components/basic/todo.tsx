@@ -130,8 +130,8 @@ const Todo: FC<TodoProps> = ({
           secondary={todo.id}
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="edit">
-            <EditIcon onClick={() => onEdit(true)} />
+          <IconButton edge="end" aria-label="edit" onClick={() => onEdit(true)}>
+            <EditIcon />
           </IconButton>
           <IconButton
             edge="end"
