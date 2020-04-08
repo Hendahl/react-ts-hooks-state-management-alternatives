@@ -11,23 +11,23 @@ import React, {
   KeyboardEvent,
   ReactElement,
   useState,
-  useEffect
+  useEffect,
 } from "react";
 import TextField from "@material-ui/core/TextField";
 import { useStore } from "../../mobx/store";
 
-const Add: FC = (): ReactElement => {
+const AddForm: FC = (): ReactElement => {
   const { todos } = useStore();
   const [state, setState] = useState<AddState>({
     title: "",
-    isAllCompleted: true
+    isAllCompleted: true,
   });
 
   useEffect(() => {
     if (todos.payload[0]) {
-      setState(state => ({
+      setState((state) => ({
         ...state,
-        isAllCompleted: !todos.payload[0].completed
+        isAllCompleted: !todos.payload[0].completed,
       }));
     }
   }, [todos.payload]);
@@ -36,13 +36,13 @@ const Add: FC = (): ReactElement => {
     setState({ ...state, title: e.target.value });
   };
 
-  const handleAdd = (e: FormEvent<HTMLButtonElement>): void => {
+  const handleAddTodo = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     todos.addTodo(state.title);
     setState({ ...state, title: "" });
   };
 
-  const handleEditAll = (): void => {
+  const handleChangeTodos = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
     todos.editTodos(state.isAllCompleted);
   };
@@ -62,7 +62,7 @@ const Add: FC = (): ReactElement => {
           color={state.isAllCompleted ? "primary" : "inherit"}
           disabled={todos.countAll === 0}
           edge="end"
-          onClick={handleEditAll}
+          onClick={handleChangeTodos}
         >
           <KeyboardArrowDownIcon />
         </IconButton>
@@ -84,7 +84,7 @@ const Add: FC = (): ReactElement => {
           color="primary"
           disabled={state.title === ""}
           edge="end"
-          onClick={handleAdd}
+          onClick={handleAddTodo}
         >
           <AddIcon />
         </IconButton>
@@ -93,4 +93,4 @@ const Add: FC = (): ReactElement => {
   );
 };
 
-export default Add;
+export default AddForm;

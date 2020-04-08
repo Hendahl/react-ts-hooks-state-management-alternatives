@@ -1,7 +1,7 @@
 import * as actions from "../../constants/actions";
-import Add from "./add";
+import AddForm from "./add";
 import Box from "@material-ui/core/Box";
-import Filter from "./filter";
+import FilterTodos from "./filter";
 import List from "@material-ui/core/List";
 import Progress from "../shared/progress";
 import React, { FC, useContext, useEffect } from "react";
@@ -28,11 +28,11 @@ const Todos: FC = () => {
       </Typography>
       <Progress isUpdating={todos.isUpdating} />
       <List>
-        <Add />
+        <AddForm />
         {todos.visible.map((_todo: Todo) => (
           <Todo key={_todo.id} todo={_todo} />
         ))}
-        <Filter />
+        <FilterTodos />
       </List>
     </Container>
   );

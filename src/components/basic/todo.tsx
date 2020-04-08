@@ -10,14 +10,14 @@ import React, { FC, ReactElement } from "react";
 import Switch from "@material-ui/core/Switch";
 
 interface TodoProps {
-  handleDelete: Delete;
-  handleEditCompleted: Edit;
-  handleEditing: Editing;
+  handleDeleteTodo: DeleteTodo;
+  handleEditCompleted: ChangeTodo;
+  handleEditing: EditingTodo;
   todo: Todo;
 }
 
 const Todo: FC<TodoProps> = ({
-  handleDelete,
+  handleDeleteTodo,
   handleEditCompleted,
   handleEditing,
   todo,
@@ -61,7 +61,7 @@ const Todo: FC<TodoProps> = ({
           <IconButton
             edge="end"
             aria-label="delete"
-            onClick={() => handleDelete(todo)}
+            onClick={() => handleDeleteTodo(todo)}
           >
             <DeleteIcon />
           </IconButton>

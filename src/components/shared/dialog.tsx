@@ -10,16 +10,16 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 interface TodoDialogProps {
   setIsDialogOpen: (isDialogOpen: boolean) => void;
   todo: Todo;
-  handleEdit: (todo: Todo) => void;
+  handleChangeTodo: (todo: Todo) => void;
 }
 
 const TodoDialog: FC<TodoDialogProps> = ({
-  handleEdit,
+  handleChangeTodo,
   setIsDialogOpen,
   todo,
 }) => {
   const handleEditDialog = () => {
-    handleEdit({
+    handleChangeTodo({
       ...todo,
       completed: todo.completed,
       title: "TEST",
@@ -47,7 +47,7 @@ const TodoDialog: FC<TodoDialogProps> = ({
           Cancel
         </Button>
         <Button color="primary" onClick={handleEditDialog}>
-          Save
+          SaveTodo
         </Button>
       </DialogActions>
     </Dialog>

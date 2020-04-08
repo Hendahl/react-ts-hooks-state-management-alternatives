@@ -9,16 +9,16 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
 import { useStyles } from "../../theme";
 
-const Filter: FC = observer(() => {
+const FilterTodos: FC = observer(() => {
   const classes = useStyles();
   const { todos } = useStore();
 
-  const handleFilter = (e: FormEvent<HTMLButtonElement>): void => {
+  const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     todos.setFilter(e.currentTarget.id);
   };
 
-  const handleDeleteAll = () => {
+  const handleDeleteTodos = () => {
     todos.deleteTodos();
   };
 
@@ -38,7 +38,7 @@ const Filter: FC = observer(() => {
                 todos.countAll === 0
               }
               id={filter.ALL_TODOS}
-              onClick={handleFilter}
+              onClick={handleFilterTodos}
             >
               ALL ({todos.countAll})
             </Button>
@@ -48,7 +48,7 @@ const Filter: FC = observer(() => {
                 todos.countAll === 0
               }
               id={filter.ACTIVE_TODOS}
-              onClick={handleFilter}
+              onClick={handleFilterTodos}
             >
               ACTIVE ({todos.countAll - todos.countCompleted})
             </Button>
@@ -58,7 +58,7 @@ const Filter: FC = observer(() => {
                 todos.countAll === 0
               }
               id={filter.COMPLETED_TODOS}
-              onClick={handleFilter}
+              onClick={handleFilterTodos}
             >
               COMPLETEDED ({todos.countCompleted})
             </Button>
@@ -67,7 +67,7 @@ const Filter: FC = observer(() => {
             color="primary"
             edge="end"
             aria-label="Delete all"
-            onClick={handleDeleteAll}
+            onClick={handleDeleteTodos}
           >
             <DeleteIcon />
           </IconButton>
@@ -77,4 +77,4 @@ const Filter: FC = observer(() => {
   );
 });
 
-export default Filter;
+export default FilterTodos;

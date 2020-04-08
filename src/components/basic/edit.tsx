@@ -14,35 +14,35 @@ import React, {
 import TextField from "@material-ui/core/TextField";
 
 interface EditFormProps {
-  handleSave: () => void;
-  handleEditing: Editing;
-  handleEditTitle: Edit;
+  handleSaveTodo: SaveTodo;
+  handleEditing: EditingTodo;
+  handleChangeTodo: ChangeTodo;
   todo: Todo;
 }
 
 const EditForm: FC<EditFormProps> = ({
-  handleSave,
-  handleEditTitle,
+  handleSaveTodo,
+  handleChangeTodo,
   handleEditing,
   todo,
 }): ReactElement => {
   const [defaultTitle] = useState<string>(todo.title);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    handleEditTitle({
+    handleChangeTodo({
       ...todo,
       title: e.target.value,
     });
   };
 
-  const handleEditTitleOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+  const handleEditTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && todo.title !== "" && todo.title !== defaultTitle) {
-      handleSave();
+      handleSaveTodo();
     }
   };
 
   const handleUndo = () => {
-    handleEditTitle({
+    handleChangeTodo({
       ...todo,
       title: defaultTitle,
     });
@@ -66,7 +66,7 @@ const EditForm: FC<EditFormProps> = ({
           fullWidth
           value={todo.title}
           onChange={handleTitleChange}
-          onKeyPress={handleEditTitleOnEnter}
+          onKeyPress={handleEditTodoOnEnter}
         />
         <TextField
           disabled={true}
@@ -91,7 +91,7 @@ const EditForm: FC<EditFormProps> = ({
         <Button
           color="primary"
           disabled={todo.title === "" || todo.title === defaultTitle}
-          onClick={() => handleSave()}
+          onClick={() => handleSaveTodo()}
         >
           Save
         </Button>

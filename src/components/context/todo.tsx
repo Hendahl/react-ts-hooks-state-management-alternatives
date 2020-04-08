@@ -18,10 +18,10 @@ const Todo: FC<TodoProps> = ({ todo }) => {
   const { dispatch } = useContext(Context);
   const classes = useStyles();
 
-  const handleDelete = () => {
+  const handleDeleteTodo = () => {
     dispatch({ type: actions.DELETE_TODO, id: todo.id });
   };
-  const handleEdit = () => {
+  const handleChangeTodo = () => {
     dispatch({ type: actions.TOGGLE_TODO, id: todo.id });
   };
 
@@ -31,7 +31,7 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         <Switch
           checked={todo.completed}
           color="primary"
-          onChange={() => handleEdit()}
+          onChange={() => handleChangeTodo()}
           value="completed"
           size="small"
         />
@@ -44,7 +44,11 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         secondary={todo.id}
       />
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="Delete Todo" onClick={handleDelete}>
+        <IconButton
+          edge="end"
+          aria-label="Delete Todo"
+          onClick={handleDeleteTodo}
+        >
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>

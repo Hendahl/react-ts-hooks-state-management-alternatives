@@ -13,18 +13,18 @@ interface FilterProps {
   todos: Todos;
 }
 
-const Filter: FC = (): ReactElement => {
+const FilterTodos: FC = (): ReactElement => {
   const classes = useStyles();
   const typedUseSelector: TypedUseSelectorHook<FilterProps> = useSelector;
-  const todos = typedUseSelector(state => state.todos);
+  const todos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
 
-  const handleFilter = (e: FormEvent<HTMLButtonElement>): void => {
+  const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     dispatch(actions.setFilter(e.currentTarget.id));
   };
 
-  const handleDeleteAll = () => {
+  const handleDeleteTodos = () => {
     dispatch(actions.deleteTodos());
   };
 
@@ -44,7 +44,7 @@ const Filter: FC = (): ReactElement => {
                 todos.countAll === 0
               }
               id={filter.ALL_TODOS}
-              onClick={handleFilter}
+              onClick={handleFilterTodos}
             >
               ALL ({todos.countAll})
             </Button>
@@ -54,7 +54,7 @@ const Filter: FC = (): ReactElement => {
                 todos.countAll === 0
               }
               id={filter.ACTIVE_TODOS}
-              onClick={handleFilter}
+              onClick={handleFilterTodos}
             >
               ACTIVE ({todos.countAll - todos.countCompleted})
             </Button>
@@ -64,7 +64,7 @@ const Filter: FC = (): ReactElement => {
                 todos.countAll === 0
               }
               id={filter.COMPLETED_TODOS}
-              onClick={handleFilter}
+              onClick={handleFilterTodos}
             >
               COMPLETEDED ({todos.countCompleted})
             </Button>
@@ -73,7 +73,7 @@ const Filter: FC = (): ReactElement => {
             color="primary"
             edge="end"
             aria-label="Delete all"
-            onClick={handleDeleteAll}
+            onClick={handleDeleteTodos}
           >
             <DeleteIcon />
           </IconButton>
@@ -83,4 +83,4 @@ const Filter: FC = (): ReactElement => {
   );
 };
 
-export default Filter;
+export default FilterTodos;

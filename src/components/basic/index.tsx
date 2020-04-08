@@ -1,7 +1,7 @@
 import * as utils from "../../utils";
-import Add from "./add";
+import AddForm from "./add";
 import Box from "@material-ui/core/Box";
-import Filter from "./filter";
+import FilterTodos from "./filter";
 import List from "@material-ui/core/List";
 import Progress from "../shared/progress";
 import React, { FC, useEffect, useState } from "react";
@@ -12,8 +12,8 @@ import Container from "@material-ui/core/Container";
 import EditForm from "./edit";
 
 interface TodosProps {
-  handleDelete: Delete;
-  handleEdit: Edit;
+  handleDeleteTodo: DeleteTodo;
+  handleChangeTodo: ChangeTodo;
   todo: Todo;
   todos: Todos;
 }
@@ -23,7 +23,6 @@ const Todos: FC<TodosProps> = () => {
   useEffect(() => {
     if (todos.isUpdating) {
       const payloadState: Todo[] = [...todos.payload];
-
       setTodos({
         ...todos,
         countCompleted: payloadState.filter((_todo) => _todo.completed).length,
@@ -41,7 +40,7 @@ const Todos: FC<TodosProps> = () => {
     }
   }, [todos]);
 
-  const handleAdd: Add = (title) => {
+  const handleAddTodo: AddTodo = (title) => {
     setTodos({
       ...todos,
       countAll: todos.countAll + 1,
@@ -54,7 +53,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleDelete: Delete = (todo) => {
+  const handleDeleteTodo: DeleteTodo = (todo) => {
     setTodos({
       ...todos,
       countAll: todos.countAll - 1,
@@ -63,7 +62,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleDeleteAll: DeleteAll = () => {
+  const handleDeleteTodos: DeleteTodos = () => {
     const defaultValues = utils.initialTodos;
     utils.setStoredTodos({
       ...defaultValues,
@@ -73,12 +72,10 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleEditCompleted: Edit = (editTodo) => {
+  const handleEditCompleted: ChangeTodo = (todo) => {
     const payloadState: Todo[] = [
       ...todos.payload.map((_todo) =>
-        _todo.id === editTodo.id
-          ? { ..._todo, completed: !_todo.completed }
-          : _todo
+        _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
       ),
     ];
     setTodos({
@@ -88,11 +85,10 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleEditing: Editing = (todo: Todo) => {
+  const handleEditing: EditingTodo = (todo) => {
     /* Since we only handle edit of one Todo at the time we toogle the existence, if you need a multi editing -> you should
     rewrite this... */
     const allreadyIncluded: boolean = todos.editing.includes(todo);
-    console.log(allreadyIncluded);
     setTodos({
       ...todos,
       editing: allreadyIncluded ? [] : [todo],
@@ -100,11 +96,11 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleEditTitle: Edit = (editTodo) => {
+  const handleChangeTodo: ChangeTodo = (todo) => {
     const editingState: Todo[] = [
       ...todos.payload.map((_todo) =>
-        _todo.id === editTodo.id
-          ? { ..._todo, completed: editTodo.completed, title: editTodo.title }
+        _todo.id === todo.id
+          ? { ..._todo, completed: todo.completed, title: todo.title }
           : _todo
       ),
     ];
@@ -115,7 +111,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleSave = () => {
+  const handleSaveTodo: SaveTodo = () => {
     const editingTodo = todos.editing[0];
     const payloadState: Todo[] = [
       ...todos.payload.map((_todo) =>
@@ -132,7 +128,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleEditAll: EditAll = (isAllCompleted) => {
+  const handleChangeTodos: ChangeTodos = (isAllCompleted) => {
     const payloadState: Todo[] = [
       ...todos.payload.map((_todo) =>
         _todo.completed === !isAllCompleted
@@ -147,7 +143,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleFilter: Filter = (visibilityFilter) => {
+  const handleFilterTodos: FilterTodos = (visibilityFilter) => {
     setTodos({
       ...todos,
       visibilityFilter: visibilityFilter,
@@ -165,31 +161,30 @@ const Todos: FC<TodosProps> = () => {
       <Progress isUpdating={todos.isUpdating} />
       {todos.editing.length !== 0 && (
         <EditForm
-          handleSave={handleSave}
-          handleEditTitle={handleEditTitle}
+          handleSaveTodo={handleSaveTodo}
+          handleChangeTodo={handleChangeTodo}
           handleEditing={handleEditing}
           todo={todos.editing[0]}
         />
       )}
-
       <List>
-        <Add
+        <AddForm
           todos={todos}
-          handleAdd={handleAdd}
-          handleEditAll={handleEditAll}
+          handleAddTodo={handleAddTodo}
+          handleChangeTodos={handleChangeTodos}
         />
         {todos.visible.map((_todo) => (
           <Todo
             handleEditCompleted={handleEditCompleted}
             handleEditing={handleEditing}
-            handleDelete={handleDelete}
+            handleDeleteTodo={handleDeleteTodo}
             key={_todo.id}
             todo={_todo}
           />
         ))}
-        <Filter
-          handleDeleteAll={handleDeleteAll}
-          handleFilter={handleFilter}
+        <FilterTodos
+          handleDeleteTodos={handleDeleteTodos}
+          handleFilterTodos={handleFilterTodos}
           todos={todos}
         />
       </List>

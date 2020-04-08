@@ -8,20 +8,20 @@ import React, { FC, FormEvent, ReactElement } from "react";
 import { useStyles } from "../../theme";
 
 interface FilterProps {
-  handleDeleteAll: DeleteAll;
-  handleFilter: Filter;
+  handleDeleteTodos: DeleteTodos;
+  handleFilterTodos: FilterTodos;
   todos: Todos;
 }
 
-const Filter: FC<FilterProps> = ({
-  handleDeleteAll,
-  handleFilter,
-  todos
+const FilterTodos: FC<FilterProps> = ({
+  handleDeleteTodos,
+  handleFilterTodos,
+  todos,
 }: FilterProps): ReactElement => {
   const classes = useStyles();
   const onFilter = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    handleFilter(e.currentTarget.id);
+    handleFilterTodos(e.currentTarget.id);
   };
 
   return (
@@ -69,7 +69,7 @@ const Filter: FC<FilterProps> = ({
             color="primary"
             edge="end"
             aria-label="Delete all"
-            onClick={handleDeleteAll}
+            onClick={handleDeleteTodos}
           >
             <DeleteIcon />
           </IconButton>
@@ -79,4 +79,4 @@ const Filter: FC<FilterProps> = ({
   );
 };
 
-export default Filter;
+export default FilterTodos;

@@ -11,31 +11,31 @@ import React, {
   KeyboardEvent,
   ReactElement,
   useState,
-  useEffect
+  useEffect,
 } from "react";
 import TextField from "@material-ui/core/TextField";
 
 interface AddProps {
   todos: Todos;
-  handleAdd: Add;
-  handleEditAll: EditAll;
+  handleAddTodo: AddTodo;
+  handleChangeTodos: ChangeTodos;
 }
 
-const Add: FC<AddProps> = ({
+const AddForm: FC<AddProps> = ({
   todos,
-  handleAdd,
-  handleEditAll
+  handleAddTodo,
+  handleChangeTodos,
 }: AddProps): ReactElement => {
   const [state, setState] = useState<AddState>({
     title: "",
-    isAllCompleted: false
+    isAllCompleted: false,
   });
 
   useEffect(() => {
     if (todos.payload[0]) {
-      setState(state => ({
+      setState((state) => ({
         ...state,
-        isAllCompleted: !todos.payload[0].completed
+        isAllCompleted: !todos.payload[0].completed,
       }));
     }
   }, [todos]);
@@ -46,18 +46,18 @@ const Add: FC<AddProps> = ({
 
   const onEditAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
-    handleEditAll(state.isAllCompleted);
+    handleChangeTodos(state.isAllCompleted);
   };
 
   const onAdd = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    handleAdd(state.title);
+    handleAddTodo(state.title);
     setState({ ...state, title: "" });
   };
 
   const onEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && state.title !== "") {
-      handleAdd(state.title);
+      handleAddTodo(state.title);
       setState({ ...state, title: "" });
     }
   };
@@ -100,4 +100,4 @@ const Add: FC<AddProps> = ({
   );
 };
 
-export default Add;
+export default AddForm;

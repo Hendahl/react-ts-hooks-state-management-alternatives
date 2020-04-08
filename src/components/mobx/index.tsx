@@ -1,6 +1,6 @@
-import Add from "./add";
+import AddForm from "./add";
 import Box from "@material-ui/core/Box";
-import Filter from "./filter";
+import FilterTodos from "./filter";
 import List from "@material-ui/core/List";
 import Progress from "../shared/progress";
 import React, { FC, useMemo } from "react";
@@ -26,11 +26,11 @@ const Todos: FC = observer(() => {
       </Typography>
       <Progress isUpdating={todos.isUpdating} />
       <List>
-        <Add />
-        {todos.visibleTodos.map(_todo => (
+        <AddForm />
+        {todos.visibleTodos.map((_todo) => (
           <Todo key={_todo.id} todo={_todo} />
         ))}
-        <Filter />
+        <FilterTodos />
       </List>
     </Container>
   );
