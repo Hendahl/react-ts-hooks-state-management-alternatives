@@ -6,50 +6,37 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, { FC, useState, ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 import Switch from "@material-ui/core/Switch";
-import EditForm from "./edit";
 
 interface TodoProps {
   handleDelete: Delete;
-  handleEdit: (todo: Todo) => void;
+  handleEditCompleted: Edit;
+  handleEditing: Editing;
   todo: Todo;
 }
 
 const Todo: FC<TodoProps> = ({
   handleDelete,
-  handleEdit,
+  handleEditCompleted,
+  handleEditing,
   todo,
 }): ReactElement => {
   const classes = useStyles();
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleEditCompleted = () => {
-    handleEdit({
-      ...todo,
-      completed: !todo.completed,
-    });
-  };
 
   return (
     <>
-      <EditForm
-        handleEdit={handleEdit}
-        isEditing={isEditing}
-        setIsEditing={setIsEditing}
-        todo={todo}
-      />
       <ListItem
         role={undefined}
         button
         divider={true}
-        onClick={handleEditCompleted}
+        onClick={() => handleEditing(todo)}
       >
         <ListItemIcon>
           <Switch
             checked={todo.completed}
             color="primary"
-            onChange={handleEditCompleted}
+            onChange={() => handleEditCompleted(todo)}
             value="completed"
             size="small"
           />
@@ -67,7 +54,7 @@ const Todo: FC<TodoProps> = ({
           <IconButton
             edge="end"
             aria-label="edit"
-            onClick={() => setIsEditing(true)}
+            onClick={() => handleEditing(todo)}
           >
             <EditIcon />
           </IconButton>

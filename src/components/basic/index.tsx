@@ -9,6 +9,7 @@ import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
 import * as filter from "../../constants/filter";
 import Container from "@material-ui/core/Container";
+import EditForm from "./edit";
 
 interface TodosProps {
   handleDelete: Delete;
@@ -22,6 +23,7 @@ const Todos: FC<TodosProps> = () => {
   useEffect(() => {
     if (todos.isUpdating) {
       const payloadState: Todo[] = [...todos.payload];
+
       setTodos({
         ...todos,
         countCompleted: payloadState.filter((_todo) => _todo.completed).length,
@@ -71,25 +73,71 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleEdit: Edit = (todo) => {
-    const payloadState: Todo[] = [...todos.payload];
-    setTodos({
-      ...todos,
-      payload: payloadState.map((_todo) =>
-        _todo.id === todo.id
-          ? { ...todo, completed: todo.completed, title: todo.title }
+  const handleEditCompleted: Edit = (editTodo) => {
+    const payloadState: Todo[] = [
+      ...todos.payload.map((_todo) =>
+        _todo.id === editTodo.id
+          ? { ..._todo, completed: !_todo.completed }
           : _todo
       ),
+    ];
+    setTodos({
+      ...todos,
+      payload: payloadState,
+      isUpdating: true,
+    });
+  };
+
+  const handleEditing: Editing = (todo: Todo) => {
+    /* Since we only handle edit of one Todo at the time we toogle the existence, if you need a multi editing -> you should
+    rewrite this... */
+    const allreadyIncluded: boolean = todos.editing.includes(todo);
+    console.log(allreadyIncluded);
+    setTodos({
+      ...todos,
+      editing: allreadyIncluded ? [] : [todo],
+      isUpdating: true,
+    });
+  };
+
+  const handleEditTitle: Edit = (editTodo) => {
+    const editingState: Todo[] = [
+      ...todos.payload.map((_todo) =>
+        _todo.id === editTodo.id
+          ? { ..._todo, completed: editTodo.completed, title: editTodo.title }
+          : _todo
+      ),
+    ];
+    setTodos({
+      ...todos,
+      editing: editingState,
+      isUpdating: true,
+    });
+  };
+
+  const handleSave = () => {
+    const editingTodo = todos.editing[0];
+    const payloadState: Todo[] = [
+      ...todos.payload.map((_todo) =>
+        _todo.id === editingTodo.id
+          ? { ..._todo, title: editingTodo.title }
+          : _todo
+      ),
+    ];
+    setTodos({
+      ...todos,
+      payload: payloadState,
+      editing: [],
       isUpdating: true,
     });
   };
 
   const handleEditAll: EditAll = (isAllCompleted) => {
     const payloadState: Todo[] = [
-      ...todos.payload.map((todo) =>
-        todo.completed === !isAllCompleted
-          ? { ...todo, completed: isAllCompleted }
-          : todo
+      ...todos.payload.map((_todo) =>
+        _todo.completed === !isAllCompleted
+          ? { ..._todo, completed: isAllCompleted }
+          : _todo
       ),
     ];
     setTodos({
@@ -115,6 +163,15 @@ const Todos: FC<TodosProps> = () => {
         </Box>
       </Typography>
       <Progress isUpdating={todos.isUpdating} />
+      {todos.editing.length !== 0 && (
+        <EditForm
+          handleSave={handleSave}
+          handleEditTitle={handleEditTitle}
+          handleEditing={handleEditing}
+          todo={todos.editing[0]}
+        />
+      )}
+
       <List>
         <Add
           todos={todos}
@@ -123,8 +180,9 @@ const Todos: FC<TodosProps> = () => {
         />
         {todos.visible.map((_todo) => (
           <Todo
+            handleEditCompleted={handleEditCompleted}
+            handleEditing={handleEditing}
             handleDelete={handleDelete}
-            handleEdit={handleEdit}
             key={_todo.id}
             todo={_todo}
           />

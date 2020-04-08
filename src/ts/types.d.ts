@@ -18,6 +18,7 @@ type Todos = {
   payload: Todo[];
   visibilityFilter: string;
   visible: Todo[];
+  editing: Todo[];
 };
 
 type AddState = {
@@ -34,6 +35,7 @@ type Delete = (todo: Todo) => void;
 type DeleteAll = () => void;
 type Dispatch = (arg0: Action) => void;
 type Edit = (todo: Todo) => void;
+type Editing = (todo: Todo) => void;
 type EditAll = (completed: boolean) => void;
 type Filter = (visibiltityFilter: string) => void;
 type Get = () => void;

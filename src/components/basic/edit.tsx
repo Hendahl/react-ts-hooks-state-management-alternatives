@@ -7,52 +7,54 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import React, {
   ChangeEvent,
   FC,
-  useState,
   ReactElement,
   KeyboardEvent,
+  useState,
 } from "react";
 import TextField from "@material-ui/core/TextField";
 
 interface EditFormProps {
-  setIsEditing: (isEditing: boolean) => void;
-  handleEdit: (todo: Todo) => void;
+  handleSave: () => void;
+  handleEditing: Editing;
+  handleEditTitle: Edit;
   todo: Todo;
-  isEditing: boolean;
 }
 
 const EditForm: FC<EditFormProps> = ({
-  isEditing,
-  handleEdit,
-  setIsEditing,
+  handleSave,
+  handleEditTitle,
+  handleEditing,
   todo,
 }): ReactElement => {
-  const [title, setTitle] = useState<string>(todo.title);
+  const [defaultTitle] = useState<string>(todo.title);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setTitle(e.target.value);
-  };
-
-  const handleEditTitle = (): void => {
-    handleEdit({
+    handleEditTitle({
       ...todo,
-      title: title,
+      title: e.target.value,
     });
-    setIsEditing(false);
   };
 
   const handleEditTitleOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === "Enter" && title !== "" && title !== todo.title) {
-      handleEdit({
-        ...todo,
-        title: title,
-      });
-      setIsEditing(false);
+    if (e.key === "Enter" && todo.title !== "" && todo.title !== defaultTitle) {
+      handleSave();
     }
   };
 
+  const handleUndo = () => {
+    handleEditTitle({
+      ...todo,
+      title: defaultTitle,
+    });
+  };
+
   return (
-    <Dialog open={isEditing} aria-labelledby="todo-dialog-title">
-      <DialogTitle id="todo-dialog-title">Edit {todo.title}</DialogTitle>
+    <Dialog
+      open={true}
+      aria-labelledby="editTodo-dialog-title"
+      fullWidth={true}
+    >
+      <DialogTitle id="editTodo-dialog-title">Edit {defaultTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>Change title of the todo ...</DialogContentText>
         <TextField
@@ -62,19 +64,34 @@ const EditForm: FC<EditFormProps> = ({
           id="title"
           label="Title"
           fullWidth
-          value={title}
+          value={todo.title}
           onChange={handleTitleChange}
           onKeyPress={handleEditTitleOnEnter}
         />
+        <TextField
+          disabled={true}
+          margin="dense"
+          id="id"
+          label="Id"
+          fullWidth
+          value={todo.id}
+        />
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={() => setIsEditing(false)}>
+        <Button
+          color="primary"
+          disabled={todo.title === defaultTitle}
+          onClick={handleUndo}
+        >
+          Reset
+        </Button>
+        <Button color="primary" onClick={() => handleEditing(todo)}>
           Cancel
         </Button>
         <Button
           color="primary"
-          disabled={title === "" || title === todo.title}
-          onClick={handleEditTitle}
+          disabled={todo.title === "" || todo.title === defaultTitle}
+          onClick={() => handleSave()}
         >
           Save
         </Button>
