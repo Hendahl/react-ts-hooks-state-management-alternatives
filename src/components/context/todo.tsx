@@ -1,5 +1,6 @@
 import * as actions from "../../constants/actions";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -22,7 +23,17 @@ const Todo: FC<TodoProps> = ({ todo }) => {
     dispatch({ type: actions.DELETE_TODO, id: todo.id });
   };
   const handleChangeTodo = () => {
-    dispatch({ type: actions.TOGGLE_TODO, id: todo.id });
+    dispatch({ type: actions.CHANGE_TODO, id: todo.id });
+  };
+
+  const handleEditing: EditingTodo = (todo) => {
+    /*
+     const allreadyIncluded: boolean = todos.editing.includes(todo);
+    setTodos({
+      ...todos,
+      editing: allreadyIncluded ? [] : [todo],
+      isUpdating: true,
+    });*/
   };
 
   return (
@@ -44,6 +55,13 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         secondary={todo.id}
       />
       <ListItemSecondaryAction>
+        <IconButton
+          edge="end"
+          aria-label="edit"
+          onClick={() => dispatch({ type: actions.EDITING_TODO, todo: todo })}
+        >
+          <EditIcon />
+        </IconButton>
         <IconButton
           edge="end"
           aria-label="Delete Todo"

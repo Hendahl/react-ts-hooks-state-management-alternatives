@@ -15,7 +15,7 @@ export default function reducer(
     case actions.DELETE_TODOS: {
       return utils.deleteTodos();
     }
-    case actions.TOGGLE_TODO: {
+    case actions.CHANGE_TODO: {
       return utils.editTodo(todos, action.id);
     }
     case actions.TOGGLE_TODOS: {

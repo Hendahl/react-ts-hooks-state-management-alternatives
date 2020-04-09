@@ -49,7 +49,8 @@ type Action =
   | { type: "COMPLETED_TODOS" }
   | { type: "DELETE_TODO"; id: number }
   | { type: "DELETE_TODOS" }
-  | { type: "TOGGLE_TODO"; id: number }
+  | { type: "EDITING_TODO"; todo: Todo }
+  | { type: "CHANGE_TODO"; id: number }
   | { type: "TOGGLE_TODOS"; isAllCompleted: boolean }
   | { type: "GET_TODOS" }
   | { type: "SET_FILTER"; visibiltityFilter: string }

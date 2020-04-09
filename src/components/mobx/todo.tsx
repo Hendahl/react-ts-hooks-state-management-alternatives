@@ -9,6 +9,7 @@ import Switch from "@material-ui/core/Switch";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
 import { useStyles } from "../../theme";
+import EditIcon from "@material-ui/icons/Edit";
 
 interface TodoProps {
   todo: Todo;
@@ -37,6 +38,9 @@ const Todo: FC<TodoProps> = observer(({ todo }) => {
         secondary={todo.id}
       />
       <ListItemSecondaryAction>
+        <IconButton edge="end" aria-label="edit">
+          <EditIcon />
+        </IconButton>
         <IconButton
           edge="end"
           aria-label="Delete Todo"

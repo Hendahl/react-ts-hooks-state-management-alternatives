@@ -20,7 +20,7 @@ export const deleteTodos: DeleteTodos = () => {
 
 export const editTodo: ChangeTodo = (todo) => {
   return (dispatch: Dispatch) => {
-    dispatch({ type: actions.TOGGLE_TODO, id: todo.id });
+    dispatch({ type: actions.CHANGE_TODO, id: todo.id });
   };
 };
 

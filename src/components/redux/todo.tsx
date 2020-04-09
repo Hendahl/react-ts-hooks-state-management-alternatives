@@ -9,6 +9,7 @@ import React, { FC } from "react";
 import Switch from "@material-ui/core/Switch";
 import { useDispatch } from "react-redux";
 import { useStyles } from "../../theme";
+import EditIcon from "@material-ui/icons/Edit";
 
 interface TodoProps {
   todo: Todo;
@@ -36,6 +37,9 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         secondary={todo.id}
       />
       <ListItemSecondaryAction>
+        <IconButton edge="end" aria-label="edit">
+          <EditIcon />
+        </IconButton>
         <IconButton
           edge="end"
           aria-label="Delete Todo"

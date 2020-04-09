@@ -9,25 +9,17 @@ import React, {
   FC,
   ReactElement,
   KeyboardEvent,
+  useContext,
   useState,
 } from "react";
 import TextField from "@material-ui/core/TextField";
+import { Context } from "../../context/store";
 
-interface EditFormProps {
-  handleSaveTodo: SaveTodo;
-  handleEditing: EditingTodo;
-  handleChangeTodo: ChangeTodo;
-  todo: Todo;
-}
+const EditForm: FC = (): ReactElement => {
+  const { dispatch } = useContext(Context);
+  /*const [existingTitle] = useState<string>(todo.title);
 
-const EditForm: FC<EditFormProps> = ({
-  handleSaveTodo,
-  handleChangeTodo,
-  handleEditing,
-  todo,
-}): ReactElement => {
-  const [existingTitle] = useState<string>(todo.title);
-
+ 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     handleChangeTodo({
       ...todo,
@@ -50,7 +42,7 @@ const EditForm: FC<EditFormProps> = ({
       ...todo,
       title: existingTitle,
     });
-  };
+  };*/
 
   return (
     <Dialog
@@ -58,7 +50,7 @@ const EditForm: FC<EditFormProps> = ({
       aria-labelledby="editTodo-dialog-title"
       fullWidth={true}
     >
-      <DialogTitle id="editTodo-dialog-title">Edit {existingTitle}</DialogTitle>
+      <DialogTitle id="editTodo-dialog-title">Edit</DialogTitle>
       <DialogContent>
         <DialogContentText>Change title of the todo ...</DialogContentText>
         <TextField
@@ -68,9 +60,6 @@ const EditForm: FC<EditFormProps> = ({
           id="title"
           label="Title"
           fullWidth
-          value={todo.title}
-          onChange={handleTitleChange}
-          onKeyPress={handleEditTodoOnEnter}
         />
         <TextField
           disabled={true}
@@ -78,27 +67,12 @@ const EditForm: FC<EditFormProps> = ({
           id="id"
           label="Id"
           fullWidth
-          value={todo.id}
         />
       </DialogContent>
       <DialogActions>
-        <Button
-          color="primary"
-          disabled={todo.title === existingTitle}
-          onClick={handleUndo}
-        >
-          Reset
-        </Button>
-        <Button color="primary" onClick={() => handleEditing(todo)}>
-          Cancel
-        </Button>
-        <Button
-          color="primary"
-          disabled={todo.title === "" || todo.title === existingTitle}
-          onClick={() => handleSaveTodo()}
-        >
-          Save
-        </Button>
+        <Button color="primary">Reset</Button>
+        <Button color="primary">Cancel</Button>
+        <Button color="primary">Save</Button>
       </DialogActions>
     </Dialog>
   );

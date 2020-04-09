@@ -83,6 +83,15 @@ export const addTodo = (todos: Todos, title: string) => {
   };
 };
 
+export const editingTodo = (todos: Todos, todo: Todo) => {
+  const allreadyIncluded: boolean = todos.editing.includes(todo);
+  return {
+    ...todos,
+    editing: allreadyIncluded ? [] : [todo],
+    isUpdating: true,
+  };
+};
+
 export const editTodo = (todos: Todos, id: number) => {
   const payloadState = todos.payload.map((_todo) =>
     _todo.id === id ? { ..._todo, completed: !_todo.completed } : _todo

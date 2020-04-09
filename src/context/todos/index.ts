@@ -6,15 +6,19 @@ const reducer = (todos: Todos, action: Action) => {
     case actions.ADD_TODO: {
       return utils.addTodo(todos, action.title);
     }
+    case actions.CHANGE_TODO: {
+      return utils.editTodo(todos, action.id);
+    }
     case actions.DELETE_TODO: {
       return utils.deleteTodo(todos, action.id);
     }
     case actions.DELETE_TODOS: {
       return utils.deleteTodos();
     }
-    case actions.TOGGLE_TODO: {
-      return utils.editTodo(todos, action.id);
+    case actions.EDITING_TODO: {
+      return utils.editingTodo(todos, action.todo);
     }
+
     case actions.TOGGLE_TODOS: {
       return utils.editTodos(todos, action.isAllCompleted);
     }

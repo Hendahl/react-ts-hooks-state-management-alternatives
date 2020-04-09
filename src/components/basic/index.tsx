@@ -128,6 +128,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
+  /* Since we only change "completed" we have one Boolean as parameter*/
   const handleChangeTodos: ChangeTodos = (isAllCompleted) => {
     const payloadState: Todo[] = [
       ...todos.payload.map((_todo) =>
