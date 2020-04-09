@@ -62,7 +62,7 @@ export const Todos = types
       self.visibilityFilter = filter.ALL_TODOS;
       self.isUpdating = true;
     },
-    editTodos(isAllCompleted: boolean) {
+    changeTodosCompleted(isAllCompleted: boolean) {
       const updatedState = self.payload.map((_todo) =>
         _todo.completed === !isAllCompleted
           ? { ..._todo, completed: isAllCompleted }

@@ -7,5 +7,5 @@ export const EDITING_TODO = "EDITING_TODO";
 export const GET_TODOS = "GET_TODOS";
 export const SAVE_TODO = "SAVE_TODO";
 export const SET_FILTER = "SET_FILTER";
-export const TOGGLE_TODOS = "TOGGLE_TODOS";
+export const CHANGE_TODOS_COMPLETED = "CHANGE_TODOS_COMPLETED";
 export const UPDATE_TODOS = "UPDATE_TODOS";

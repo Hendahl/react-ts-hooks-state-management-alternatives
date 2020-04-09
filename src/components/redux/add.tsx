@@ -17,12 +17,12 @@ import React, {
 import TextField from "@material-ui/core/TextField";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
-interface HeaderProps {
+interface AddFormProps {
   todos: Todos;
 }
 
 const AddForm: FC = (): ReactElement => {
-  const typedUseSelector: TypedUseSelectorHook<HeaderProps> = useSelector;
+  const typedUseSelector: TypedUseSelectorHook<AddFormProps> = useSelector;
   const todos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
   const [state, setState] = useState<AddState>({
@@ -51,7 +51,7 @@ const AddForm: FC = (): ReactElement => {
 
   const handleChangeTodosCompleted = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
-    dispatch(actions.editTodos(state.isAllCompleted));
+    dispatch(actions.changeTodosCompleted(state.isAllCompleted));
   };
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {

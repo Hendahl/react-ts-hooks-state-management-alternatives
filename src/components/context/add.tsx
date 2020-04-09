@@ -47,7 +47,7 @@ const AddForm: FC = (): ReactElement => {
   const handleChangeTodosCompleted = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
     dispatch({
-      type: actions.TOGGLE_TODOS,
+      type: actions.CHANGE_TODOS_COMPLETED,
       isAllCompleted: state.isAllCompleted,
     });
   };

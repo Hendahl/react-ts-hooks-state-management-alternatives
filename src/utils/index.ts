@@ -16,8 +16,8 @@ export const initialTodos: Todos = {
   countAll: 0,
   countCompleted: 0,
   editing: [],
-  payload: [],
   isUpdating: false,
+  payload: [],
   visibilityFilter: filter.ALL_TODOS,
   visible: [],
 };
@@ -87,9 +87,11 @@ export const changeTodoCompleted = (todos: Todos, todo: Todo) => {
   const payloadState = todos.payload.map((_todo) =>
     _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
   );
+  console.log(payloadState);
   return {
     ...todos,
     payload: payloadState,
+    isUpdating: true,
   };
 };
 
@@ -119,11 +121,9 @@ export const saveTodo = (todos: Todos) => {
   };
 };
 
-export const editTodo = (todos: Todos, todo: Todo) => {
+export const changeTodoTitle = (todos: Todos, todo: Todo) => {
   const editingState = todos.payload.map((_todo) =>
-    _todo.id === todo.id
-      ? { ..._todo, completed: todo.completed, title: todo.title }
-      : _todo
+    _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
   );
   return {
     ...todos,
@@ -131,7 +131,7 @@ export const editTodo = (todos: Todos, todo: Todo) => {
   };
 };
 
-export const editTodos = (todos: Todos, isAllCompleted: boolean) => {
+export const changeTodosCompleted = (todos: Todos, isAllCompleted: boolean) => {
   const payloadState = todos.payload.map((_todo) =>
     _todo.completed === !isAllCompleted
       ? { ..._todo, completed: isAllCompleted }

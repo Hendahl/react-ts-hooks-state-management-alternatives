@@ -55,5 +55,5 @@ type Action =
   | { type: "GET_TODOS" }
   | { type: "SAVE_TODO" }
   | { type: "SET_FILTER"; visibiltityFilter: string }
-  | { type: "TOGGLE_TODOS"; isAllCompleted: boolean }
+  | { type: "CHANGE_TODOS_COMPLETED"; isAllCompleted: boolean }
   | { type: "UPDATE_TODOS" };

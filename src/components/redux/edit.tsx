@@ -1,3 +1,4 @@
+import * as actions from "../../constants/actions";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -9,40 +10,45 @@ import React, {
   FC,
   ReactElement,
   KeyboardEvent,
-  useContext,
   useState,
 } from "react";
 import TextField from "@material-ui/core/TextField";
-import { Context } from "../../context/store";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+interface EditFormProps {
+  todos: Todos;
+}
 
 const EditForm: FC = (): ReactElement => {
-  const { dispatch } = useContext(Context);
-  /*const [existingTitle] = useState<string>(todo.title);
+  const typedUseSelector: TypedUseSelectorHook<EditFormProps> = useSelector;
+  const editTodo = typedUseSelector((state) => state.todos.editing[0]);
+  const dispatch = useDispatch();
+  const [existingTitle] = useState<string>(editTodo.title);
 
- 
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    handleChangeTodoTitle({
-      ...todo,
+  const handleChangeTodoTitle = (e: ChangeEvent<HTMLInputElement>): void => {
+    const todoState = {
+      ...editTodo,
       title: e.target.value,
-    });
+    };
+    dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todoState });
   };
 
-  const handleEditTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+  const handleSaveTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (
       e.key === "Enter" &&
-      todo.title !== "" &&
-      todo.title !== existingTitle
+      editTodo.title !== "" &&
+      editTodo.title !== existingTitle
     ) {
-      handleSaveTodo();
+      dispatch({ type: actions.SAVE_TODO });
     }
   };
 
   const handleUndo = () => {
-    handleChangeTodoTitle({
-      ...todo,
+    const todoState = {
+      ...editTodo,
       title: existingTitle,
-    });
-  };*/
+    };
+    dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todoState });
+  };
 
   return (
     <Dialog
@@ -50,7 +56,9 @@ const EditForm: FC = (): ReactElement => {
       aria-labelledby="editTodo-dialog-title"
       fullWidth={true}
     >
-      <DialogTitle id="editTodo-dialog-title">Edit</DialogTitle>
+      <DialogTitle id="editTodo-dialog-title">
+        Edit : {existingTitle}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>Change title of the todo ...</DialogContentText>
         <TextField
@@ -60,6 +68,9 @@ const EditForm: FC = (): ReactElement => {
           id="title"
           label="Title"
           fullWidth
+          value={editTodo.title}
+          onChange={handleChangeTodoTitle}
+          onKeyPress={handleSaveTodoOnEnter}
         />
         <TextField
           disabled={true}
@@ -67,12 +78,32 @@ const EditForm: FC = (): ReactElement => {
           id="id"
           label="Id"
           fullWidth
+          value={editTodo.id}
         />
       </DialogContent>
       <DialogActions>
-        <Button color="primary">Reset</Button>
-        <Button color="primary">Cancel</Button>
-        <Button color="primary">Save</Button>
+        <Button
+          color="primary"
+          disabled={editTodo.title === existingTitle}
+          onClick={handleUndo}
+        >
+          Undo
+        </Button>
+        <Button
+          color="primary"
+          onClick={() =>
+            dispatch({ type: actions.EDITING_TODO, todo: editTodo })
+          }
+        >
+          Cancel
+        </Button>
+        <Button
+          color="primary"
+          disabled={editTodo.title === "" || editTodo.title === existingTitle}
+          onClick={() => dispatch({ type: actions.SAVE_TODO })}
+        >
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );

@@ -44,7 +44,7 @@ const AddForm: FC = (): ReactElement => {
 
   const handleChangeTodosCompleted = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
-    todos.editTodos(state.isAllCompleted);
+    todos.changeTodosCompleted(state.isAllCompleted);
   };
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {

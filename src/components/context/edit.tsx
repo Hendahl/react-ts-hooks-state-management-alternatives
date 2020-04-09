@@ -21,7 +21,7 @@ const EditForm: FC = (): ReactElement => {
   const editTodo = todos.editing[0];
   const [existingTitle] = useState<string>(editTodo.title);
 
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeTodoTitle = (e: ChangeEvent<HTMLInputElement>): void => {
     const todoState = {
       ...editTodo,
       title: e.target.value,
@@ -29,7 +29,7 @@ const EditForm: FC = (): ReactElement => {
     dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todoState });
   };
 
-  const handleEditTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+  const handleSaveTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (
       e.key === "Enter" &&
       editTodo.title !== "" &&
@@ -66,7 +66,8 @@ const EditForm: FC = (): ReactElement => {
           label="Title"
           fullWidth
           value={editTodo.title}
-          onChange={handleTitleChange}
+          onChange={handleChangeTodoTitle}
+          onKeyPress={handleSaveTodoOnEnter}
         />
         <TextField
           disabled={true}

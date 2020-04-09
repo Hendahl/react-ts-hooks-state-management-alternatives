@@ -72,6 +72,17 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
+  const handleEditing: EditingTodo = (todo) => {
+    /* Since we only handle edit of one Todo at the time we toogle the existence, if you need a multi editing -> you should
+    rewrite this... */
+    const allreadyIncluded: boolean = todos.editing.includes(todo);
+    setTodos({
+      ...todos,
+      editing: allreadyIncluded ? [] : [todo],
+      isUpdating: true,
+    });
+  };
+
   const handleChangeTodoCompleted: ChangeTodo = (todo) => {
     const payloadState: Todo[] = [
       ...todos.payload.map((_todo) =>
@@ -81,17 +92,6 @@ const Todos: FC<TodosProps> = () => {
     setTodos({
       ...todos,
       payload: payloadState,
-      isUpdating: true,
-    });
-  };
-
-  const handleEditing: EditingTodo = (todo) => {
-    /* Since we only handle edit of one Todo at the time we toogle the existence, if you need a multi editing -> you should
-    rewrite this... */
-    const allreadyIncluded: boolean = todos.editing.includes(todo);
-    setTodos({
-      ...todos,
-      editing: allreadyIncluded ? [] : [todo],
       isUpdating: true,
     });
   };
@@ -165,7 +165,7 @@ const Todos: FC<TodosProps> = () => {
           handleSaveTodo={handleSaveTodo}
           handleChangeTodoTitle={handleChangeTodoTitle}
           handleEditing={handleEditing}
-          todo={todos.editing[0]}
+          editTodo={todos.editing[0]}
         />
       )}
       <List>

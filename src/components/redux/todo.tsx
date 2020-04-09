@@ -24,9 +24,9 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         <Switch
           checked={todo.completed}
           color="primary"
-          onChange={() => dispatch(actions.editTodo(todo))}
           value="completed"
           size="small"
+          onChange={() => dispatch(actions.changeTodoCompleted(todo))}
         />
       </ListItemIcon>
       <ListItemText
@@ -37,7 +37,11 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         secondary={todo.id}
       />
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="edit">
+        <IconButton
+          edge="end"
+          aria-label="edit"
+          onClick={() => dispatch(actions.editingTodo(todo))}
+        >
           <EditIcon />
         </IconButton>
         <IconButton

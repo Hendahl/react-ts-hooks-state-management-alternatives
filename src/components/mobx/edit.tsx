@@ -20,14 +20,14 @@ const EditForm: FC = (): ReactElement => {
   /*const [existingTitle] = useState<string>(todo.title);
 
  
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeTodoTitle = (e: ChangeEvent<HTMLInputElement>): void => {
     handleChangeTodoTitle({
       ...todo,
       title: e.target.value,
     });
   };
 
-  const handleEditTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+  const handleSaveTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (
       e.key === "Enter" &&
       todo.title !== "" &&

@@ -19,8 +19,6 @@ const Todo: FC<TodoProps> = ({ todo }) => {
   const { dispatch } = useContext(Context);
   const classes = useStyles();
 
-  const handleDeleteTodo = () => {};
-
   return (
     <ListItem role={undefined} button divider={true}>
       <ListItemIcon>
