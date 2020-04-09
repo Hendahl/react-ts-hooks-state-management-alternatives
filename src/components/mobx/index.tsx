@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
 import Container from "@material-ui/core/Container";
+import EditForm from "./edit";
 
 const Todos: FC = observer(() => {
   const { todos } = useStore();
@@ -25,6 +26,7 @@ const Todos: FC = observer(() => {
         </Box>
       </Typography>
       <Progress isUpdating={todos.isUpdating} />
+      {todos.editing.length !== 0 && <EditForm />}
       <List>
         <AddForm />
         {todos.visibleTodos.map((_todo) => (

@@ -98,16 +98,13 @@ const Todos: FC<TodosProps> = () => {
 
   const handleChangeTodoTitle: ChangeTodo = (todo) => {
     const editingState: Todo[] = [
-      ...todos.payload.map((_todo) =>
-        _todo.id === todo.id
-          ? { ..._todo, completed: todo.completed, title: todo.title }
-          : _todo
+      ...todos.editing.map((_todo) =>
+        _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
       ),
     ];
     setTodos({
       ...todos,
       editing: editingState,
-      isUpdating: true,
     });
   };
 
@@ -165,7 +162,7 @@ const Todos: FC<TodosProps> = () => {
           handleSaveTodo={handleSaveTodo}
           handleChangeTodoTitle={handleChangeTodoTitle}
           handleEditing={handleEditing}
-          editTodo={todos.editing[0]}
+          todo={todos.editing[0]}
         />
       )}
       <List>

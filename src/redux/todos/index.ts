@@ -6,14 +6,17 @@ export default function reducer(
   action: Action
 ): Todos {
   switch (action.type) {
-    case actions.SAVE_TODO: {
-      return utils.saveTodo(todos);
-    }
-    case actions.EDITING_TODO: {
-      return utils.editingTodo(todos, action.todo);
-    }
     case actions.ADD_TODO: {
       return utils.addTodo(todos, action.title);
+    }
+    case actions.CHANGE_TODO_COMPLETED: {
+      return utils.changeTodoCompleted(todos, action.todo);
+    }
+    case actions.CHANGE_TODO_TITLE: {
+      return utils.changeTodoTitle(todos, action.todo);
+    }
+    case actions.CHANGE_TODOS_COMPLETED: {
+      return utils.changeTodosCompleted(todos, action.isAllCompleted);
     }
     case actions.DELETE_TODO: {
       return utils.deleteTodo(todos, action.id);
@@ -21,17 +24,14 @@ export default function reducer(
     case actions.DELETE_TODOS: {
       return utils.deleteTodos();
     }
-    case actions.CHANGE_TODO_COMPLETED: {
-      return utils.changeTodoCompleted(todos, action.todo);
-    }
-    case actions.CHANGE_TODOS_COMPLETED: {
-      return utils.changeTodosCompleted(todos, action.isAllCompleted);
-    }
-    case actions.CHANGE_TODO_TITLE: {
-      return utils.changeTodoTitle(todos, action.todo);
+    case actions.EDITING_TODO: {
+      return utils.editingTodo(todos, action.todo);
     }
     case actions.GET_TODOS: {
       return utils.getStoredTodos();
+    }
+    case actions.SAVE_TODO: {
+      return utils.saveTodo(todos);
     }
     case actions.SET_FILTER: {
       return utils.setFilter(todos, action.visibiltityFilter);

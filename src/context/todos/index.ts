@@ -12,6 +12,9 @@ const reducer = (todos: Todos, action: Action) => {
     case actions.CHANGE_TODO_TITLE: {
       return utils.changeTodoTitle(todos, action.todo);
     }
+    case actions.CHANGE_TODOS_COMPLETED: {
+      return utils.changeTodosCompleted(todos, action.isAllCompleted);
+    }
     case actions.DELETE_TODO: {
       return utils.deleteTodo(todos, action.id);
     }
@@ -21,11 +24,11 @@ const reducer = (todos: Todos, action: Action) => {
     case actions.EDITING_TODO: {
       return utils.editingTodo(todos, action.todo);
     }
-    case actions.CHANGE_TODOS_COMPLETED: {
-      return utils.changeTodosCompleted(todos, action.isAllCompleted);
-    }
     case actions.GET_TODOS: {
       return utils.getStoredTodos();
+    }
+    case actions.SAVE_TODO: {
+      return utils.saveTodo(todos);
     }
     case actions.SET_FILTER: {
       return utils.setFilter(todos, action.visibiltityFilter);
@@ -33,9 +36,7 @@ const reducer = (todos: Todos, action: Action) => {
     case actions.UPDATE_TODOS: {
       return utils.updateTodos(todos);
     }
-    case actions.SAVE_TODO: {
-      return utils.saveTodo(todos);
-    }
+
     default:
       return todos;
   }

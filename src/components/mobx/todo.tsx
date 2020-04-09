@@ -38,7 +38,11 @@ const Todo: FC<TodoProps> = observer(({ todo }) => {
         secondary={todo.id}
       />
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="edit">
+        <IconButton
+          edge="end"
+          aria-label="edit"
+          onClick={() => todos.editingTodo(todo)}
+        >
           <EditIcon />
         </IconButton>
         <IconButton

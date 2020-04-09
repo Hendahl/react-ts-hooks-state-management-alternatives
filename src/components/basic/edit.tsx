@@ -17,20 +17,21 @@ interface EditFormProps {
   handleSaveTodo: SaveTodo;
   handleEditing: EditingTodo;
   handleChangeTodoTitle: ChangeTodo;
-  editTodo: Todo;
+  todo: Todo;
 }
 
 const EditForm: FC<EditFormProps> = ({
   handleSaveTodo,
   handleChangeTodoTitle,
   handleEditing,
-  editTodo,
+  todo,
 }): ReactElement => {
-  const [existingTitle] = useState<string>(editTodo.title);
+  const [existingTitle] = useState<string>(todo.title);
 
   const onChangeTodoTitle = (e: ChangeEvent<HTMLInputElement>): void => {
+    console.log(e.target.value);
     handleChangeTodoTitle({
-      ...editTodo,
+      ...todo,
       title: e.target.value,
     });
   };
@@ -38,8 +39,8 @@ const EditForm: FC<EditFormProps> = ({
   const onSaveTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (
       e.key === "Enter" &&
-      editTodo.title !== "" &&
-      editTodo.title !== existingTitle
+      todo.title !== "" &&
+      todo.title !== existingTitle
     ) {
       handleSaveTodo();
     }
@@ -47,20 +48,14 @@ const EditForm: FC<EditFormProps> = ({
 
   const onUndo = () => {
     handleChangeTodoTitle({
-      ...editTodo,
+      ...todo,
       title: existingTitle,
     });
   };
 
   return (
-    <Dialog
-      open={true}
-      aria-labelledby="editTodo-dialog-title"
-      fullWidth={true}
-    >
-      <DialogTitle id="editTodo-dialog-title">
-        Edit : {existingTitle}
-      </DialogTitle>
+    <Dialog open={true} aria-labelledby="todo-dialog-title" fullWidth={true}>
+      <DialogTitle id="todo-dialog-title">Edit : {existingTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>Change title of the todo ...</DialogContentText>
         <TextField
@@ -70,7 +65,7 @@ const EditForm: FC<EditFormProps> = ({
           id="title"
           label="Title"
           fullWidth
-          value={editTodo.title}
+          value={todo.title}
           onChange={onChangeTodoTitle}
           onKeyPress={onSaveTodoOnEnter}
         />
@@ -80,23 +75,23 @@ const EditForm: FC<EditFormProps> = ({
           id="id"
           label="Id"
           fullWidth
-          value={editTodo.id}
+          value={todo.id}
         />
       </DialogContent>
       <DialogActions>
         <Button
           color="primary"
-          disabled={editTodo.title === existingTitle}
+          disabled={todo.title === existingTitle}
           onClick={onUndo}
         >
           Reset
         </Button>
-        <Button color="primary" onClick={() => handleEditing(editTodo)}>
+        <Button color="primary" onClick={() => handleEditing(todo)}>
           Cancel
         </Button>
         <Button
           color="primary"
-          disabled={editTodo.title === "" || editTodo.title === existingTitle}
+          disabled={todo.title === "" || todo.title === existingTitle}
           onClick={() => handleSaveTodo()}
         >
           Save

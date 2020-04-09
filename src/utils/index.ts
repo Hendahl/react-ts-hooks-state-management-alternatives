@@ -83,6 +83,30 @@ export const addTodo = (todos: Todos, title: string) => {
   };
 };
 
+export const changeTodoTitle = (todos: Todos, todo: Todo) => {
+  const editingState = todos.editing.map((_todo) =>
+    _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
+  );
+  return {
+    ...todos,
+    editing: editingState,
+  };
+};
+
+export const changeTodosCompleted = (todos: Todos, isAllCompleted: boolean) => {
+  const payloadState = todos.payload.map((_todo) =>
+    _todo.completed === !isAllCompleted
+      ? { ..._todo, completed: isAllCompleted }
+      : _todo
+  );
+  return {
+    ...todos,
+    countCompleted: payloadState.filter((_todo) => _todo.completed).length,
+    payload: payloadState,
+    isUpdating: true,
+  };
+};
+
 export const changeTodoCompleted = (todos: Todos, todo: Todo) => {
   const payloadState = todos.payload.map((_todo) =>
     _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
@@ -117,30 +141,6 @@ export const saveTodo = (todos: Todos) => {
     ...todos,
     payload: payloadState,
     editing: [],
-    isUpdating: true,
-  };
-};
-
-export const changeTodoTitle = (todos: Todos, todo: Todo) => {
-  const editingState = todos.payload.map((_todo) =>
-    _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
-  );
-  return {
-    ...todos,
-    editing: editingState,
-  };
-};
-
-export const changeTodosCompleted = (todos: Todos, isAllCompleted: boolean) => {
-  const payloadState = todos.payload.map((_todo) =>
-    _todo.completed === !isAllCompleted
-      ? { ..._todo, completed: isAllCompleted }
-      : _todo
-  );
-  return {
-    ...todos,
-    countCompleted: payloadState.filter((_todo) => _todo.completed).length,
-    payload: payloadState,
     isUpdating: true,
   };
 };
