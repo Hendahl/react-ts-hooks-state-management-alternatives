@@ -21,7 +21,7 @@ const EditForm: FC = (): ReactElement => {
 
  
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    handleChangeTodo({
+    handleChangeTodoTitle({
       ...todo,
       title: e.target.value,
     });
@@ -38,7 +38,7 @@ const EditForm: FC = (): ReactElement => {
   };
 
   const handleUndo = () => {
-    handleChangeTodo({
+    handleChangeTodoTitle({
       ...todo,
       title: existingTitle,
     });

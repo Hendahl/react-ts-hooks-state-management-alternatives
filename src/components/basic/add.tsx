@@ -18,13 +18,13 @@ import TextField from "@material-ui/core/TextField";
 interface AddProps {
   todos: Todos;
   handleAddTodo: AddTodo;
-  handleChangeTodos: ChangeTodos;
+  handleChangeTodosCompleted: ChangeTodos;
 }
 
 const AddForm: FC<AddProps> = ({
   todos,
   handleAddTodo,
-  handleChangeTodos,
+  handleChangeTodosCompleted,
 }: AddProps): ReactElement => {
   const [state, setState] = useState<AddState>({
     title: "",
@@ -46,7 +46,7 @@ const AddForm: FC<AddProps> = ({
 
   const onEditAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
-    handleChangeTodos(state.isAllCompleted);
+    handleChangeTodosCompleted(state.isAllCompleted);
   };
 
   const onAdd = (e: FormEvent<HTMLButtonElement>): void => {

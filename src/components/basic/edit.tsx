@@ -16,20 +16,20 @@ import TextField from "@material-ui/core/TextField";
 interface EditFormProps {
   handleSaveTodo: SaveTodo;
   handleEditing: EditingTodo;
-  handleChangeTodo: ChangeTodo;
+  handleChangeTodoTitle: ChangeTodo;
   todo: Todo;
 }
 
 const EditForm: FC<EditFormProps> = ({
   handleSaveTodo,
-  handleChangeTodo,
+  handleChangeTodoTitle,
   handleEditing,
   todo,
 }): ReactElement => {
   const [existingTitle] = useState<string>(todo.title);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    handleChangeTodo({
+    handleChangeTodoTitle({
       ...todo,
       title: e.target.value,
     });
@@ -46,7 +46,7 @@ const EditForm: FC<EditFormProps> = ({
   };
 
   const handleUndo = () => {
-    handleChangeTodo({
+    handleChangeTodoTitle({
       ...todo,
       title: existingTitle,
     });
@@ -58,7 +58,9 @@ const EditForm: FC<EditFormProps> = ({
       aria-labelledby="editTodo-dialog-title"
       fullWidth={true}
     >
-      <DialogTitle id="editTodo-dialog-title">Edit {existingTitle}</DialogTitle>
+      <DialogTitle id="editTodo-dialog-title">
+        Edit : {existingTitle}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>Change title of the todo ...</DialogContentText>
         <TextField

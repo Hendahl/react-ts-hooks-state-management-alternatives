@@ -18,32 +18,34 @@ import { Context } from "../../context/store";
 
 const EditForm: FC = (): ReactElement => {
   const { todos, dispatch } = useContext(Context);
-  /*const [existingTitle] = useState<string>(todo.title);
+  const editTodo = todos.editing[0];
+  const [existingTitle] = useState<string>(editTodo.title);
 
- 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    handleChangeTodo({
-      ...todo,
+    const todoState = {
+      ...editTodo,
       title: e.target.value,
-    });
+    };
+    dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todoState });
   };
 
   const handleEditTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (
       e.key === "Enter" &&
-      todo.title !== "" &&
-      todo.title !== existingTitle
+      editTodo.title !== "" &&
+      editTodo.title !== existingTitle
     ) {
-      handleSaveTodo();
+      dispatch({ type: actions.SAVE_TODO });
     }
   };
 
   const handleUndo = () => {
-    handleChangeTodo({
-      ...todo,
+    const todoState = {
+      ...editTodo,
       title: existingTitle,
-    });
-  };*/
+    };
+    dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todoState });
+  };
 
   return (
     <Dialog
@@ -51,7 +53,9 @@ const EditForm: FC = (): ReactElement => {
       aria-labelledby="editTodo-dialog-title"
       fullWidth={true}
     >
-      <DialogTitle id="editTodo-dialog-title">Edit</DialogTitle>
+      <DialogTitle id="editTodo-dialog-title">
+        Edit : {existingTitle}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>Change title of the todo ...</DialogContentText>
         <TextField
@@ -61,7 +65,8 @@ const EditForm: FC = (): ReactElement => {
           id="title"
           label="Title"
           fullWidth
-          value={todos.editing[0].title}
+          value={editTodo.title}
+          onChange={handleTitleChange}
         />
         <TextField
           disabled={true}
@@ -69,20 +74,32 @@ const EditForm: FC = (): ReactElement => {
           id="id"
           label="Id"
           fullWidth
-          value={todos.editing[0].id}
+          value={editTodo.id}
         />
       </DialogContent>
       <DialogActions>
-        <Button color="primary">Reset</Button>
+        <Button
+          color="primary"
+          disabled={editTodo.title === existingTitle}
+          onClick={handleUndo}
+        >
+          Undo
+        </Button>
         <Button
           color="primary"
           onClick={() =>
-            dispatch({ type: actions.EDITING_TODO, todo: todos.editing[0] })
+            dispatch({ type: actions.EDITING_TODO, todo: editTodo })
           }
         >
           Cancel
         </Button>
-        <Button color="primary">Save</Button>
+        <Button
+          color="primary"
+          disabled={editTodo.title === "" || editTodo.title === existingTitle}
+          onClick={() => dispatch({ type: actions.SAVE_TODO })}
+        >
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );

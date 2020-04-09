@@ -10,16 +10,16 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 interface TodoDialogProps {
   setIsDialogOpen: (isDialogOpen: boolean) => void;
   todo: Todo;
-  handleChangeTodo: (todo: Todo) => void;
+  handleChangeTodoTitle: (todo: Todo) => void;
 }
 
 const TodoDialog: FC<TodoDialogProps> = ({
-  handleChangeTodo,
+  handleChangeTodoTitle,
   setIsDialogOpen,
   todo,
 }) => {
   const handleEditDialog = () => {
-    handleChangeTodo({
+    handleChangeTodoTitle({
       ...todo,
       completed: todo.completed,
       title: "TEST",

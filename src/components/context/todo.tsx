@@ -19,22 +19,7 @@ const Todo: FC<TodoProps> = ({ todo }) => {
   const { dispatch } = useContext(Context);
   const classes = useStyles();
 
-  const handleDeleteTodo = () => {
-    dispatch({ type: actions.DELETE_TODO, id: todo.id });
-  };
-  const handleChangeTodo = () => {
-    dispatch({ type: actions.CHANGE_TODO, id: todo.id });
-  };
-
-  const handleEditing: EditingTodo = (todo) => {
-    /*
-     const allreadyIncluded: boolean = todos.editing.includes(todo);
-    setTodos({
-      ...todos,
-      editing: allreadyIncluded ? [] : [todo],
-      isUpdating: true,
-    });*/
-  };
+  const handleDeleteTodo = () => {};
 
   return (
     <ListItem role={undefined} button divider={true}>
@@ -42,9 +27,11 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         <Switch
           checked={todo.completed}
           color="primary"
-          onChange={() => handleChangeTodo()}
           value="completed"
           size="small"
+          onChange={() =>
+            dispatch({ type: actions.CHANGE_TODO_COMPLETED, todo: todo })
+          }
         />
       </ListItemIcon>
       <ListItemText
@@ -65,7 +52,7 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         <IconButton
           edge="end"
           aria-label="Delete Todo"
-          onClick={handleDeleteTodo}
+          onClick={() => dispatch({ type: actions.DELETE_TODO, id: todo.id })}
         >
           <DeleteIcon />
         </IconButton>

@@ -15,11 +15,11 @@ export default function reducer(
     case actions.DELETE_TODOS: {
       return utils.deleteTodos();
     }
-    case actions.CHANGE_TODO: {
-      return utils.editTodo(todos, action.id);
+    case actions.CHANGE_TODO_TITLE: {
+      //return utils.editTodo(todos, action.todo);
     }
     case actions.TOGGLE_TODOS: {
-      return utils.editTodos(todos, action.isAllCompleted);
+      //return utils.editTodos(todos, action.isAllCompleted);
     }
     case actions.GET_TODOS: {
       return utils.getStoredTodos();

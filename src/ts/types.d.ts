@@ -46,12 +46,14 @@ type Action =
   | { type: "ACTIVE_TODOS" }
   | { type: "ADD_TODO"; title: string }
   | { type: "ALL_TODOS" }
+  | { type: "CHANGE_TODO_COMPLETED"; todo: Todo }
+  | { type: "CHANGE_TODO_TITLE"; todo: Todo }
   | { type: "COMPLETED_TODOS" }
   | { type: "DELETE_TODO"; id: number }
   | { type: "DELETE_TODOS" }
   | { type: "EDITING_TODO"; todo: Todo }
-  | { type: "CHANGE_TODO"; id: number }
-  | { type: "TOGGLE_TODOS"; isAllCompleted: boolean }
   | { type: "GET_TODOS" }
+  | { type: "SAVE_TODO" }
   | { type: "SET_FILTER"; visibiltityFilter: string }
+  | { type: "TOGGLE_TODOS"; isAllCompleted: boolean }
   | { type: "UPDATE_TODOS" };

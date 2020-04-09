@@ -6,8 +6,11 @@ const reducer = (todos: Todos, action: Action) => {
     case actions.ADD_TODO: {
       return utils.addTodo(todos, action.title);
     }
-    case actions.CHANGE_TODO: {
-      return utils.editTodo(todos, action.id);
+    case actions.CHANGE_TODO_COMPLETED: {
+      return utils.changeTodoCompleted(todos, action.todo);
+    }
+    case actions.CHANGE_TODO_TITLE: {
+      return utils.editTodo(todos, action.todo);
     }
     case actions.DELETE_TODO: {
       return utils.deleteTodo(todos, action.id);
@@ -30,6 +33,9 @@ const reducer = (todos: Todos, action: Action) => {
     }
     case actions.UPDATE_TODOS: {
       return utils.updateTodos(todos);
+    }
+    case actions.SAVE_TODO: {
+      return utils.saveTodo(todos);
     }
     default:
       return todos;

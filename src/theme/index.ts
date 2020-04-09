@@ -16,14 +16,14 @@ export const themeOverrides = (darkMode: boolean) =>
   createMuiTheme({
     appDrawer: { breakpoint: "md" },
     palette: {
-      type: darkMode ? "light" : "dark",
+      type: darkMode ? "dark" : "light",
       primary: {
-        main: orange[500]
-      }
+        main: orange[500],
+      },
     },
     typography: {
-      fontSize: 12
-    }
+      fontSize: 12,
+    },
   });
 
 const drawerWidth = 240;
@@ -31,47 +31,47 @@ const drawerWidth = 240;
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex"
+      display: "flex",
     },
     appBar: {
       [theme.breakpoints.up("sm")]: {
         width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth
-      }
+        marginLeft: drawerWidth,
+      },
     },
     drawer: {
       [theme.breakpoints.up("sm")]: {
         width: drawerWidth,
-        flexShrink: 0
-      }
+        flexShrink: 0,
+      },
     },
     menuButton: {
       marginRight: theme.spacing(2),
       [theme.breakpoints.up("sm")]: {
-        display: "none"
-      }
+        display: "none",
+      },
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
-      width: drawerWidth
+      width: drawerWidth,
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
-      marginTop: "4rem"
+      marginTop: "4rem",
     },
     listItem: {
-      color: "white"
+      color: "white",
     },
     listItemText: {
-      textDecoration: "inherit"
+      textDecoration: "inherit",
     },
     listItemTextCompleted: {
       textDecoration: "line-through",
-      color: grey[300]
+      color: grey[300],
     },
     buttonGroup: {
-      margin: "0 auto"
-    }
+      margin: "0 auto",
+    },
   })
 );

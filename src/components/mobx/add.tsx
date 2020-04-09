@@ -42,7 +42,7 @@ const AddForm: FC = (): ReactElement => {
     setState({ ...state, title: "" });
   };
 
-  const handleChangeTodos = (): void => {
+  const handleChangeTodosCompleted = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
     todos.editTodos(state.isAllCompleted);
   };
@@ -62,7 +62,7 @@ const AddForm: FC = (): ReactElement => {
           color={state.isAllCompleted ? "primary" : "inherit"}
           disabled={todos.countAll === 0}
           edge="end"
-          onClick={handleChangeTodos}
+          onClick={handleChangeTodosCompleted}
         >
           <KeyboardArrowDownIcon />
         </IconButton>

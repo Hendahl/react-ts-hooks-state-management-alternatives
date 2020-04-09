@@ -11,14 +11,14 @@ import Switch from "@material-ui/core/Switch";
 
 interface TodoProps {
   handleDeleteTodo: DeleteTodo;
-  handleEditCompleted: ChangeTodo;
+  handleChangeTodoCompleted: ChangeTodo;
   handleEditing: EditingTodo;
   todo: Todo;
 }
 
 const Todo: FC<TodoProps> = ({
   handleDeleteTodo,
-  handleEditCompleted,
+  handleChangeTodoCompleted,
   handleEditing,
   todo,
 }): ReactElement => {
@@ -36,7 +36,7 @@ const Todo: FC<TodoProps> = ({
           <Switch
             checked={todo.completed}
             color="primary"
-            onChange={() => handleEditCompleted(todo)}
+            onChange={() => handleChangeTodoCompleted(todo)}
             value="completed"
             size="small"
           />

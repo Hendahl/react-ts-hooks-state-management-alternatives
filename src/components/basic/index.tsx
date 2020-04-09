@@ -13,7 +13,7 @@ import EditForm from "./edit";
 
 interface TodosProps {
   handleDeleteTodo: DeleteTodo;
-  handleChangeTodo: ChangeTodo;
+  handleChangeTodoTitle: ChangeTodo;
   todo: Todo;
   todos: Todos;
 }
@@ -72,7 +72,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleEditCompleted: ChangeTodo = (todo) => {
+  const handleChangeTodoCompleted: ChangeTodo = (todo) => {
     const payloadState: Todo[] = [
       ...todos.payload.map((_todo) =>
         _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
@@ -96,7 +96,7 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
-  const handleChangeTodo: ChangeTodo = (todo) => {
+  const handleChangeTodoTitle: ChangeTodo = (todo) => {
     const editingState: Todo[] = [
       ...todos.payload.map((_todo) =>
         _todo.id === todo.id
@@ -129,7 +129,7 @@ const Todos: FC<TodosProps> = () => {
   };
 
   /* Since we only change "completed" we have one Boolean as parameter*/
-  const handleChangeTodos: ChangeTodos = (isAllCompleted) => {
+  const handleChangeTodosCompleted: ChangeTodos = (isAllCompleted) => {
     const payloadState: Todo[] = [
       ...todos.payload.map((_todo) =>
         _todo.completed === !isAllCompleted
@@ -163,7 +163,7 @@ const Todos: FC<TodosProps> = () => {
       {todos.editing.length !== 0 && (
         <EditForm
           handleSaveTodo={handleSaveTodo}
-          handleChangeTodo={handleChangeTodo}
+          handleChangeTodoTitle={handleChangeTodoTitle}
           handleEditing={handleEditing}
           todo={todos.editing[0]}
         />
@@ -172,11 +172,11 @@ const Todos: FC<TodosProps> = () => {
         <AddForm
           todos={todos}
           handleAddTodo={handleAddTodo}
-          handleChangeTodos={handleChangeTodos}
+          handleChangeTodosCompleted={handleChangeTodosCompleted}
         />
         {todos.visible.map((_todo) => (
           <Todo
-            handleEditCompleted={handleEditCompleted}
+            handleChangeTodoCompleted={handleChangeTodoCompleted}
             handleEditing={handleEditing}
             handleDeleteTodo={handleDeleteTodo}
             key={_todo.id}
