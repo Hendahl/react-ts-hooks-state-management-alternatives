@@ -1,5 +1,6 @@
 import * as actions from "../../constants/actions";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -18,22 +19,17 @@ const Todo: FC<TodoProps> = ({ todo }) => {
   const { dispatch } = useContext(Context);
   const classes = useStyles();
 
-  const handleDelete = () => {
-    dispatch({ type: actions.DELETE_TODO, id: todo.id });
-  };
-  const handleEdit = () => {
-    dispatch({ type: actions.EDIT_TODO, id: todo.id });
-  };
-
   return (
     <ListItem role={undefined} button divider={true}>
       <ListItemIcon>
         <Switch
           checked={todo.completed}
           color="primary"
-          onChange={handleEdit}
           value="completed"
           size="small"
+          onChange={() =>
+            dispatch({ type: actions.CHANGE_TODO_COMPLETED, todo: todo })
+          }
         />
       </ListItemIcon>
       <ListItemText
@@ -44,7 +40,18 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         secondary={todo.id}
       />
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="Delete Todo" onClick={handleDelete}>
+        <IconButton
+          edge="end"
+          aria-label="edit"
+          onClick={() => dispatch({ type: actions.EDITING_TODO, todo: todo })}
+        >
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          edge="end"
+          aria-label="Delete Todo"
+          onClick={() => dispatch({ type: actions.DELETE_TODO, id: todo.id })}
+        >
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>

@@ -5,6 +5,8 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import TextField from "@material-ui/core/TextField";
+import { Context } from "../../context/store";
 import React, {
   ChangeEvent,
   FC,
@@ -12,33 +14,41 @@ import React, {
   KeyboardEvent,
   ReactElement,
   useContext,
-  useState
+  useState,
+  useEffect,
 } from "react";
-import TextField from "@material-ui/core/TextField";
-import { Context } from "../../context/store";
 
-const Add: FC = (): ReactElement => {
+const AddForm: FC = (): ReactElement => {
+  const { todos, dispatch } = useContext(Context);
   const [state, setState] = useState<AddState>({
     title: "",
-    isAllCompleted: true
+    isAllCompleted: false,
   });
-  const { todos, dispatch } = useContext(Context);
+
+  useEffect(() => {
+    if (todos.payload[0]) {
+      setState((state) => ({
+        ...state,
+        isAllCompleted: !todos.payload[0].completed,
+      }));
+    }
+  }, [todos.payload]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setState({ ...state, title: e.target.value });
   };
 
-  const handleAdd = (e: FormEvent<HTMLButtonElement>): void => {
+  const handleAddTodo = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     dispatch({ type: actions.ADD_TODO, title: state.title });
     setState({ ...state, title: "" });
   };
 
-  const handleAll = (): void => {
+  const handleChangeTodosCompleted = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
     dispatch({
-      type: actions.EDIT_TODOS,
-      isAllCompleted: state.isAllCompleted
+      type: actions.CHANGE_TODOS_COMPLETED,
+      isAllCompleted: state.isAllCompleted,
     });
   };
 
@@ -53,11 +63,11 @@ const Add: FC = (): ReactElement => {
     <ListItem>
       <ListItemIcon>
         <IconButton
-          aria-label="Toggle Completed"
+          aria-label="Edit Completed"
           color={state.isAllCompleted ? "primary" : "inherit"}
           disabled={todos.countAll === 0}
           edge="end"
-          onClick={handleAll}
+          onClick={handleChangeTodosCompleted}
         >
           <KeyboardArrowDownIcon />
         </IconButton>
@@ -79,7 +89,7 @@ const Add: FC = (): ReactElement => {
           color="primary"
           disabled={state.title === ""}
           edge="end"
-          onClick={handleAdd}
+          onClick={handleAddTodo}
         >
           <AddIcon />
         </IconButton>
@@ -88,4 +98,4 @@ const Add: FC = (): ReactElement => {
   );
 };
 
-export default Add;
+export default AddForm;

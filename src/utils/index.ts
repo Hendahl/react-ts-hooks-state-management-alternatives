@@ -9,10 +9,11 @@ export const uuid = () => {
 export const initialTodos: Todos = {
   countAll: 0,
   countCompleted: 0,
+  editing: [],
   payload: [],
   isUpdating: false,
   visibilityFilter: filter.ALL_TODOS,
-  visible: []
+  visible: [],
 };
 
 export const getStoredTodos = () => {
@@ -26,9 +27,9 @@ export const setStoredTodos = (payload: Todos) => {
 
 export const deleteTodos = () => {
   setStoredTodos({
-    ...initialTodos
+    ...initialTodos,
   });
   return {
-    ...initialTodos
+    ...initialTodos,
   };
 };

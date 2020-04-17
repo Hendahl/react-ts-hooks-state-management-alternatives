@@ -12,35 +12,45 @@ type Todo = {
 };
 
 type Todos = {
-  visibilityFilter: string;
-  payload: Todo[];
   countAll: number;
   countCompleted: number;
   isUpdating: boolean;
+  payload: Todo[];
+  visibilityFilter: string;
   visible: Todo[];
+  editing: Todo[];
 };
 
 type AddState = {
-  title: string;
   isAllCompleted: boolean;
+  title: string;
 };
 
-type Add = (title: string) => void;
-type Filter = (visibilityFilter: string) => void;
-type Delete = (todo: Todo) => void;
-type DeleteAll = () => void;
-type Edit = (todo: Todo) => void;
-type EditAll = (completed: boolean) => void;
+type AddTodo = (title: string) => void;
+type DeleteTodo = (todo: Todo) => void;
+type DeleteTodos = () => void;
+type Dispatch = (arg: Action) => void;
+type ChangeTodo = (todo: Todo) => void;
+type ChangeTodos = (completed: boolean) => void;
+type EditingTodo = (todo: Todo) => void;
+type FilterTodos = (visibiltityFilter: string) => void;
+type GetTodos = () => void;
+type SaveTodoTitle = () => void;
+type UndoEdit = () => void;
+type UpdateTodos = () => void;
 
 type Action =
   | { type: "ACTIVE_TODOS" }
   | { type: "ADD_TODO"; title: string }
   | { type: "ALL_TODOS" }
+  | { type: "CHANGE_TODO_COMPLETED"; todo: Todo }
+  | { type: "CHANGE_TODO_TITLE"; todo: Todo }
   | { type: "COMPLETED_TODOS" }
   | { type: "DELETE_TODO"; id: number }
   | { type: "DELETE_TODOS" }
-  | { type: "EDIT_TODO"; id: number }
-  | { type: "EDIT_TODOS"; isAllCompleted: boolean }
+  | { type: "EDITING_TODO"; todo: Todo }
   | { type: "GET_TODOS" }
-  | { type: "SET_FILTER"; visibilityFilter: string }
+  | { type: "SAVE_TODO" }
+  | { type: "SET_FILTER"; visibiltityFilter: string }
+  | { type: "CHANGE_TODOS_COMPLETED"; isAllCompleted: boolean }
   | { type: "UPDATE_TODOS" };
