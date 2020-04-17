@@ -4,31 +4,41 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import TextField from "@material-ui/core/TextField";
 import React, {
   ChangeEvent,
   FC,
   FormEvent,
   KeyboardEvent,
   ReactElement,
-  useState
+  useState,
+  useEffect,
 } from "react";
-import TextField from "@material-ui/core/TextField";
 
 interface AddProps {
-  countAll: number;
-  handleAdd: Add;
-  handleAll: EditAll;
+  todos: Todos;
+  handleAddTodo: AddTodo;
+  handleChangeTodosCompleted: ChangeTodos;
 }
 
-const Add: FC<AddProps> = ({
-  countAll,
-  handleAdd,
-  handleAll
+const AddForm: FC<AddProps> = ({
+  todos,
+  handleAddTodo,
+  handleChangeTodosCompleted,
 }: AddProps): ReactElement => {
   const [state, setState] = useState<AddState>({
     title: "",
-    isAllCompleted: true
+    isAllCompleted: false,
   });
+
+  useEffect(() => {
+    if (todos.payload[0]) {
+      setState((state) => ({
+        ...state,
+        isAllCompleted: !todos.payload[0].completed,
+      }));
+    }
+  }, [todos]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setState({ ...state, title: e.target.value });
@@ -36,29 +46,28 @@ const Add: FC<AddProps> = ({
 
   const onEditAll = (): void => {
     setState({ ...state, isAllCompleted: !state.isAllCompleted });
-    handleAll(state.isAllCompleted);
+    handleChangeTodosCompleted(state.isAllCompleted);
   };
 
   const onAdd = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    handleAdd(state.title);
+    handleAddTodo(state.title);
     setState({ ...state, title: "" });
   };
 
   const onEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && state.title !== "") {
-      handleAdd(state.title);
+      handleAddTodo(state.title);
       setState({ ...state, title: "" });
     }
   };
-
   return (
     <ListItem>
       <ListItemIcon>
         <IconButton
-          aria-label="Toggle Completed"
+          aria-label="Edit Completed"
           color={state.isAllCompleted ? "primary" : "inherit"}
-          disabled={countAll === 0}
+          disabled={todos.countAll === 0}
           edge="end"
           onClick={onEditAll}
         >
@@ -79,7 +88,7 @@ const Add: FC<AddProps> = ({
       <ListItemSecondaryAction>
         <IconButton
           aria-label="Add"
-          color={"primary"}
+          color="primary"
           disabled={state.title === ""}
           edge="end"
           onClick={onAdd}
@@ -91,4 +100,4 @@ const Add: FC<AddProps> = ({
   );
 };
 
-export default Add;
+export default AddForm;

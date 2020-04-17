@@ -1,8 +1,8 @@
 type Classes = {
   listItem: string;
+  listItemText: string;
   title: string;
   titleCompleted: string;
-  listItemText: string;
 };
 
 type Todo = {
@@ -12,11 +12,12 @@ type Todo = {
 };
 
 type Todos = {
-  visibilityFilter: string;
-  payload: Todo[];
   countAll: number;
   countCompleted: number;
+  editing: Todo[];
   isUpdating: boolean;
+  payload: Todo[];
+  visibilityFilter: string;
   visible: Todo[];
 };
 
@@ -25,10 +26,13 @@ type AddState = {
   isAllCompleted: boolean;
 };
 
-type Add = (title: string) => void;
-type Delete = (todo: Todo) => void;
-type DeleteAll = () => void;
-type Edit = (todo: Todo) => void;
-type EditAll = (completed: boolean) => void;
-type Filter = (visibilityFilter: string) => void;
-type Update  = () => void;
+type AddTodo = (title: string) => void;
+type ChangeTodo = (todo: Todo) => void;
+type ChangeTodos = (completed: boolean) => void;
+type DeleteTodo = (todo: Todo) => void;
+type DeleteTodos = () => void;
+type EditingTodo = (todo: Todo) => void;
+type FilterTodos = (visibiltityFilter: string) => void;
+type SaveTodoTitle = () => void;
+type UndoEdit = () => void;
+type UpdateTodos = () => void;

@@ -1,109 +1,130 @@
+import * as filter from "../../constants/filter";
 import * as utils from "../../utils";
-import Add from "./add";
+import AddForm from "./add";
 import Box from "@material-ui/core/Box";
-import Filter from "./filter";
+import Container from "@material-ui/core/Container";
+import EditForm from "./edit";
+import FilterTodos from "./filter";
 import List from "@material-ui/core/List";
 import Progress from "./progress";
 import React, { FC, useEffect, useState } from "react";
 import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
-import * as filter from "../../constants/filter";
-import Container from "@material-ui/core/Container";
 
 interface TodosProps {
-  handleDelete: Delete;
-  handleEdit: Edit;
+  handleDeleteTodo: DeleteTodo;
+  handleChangeTodoTitle: ChangeTodo;
   todo: Todo;
   todos: Todos;
 }
-
 const Todos: FC<TodosProps> = () => {
   const [todos, setTodos] = useState<Todos>(utils.getStoredTodos());
 
   useEffect(() => {
     if (todos.isUpdating) {
-      const payloadState: Todo[] = [...todos.payload];
-      const todosState: Todos = {
-        ...todos,
-        countCompleted: payloadState.filter(_todo => _todo.completed).length,
-        isUpdating: false,
-        visible:
-          todos.visibilityFilter === filter.ALL_TODOS
-            ? payloadState
-            : payloadState.filter(_todo =>
-                todos.visibilityFilter === filter.COMPLETED_TODOS
-                  ? _todo.completed
-                  : !_todo.completed
-              )
-      };
-      setTodos(todosState);
-      utils.setStoredTodos(todosState);
+      setTodos(utils.updateTodos(todos));
     }
   }, [todos]);
 
-  const handleAdd: Add = title => {
+  const handleAddTodo: AddTodo = (title) => {
     setTodos({
       ...todos,
       countAll: todos.countAll + 1,
       payload: [
         { id: utils.uuid(), completed: false, title: title },
-        ...todos.payload
+        ...todos.payload,
       ],
       isUpdating: true,
-      visibilityFilter: filter.ALL_TODOS
+      visibilityFilter: filter.ALL_TODOS,
     });
   };
 
-  const handleDelete: Delete = todo => {
+  const handleDeleteTodo: DeleteTodo = (todo) => {
     setTodos({
       ...todos,
       countAll: todos.countAll - 1,
-      payload: todos.payload.filter(_todo => _todo.id !== todo.id),
-      isUpdating: true
+      payload: todos.payload.filter((_todo) => _todo.id !== todo.id),
+      isUpdating: true,
     });
   };
 
-  const handleDeleteAll: DeleteAll = () => {
+  const handleDeleteTodos: DeleteTodos = () => {
     const defaultValues = utils.initialTodos;
     utils.setStoredTodos({
-      ...defaultValues
+      ...defaultValues,
     });
     setTodos({
-      ...defaultValues
+      ...defaultValues,
     });
   };
 
-  const handleEdit: Edit = todo => {
-    const payloadState: Todo[] = [...todos.payload];
+  const handleEditingTodo: EditingTodo = (todo) => {
+    const allreadyIncluded: boolean = todos.editing.includes(todo);
     setTodos({
       ...todos,
-      payload: payloadState.map(_todo =>
-        _todo.id === todo.id ? { ...todo, completed: !todo.completed } : _todo
-      ),
-      isUpdating: true
+      editing: allreadyIncluded ? [] : [todo],
+      isUpdating: true,
     });
   };
 
-  const handleAll: EditAll = isAllCompleted => {
+  const handleChangeTodoCompleted: ChangeTodo = (todo) => {
+    const payloadState = todos.payload.map((_todo) =>
+      _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
+    );
+    setTodos({
+      ...todos,
+      payload: payloadState,
+      isUpdating: true,
+    });
+  };
+
+  const handleChangeTodoTitle: ChangeTodo = (todo) => {
+    const editingState = todos.editing.map((_todo) =>
+      _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
+    );
+    setTodos({
+      ...todos,
+      editing: editingState,
+    });
+  };
+
+  const handleSaveTodoTitle: SaveTodoTitle = () => {
+    const editingTodo = todos.editing[0];
     const payloadState: Todo[] = [
-      ...todos.payload.map(todo =>
-        todo.completed === !isAllCompleted
-          ? { ...todo, completed: isAllCompleted }
-          : todo
-      )
+      ...todos.payload.map((_todo) =>
+        _todo.id === editingTodo.id
+          ? { ..._todo, title: editingTodo.title }
+          : _todo
+      ),
     ];
     setTodos({
       ...todos,
       payload: payloadState,
-      isUpdating: true
+      editing: [],
+      isUpdating: true,
     });
   };
 
-  const handleFilter: Filter = visibilityFilter => {
+  const handleChangeTodosCompleted: ChangeTodos = (isAllCompleted) => {
+    const payloadState: Todo[] = [
+      ...todos.payload.map((todo) =>
+        todo.completed === !isAllCompleted
+          ? { ...todo, completed: isAllCompleted }
+          : todo
+      ),
+    ];
+    setTodos({
+      ...todos,
+      payload: payloadState,
+      isUpdating: true,
+    });
+  };
+
+  const handleFilterTodos: FilterTodos = (visibilityFilter) => {
     setTodos({
       ...todos,
       visibilityFilter: visibilityFilter,
-      isUpdating: true
+      isUpdating: true,
     });
   };
 
@@ -115,23 +136,32 @@ const Todos: FC<TodosProps> = () => {
         </Box>
       </Typography>
       <Progress isUpdating={todos.isUpdating} />
-      <List>
-        <Add
-          countAll={todos.countAll}
-          handleAdd={handleAdd}
-          handleAll={handleAll}
+      {todos.editing.length !== 0 && (
+        <EditForm
+          handleSaveTodoTitle={handleSaveTodoTitle}
+          handleChangeTodoTitle={handleChangeTodoTitle}
+          handleEditingTodo={handleEditingTodo}
+          todo={todos.editing[0]}
         />
-        {todos.visible.map(_todo => (
+      )}
+      <List>
+        <AddForm
+          todos={todos}
+          handleAddTodo={handleAddTodo}
+          handleChangeTodosCompleted={handleChangeTodosCompleted}
+        />
+        {todos.visible.map((_todo) => (
           <Todo
-            handleDelete={handleDelete}
-            handleEdit={handleEdit}
+            handleChangeTodoCompleted={handleChangeTodoCompleted}
+            handleEditingTodo={handleEditingTodo}
+            handleDeleteTodo={handleDeleteTodo}
             key={_todo.id}
             todo={_todo}
           />
         ))}
-        <Filter
-          handleDeleteAll={handleDeleteAll}
-          handleFilter={handleFilter}
+        <FilterTodos
+          handleDeleteTodos={handleDeleteTodos}
+          handleFilterTodos={handleFilterTodos}
           todos={todos}
         />
       </List>

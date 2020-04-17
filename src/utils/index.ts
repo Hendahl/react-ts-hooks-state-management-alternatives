@@ -9,10 +9,11 @@ export const uuid = () => {
 export const initialTodos: Todos = {
   countAll: 0,
   countCompleted: 0,
-  payload: [],
+  editing: [],
   isUpdating: false,
+  payload: [],
   visibilityFilter: filter.ALL_TODOS,
-  visible: []
+  visible: [],
 };
 
 export const getStoredTodos = () => {
@@ -24,3 +25,20 @@ export const setStoredTodos = (payload: Todos) => {
   return localStorage.setItem(LSKEY, JSON.stringify(payload));
 };
 
+export const updateTodos = (todos: Todos) => {
+  const payloadState: Todo[] = [...todos.payload];
+  const todosState: Todos = {
+    ...todos,
+    isUpdating: false,
+    visible:
+      todos.visibilityFilter === filter.ALL_TODOS
+        ? payloadState
+        : payloadState.filter((_todo) =>
+            todos.visibilityFilter === filter.COMPLETED_TODOS
+              ? _todo.completed
+              : !_todo.completed
+          ),
+  };
+  setStoredTodos(todosState);
+  return todosState;
+};
