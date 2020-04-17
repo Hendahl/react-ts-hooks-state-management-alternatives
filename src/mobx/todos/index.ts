@@ -17,11 +17,14 @@ export const Todo = types
     title: types.string,
   })
   .actions((self) => ({
-    editTodo() {
-      getRoot<TodosModel>(self).editTodo(self);
+    changeTodoCompleted() {
+      getRoot<TodosModel>(self).changeTodoCompleted(self);
     },
     deleteTodo() {
       getRoot<TodosModel>(self).deleteTodo(self);
+    },
+    editingTodo() {
+      getRoot<TodosModel>(self).editingTodo(self);
     },
   }));
 
@@ -32,15 +35,16 @@ export const Todos = types
     payload: types.optional(types.array(Todo), []),
     isUpdating: types.boolean,
     visibilityFilter: types.string,
+    editing: types.optional(types.array(Todo), []),
   })
   .views((self) => ({
-    get countCompleted() {
+    get countCompletedView() {
       return self.payload.filter((_todo) => _todo.completed).length;
     },
-    get countAll() {
+    get countAllView() {
       return self.payload.length;
     },
-    get visibleTodos() {
+    get visibleView() {
       return self.visibilityFilter === filter.ALL_TODOS
         ? self.payload
         : self.payload.filter((_todo) =>
@@ -48,6 +52,9 @@ export const Todos = types
               ? _todo.completed
               : !_todo.completed
           );
+    },
+    get editingView() {
+      return self.editing;
     },
   }))
   .actions((self) => ({
@@ -58,7 +65,7 @@ export const Todos = types
         title,
         completed: false,
       };
-      self.payload.push(newTodo);
+      self.payload.unshift(newTodo);
       self.visibilityFilter = filter.ALL_TODOS;
       self.isUpdating = true;
     },
@@ -71,19 +78,55 @@ export const Todos = types
       self.payload.replace(updatedState);
       self.isUpdating = true;
     },
-    editTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
+
+    editingTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
+      const allreadyIncluded: boolean = self.editing.length !== 0;
+      const todoSnapshot = getSnapshot(self).payload.filter(
+        (_todo) => _todo.id === todo.id
+      );
+      if (allreadyIncluded) {
+        self.editing.replace(
+          self.editing.filter((_todo) => _todo.id !== todoSnapshot[0].id)
+        );
+        self.isUpdating = true;
+        destroy(todo);
+      } else {
+        self.editing.push(todoSnapshot[0]);
+        self.isUpdating = true;
+      }
+    },
+
+    changeTodoTitle(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
+      const editingState = self.editing.map((_todo) =>
+        _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
+      );
+      self.editing.replace(editingState);
+    },
+
+    changeTodoCompleted(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
       const updatedState = self.payload.map((_todo) =>
         _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
       );
       self.payload.replace(updatedState);
       self.isUpdating = true;
     },
+    saveTodoTitle() {
+      const editingTodo = self.editing[0];
+      const payloadState = self.payload.map((_todo) =>
+        _todo.id === editingTodo.id
+          ? { ..._todo, title: editingTodo.title }
+          : _todo
+      );
+      destroy(self.editing);
+      self.payload.replace(payloadState);
+      self.isUpdating = true;
+    },
     deleteTodo(todo: SnapshotIn<TodoModel>) {
-      destroy(todo);
       self.payload.replace(
         self.payload.filter((_todo) => _todo.id !== todo.id)
       );
       self.isUpdating = true;
+      destroy(todo);
     },
     deleteTodos() {
       applySnapshot(self, utils.deleteTodos());
@@ -99,13 +142,13 @@ export const Todos = types
       if (self.isUpdating) {
         self.isUpdating = false;
         const todosState = {
-          countAll: self.countAll,
-          countCompleted: self.countCompleted,
+          countAll: self.countAllView,
+          countCompleted: self.countCompletedView,
           payload: getSnapshot(self).payload,
           visibilityFilter: self.visibilityFilter,
           isUpdating: self.isUpdating,
           visible: [],
-          editing: [],
+          editing: getSnapshot(self).editing,
         };
         utils.updateTodos(todosState);
       }

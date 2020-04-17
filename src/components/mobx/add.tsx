@@ -60,7 +60,7 @@ const AddForm: FC = (): ReactElement => {
         <IconButton
           aria-label="Edit Completed"
           color={state.isAllCompleted ? "primary" : "inherit"}
-          disabled={todos.countAll === 0}
+          disabled={todos.countAllView === 0}
           edge="end"
           onClick={handleChangeTodosCompleted}
         >

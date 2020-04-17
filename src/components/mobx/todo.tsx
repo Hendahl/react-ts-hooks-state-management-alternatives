@@ -24,7 +24,7 @@ const Todo: FC<TodoProps> = observer(({ todo }) => {
       <ListItemIcon>
         <Switch
           checked={todo.completed}
-          onChange={() => todos.editTodo(todo)}
+          onChange={() => todos.changeTodoCompleted(todo)}
           color="primary"
           value="completed"
           size="small"

@@ -29,7 +29,7 @@ const Todos: FC = observer(() => {
       {todos.editing.length !== 0 && <EditForm />}
       <List>
         <AddForm />
-        {todos.visibleTodos.map((_todo) => (
+        {todos.visibleView.map((_todo) => (
           <Todo key={_todo.id} todo={_todo} />
         ))}
         <FilterTodos />

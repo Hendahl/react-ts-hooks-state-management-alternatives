@@ -4,6 +4,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
 import React, {
   ChangeEvent,
   FC,
@@ -11,25 +12,23 @@ import React, {
   KeyboardEvent,
   useState,
 } from "react";
-import TextField from "@material-ui/core/TextField";
 
 interface EditFormProps {
-  handleSaveTodo: SaveTodo;
-  handleEditing: EditingTodo;
+  handleSaveTodoTitle: SaveTodoTitle;
+  handleEditingTodo: EditingTodo;
   handleChangeTodoTitle: ChangeTodo;
   todo: Todo;
 }
 
 const EditForm: FC<EditFormProps> = ({
-  handleSaveTodo,
+  handleSaveTodoTitle,
   handleChangeTodoTitle,
-  handleEditing,
+  handleEditingTodo,
   todo,
 }): ReactElement => {
   const [existingTitle] = useState<string>(todo.title);
 
   const onChangeTodoTitle = (e: ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
     handleChangeTodoTitle({
       ...todo,
       title: e.target.value,
@@ -42,7 +41,7 @@ const EditForm: FC<EditFormProps> = ({
       todo.title !== "" &&
       todo.title !== existingTitle
     ) {
-      handleSaveTodo();
+      handleSaveTodoTitle();
     }
   };
 
@@ -86,13 +85,13 @@ const EditForm: FC<EditFormProps> = ({
         >
           Reset
         </Button>
-        <Button color="primary" onClick={() => handleEditing(todo)}>
+        <Button color="primary" onClick={() => handleEditingTodo(todo)}>
           Cancel
         </Button>
         <Button
           color="primary"
           disabled={todo.title === "" || todo.title === existingTitle}
-          onClick={() => handleSaveTodo()}
+          onClick={() => handleSaveTodoTitle()}
         >
           Save
         </Button>

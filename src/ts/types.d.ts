@@ -25,21 +25,18 @@ type AddState = {
   isAllCompleted: boolean;
   title: string;
 };
-type EditState = {
-  isEditing: boolean;
-  title: string;
-};
 
 type AddTodo = (title: string) => void;
 type DeleteTodo = (todo: Todo) => void;
 type DeleteTodos = () => void;
-type Dispatch = (arg0: Action) => void;
+type Dispatch = (arg: Action) => void;
 type ChangeTodo = (todo: Todo) => void;
 type ChangeTodos = (completed: boolean) => void;
 type EditingTodo = (todo: Todo) => void;
 type FilterTodos = (visibiltityFilter: string) => void;
 type GetTodos = () => void;
-type SaveTodo = () => void;
+type SaveTodoTitle = () => void;
+type UndoEdit = () => void;
 type UpdateTodos = () => void;
 
 type Action =

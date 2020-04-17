@@ -24,7 +24,7 @@ const FilterTodos: FC = observer(() => {
 
   return (
     <ListItem>
-      {todos.countAll !== 0 && (
+      {todos.countAllView !== 0 && (
         <>
           <ButtonGroup
             aria-label="text primary button group"
@@ -35,32 +35,32 @@ const FilterTodos: FC = observer(() => {
             <Button
               disabled={
                 todos.visibilityFilter === filter.ALL_TODOS ||
-                todos.countAll === 0
+                todos.countAllView === 0
               }
               id={filter.ALL_TODOS}
               onClick={handleFilterTodos}
             >
-              ALL ({todos.countAll})
+              ALL ({todos.countAllView})
             </Button>
             <Button
               disabled={
                 todos.visibilityFilter === filter.ACTIVE_TODOS ||
-                todos.countAll === 0
+                todos.countAllView === 0
               }
               id={filter.ACTIVE_TODOS}
               onClick={handleFilterTodos}
             >
-              ACTIVE ({todos.countAll - todos.countCompleted})
+              ACTIVE ({todos.countAllView - todos.countCompletedView})
             </Button>
             <Button
               disabled={
                 todos.visibilityFilter === filter.COMPLETED_TODOS ||
-                todos.countAll === 0
+                todos.countAllView === 0
               }
               id={filter.COMPLETED_TODOS}
               onClick={handleFilterTodos}
             >
-              COMPLETEDED ({todos.countCompleted})
+              COMPLETEDED ({todos.countCompletedView})
             </Button>
           </ButtonGroup>
           <IconButton

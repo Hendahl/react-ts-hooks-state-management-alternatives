@@ -28,7 +28,7 @@ const reducer = (todos: Todos, action: Action) => {
       return utils.getStoredTodos();
     }
     case actions.SAVE_TODO: {
-      return utils.saveTodo(todos);
+      return utils.saveTodoTitle(todos);
     }
     case actions.SET_FILTER: {
       return utils.setFilter(todos, action.visibiltityFilter);

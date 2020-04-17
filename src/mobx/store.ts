@@ -4,15 +4,13 @@ import { Instance, onSnapshot, types } from "mobx-state-tree";
 import { Todos } from "./todos";
 
 const RootModel = types.model({
-  todos: Todos
+  todos: Todos,
 });
 
 export const store = RootModel.create({ todos: utils.getStoredTodos() });
 
-onSnapshot(store, snapshot => {
+onSnapshot(store, (snapshot) => {
   store.todos.updateTodos();
-  //utils.setStoredTodos(snapshot.todos);
-  //console.log(snapshot.todos);
 });
 
 export type RootInstance = Instance<typeof RootModel>;

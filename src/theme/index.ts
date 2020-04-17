@@ -1,7 +1,6 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { createMuiTheme } from "@material-ui/core";
 import orange from "@material-ui/core/colors/orange";
-import grey from "@material-ui/core/colors/grey";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
 declare module "@material-ui/core/styles/createMuiTheme" {
@@ -16,7 +15,7 @@ export const themeOverrides = (darkMode: boolean) =>
   createMuiTheme({
     appDrawer: { breakpoint: "md" },
     palette: {
-      type: darkMode ? "dark" : "light",
+      type: darkMode ? "light" : "dark",
       primary: {
         main: orange[500],
       },
@@ -68,7 +67,6 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     listItemTextCompleted: {
       textDecoration: "line-through",
-      color: grey[300],
     },
     buttonGroup: {
       margin: "0 auto",

@@ -5,6 +5,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import { Context } from "../../context/store";
 import React, {
   ChangeEvent,
   FC,
@@ -13,8 +15,6 @@ import React, {
   useContext,
   useState,
 } from "react";
-import TextField from "@material-ui/core/TextField";
-import { Context } from "../../context/store";
 
 const EditForm: FC = (): ReactElement => {
   const { todos, dispatch } = useContext(Context);
@@ -29,7 +29,9 @@ const EditForm: FC = (): ReactElement => {
     dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todoState });
   };
 
-  const handleSaveTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+  const handleSaveTodoTitleOnEnter = (
+    e: KeyboardEvent<HTMLInputElement>
+  ): void => {
     if (
       e.key === "Enter" &&
       editTodo.title !== "" &&
@@ -39,7 +41,7 @@ const EditForm: FC = (): ReactElement => {
     }
   };
 
-  const handleUndo = () => {
+  const handleUndo: UndoEdit = () => {
     const todoState = {
       ...editTodo,
       title: existingTitle,
@@ -67,7 +69,7 @@ const EditForm: FC = (): ReactElement => {
           fullWidth
           value={editTodo.title}
           onChange={handleChangeTodoTitle}
-          onKeyPress={handleSaveTodoOnEnter}
+          onKeyPress={handleSaveTodoTitleOnEnter}
         />
         <TextField
           disabled={true}

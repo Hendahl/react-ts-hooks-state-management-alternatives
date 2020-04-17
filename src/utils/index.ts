@@ -111,7 +111,6 @@ export const changeTodoCompleted = (todos: Todos, todo: Todo) => {
   const payloadState = todos.payload.map((_todo) =>
     _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
   );
-  console.log(payloadState);
   return {
     ...todos,
     payload: payloadState,
@@ -119,6 +118,8 @@ export const changeTodoCompleted = (todos: Todos, todo: Todo) => {
   };
 };
 
+/* Since we only handle edit of one Todo at the time we toogle the existence, if you need a multi editing -> you should
+    rewrite this... */
 export const editingTodo = (todos: Todos, todo: Todo) => {
   const allreadyIncluded: boolean = todos.editing.includes(todo);
   return {
@@ -128,7 +129,7 @@ export const editingTodo = (todos: Todos, todo: Todo) => {
   };
 };
 
-export const saveTodo = (todos: Todos) => {
+export const saveTodoTitle = (todos: Todos) => {
   const editingTodo = todos.editing[0];
   const payloadState: Todo[] = [
     ...todos.payload.map((_todo) =>

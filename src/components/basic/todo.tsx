@@ -1,4 +1,3 @@
-import { useStyles } from "../../theme";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
@@ -8,18 +7,19 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import React, { FC, ReactElement } from "react";
 import Switch from "@material-ui/core/Switch";
+import { useStyles } from "../../theme";
 
 interface TodoProps {
   handleDeleteTodo: DeleteTodo;
   handleChangeTodoCompleted: ChangeTodo;
-  handleEditing: EditingTodo;
+  handleEditingTodo: EditingTodo;
   todo: Todo;
 }
 
 const Todo: FC<TodoProps> = ({
   handleDeleteTodo,
   handleChangeTodoCompleted,
-  handleEditing,
+  handleEditingTodo,
   todo,
 }): ReactElement => {
   const classes = useStyles();
@@ -30,7 +30,7 @@ const Todo: FC<TodoProps> = ({
         role={undefined}
         button
         divider={true}
-        onClick={() => handleEditing(todo)}
+        onClick={() => handleEditingTodo(todo)}
       >
         <ListItemIcon>
           <Switch
@@ -54,7 +54,7 @@ const Todo: FC<TodoProps> = ({
           <IconButton
             edge="end"
             aria-label="edit"
-            onClick={() => handleEditing(todo)}
+            onClick={() => handleEditingTodo(todo)}
           >
             <EditIcon />
           </IconButton>

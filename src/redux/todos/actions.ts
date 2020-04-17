@@ -6,7 +6,7 @@ export const addTodo: AddTodo = (title) => {
   };
 };
 
-export const saveTodo: SaveTodo = () => {
+export const saveTodoTitle: SaveTodoTitle = () => {
   return (dispatch: Dispatch) => {
     dispatch({ type: actions.SAVE_TODO });
   };
