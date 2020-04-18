@@ -1,4 +1,4 @@
-import * as actions from "../../constants/actions";
+import * as actions from "../../redux/todos/actions";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -29,7 +29,8 @@ const EditForm: FC = (): ReactElement => {
       ...editTodo,
       title: e.target.value,
     };
-    dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todoState });
+    dispatch(actions.changeTodoTitle(todoState));
+    //dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todoState });
   };
 
   const handleSaveTodoTitleOnEnter = (
@@ -40,7 +41,7 @@ const EditForm: FC = (): ReactElement => {
       editTodo.title !== "" &&
       editTodo.title !== existingTitle
     ) {
-      dispatch({ type: actions.SAVE_TODO });
+      dispatch(actions.saveTodoTitle());
     }
   };
 
@@ -49,7 +50,7 @@ const EditForm: FC = (): ReactElement => {
       ...editTodo,
       title: existingTitle,
     };
-    dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todoState });
+    dispatch(actions.changeTodoTitle(todoState));
   };
 
   return (
@@ -93,16 +94,14 @@ const EditForm: FC = (): ReactElement => {
         </Button>
         <Button
           color="primary"
-          onClick={() =>
-            dispatch({ type: actions.EDITING_TODO, todo: editTodo })
-          }
+          onClick={() => dispatch(actions.editingTodo(editTodo))}
         >
           Cancel
         </Button>
         <Button
           color="primary"
           disabled={editTodo.title === "" || editTodo.title === existingTitle}
-          onClick={() => dispatch({ type: actions.SAVE_TODO })}
+          onClick={() => dispatch(actions.saveTodoTitle())}
         >
           Save
         </Button>
