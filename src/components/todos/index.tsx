@@ -1,6 +1,7 @@
 import * as filter from "../../constants/filter";
 import * as utils from "../../utils";
 import AddForm from "./add";
+import SearchForm from "./search";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import EditForm from "./edit";
@@ -147,10 +148,13 @@ const Todos: FC<TodosProps> = () => {
         />
       )}
       <List>
-        <AddForm
-          todos={todos}
-          handleAddTodo={handleAddTodo}
+        <AddForm todos={todos} handleAddTodo={handleAddTodo} />
+        <SearchForm />
+        <FilterTodos
           handleChangeTodosCompleted={handleChangeTodosCompleted}
+          handleDeleteTodos={handleDeleteTodos}
+          handleFilterTodos={handleFilterTodos}
+          todos={todos}
         />
         {todos.visible.map((_todo) => (
           <Todo
@@ -161,11 +165,6 @@ const Todos: FC<TodosProps> = () => {
             todo={_todo}
           />
         ))}
-        <FilterTodos
-          handleDeleteTodos={handleDeleteTodos}
-          handleFilterTodos={handleFilterTodos}
-          todos={todos}
-        />
       </List>
     </Container>
   );
