@@ -20,6 +20,7 @@ const FilterTodos: FC<FilterProps> = ({
 }: FilterProps): ReactElement => {
   const classes = useStyles();
   const onFilter = (e: FormEvent<HTMLButtonElement>): void => {
+    console.log(e.currentTarget.id);
     e.preventDefault();
     handleFilterTodos(e.currentTarget.id);
   };

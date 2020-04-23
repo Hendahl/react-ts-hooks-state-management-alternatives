@@ -73,6 +73,23 @@ const Todos: FC<TodosProps> = () => {
     );
     setTodos({
       ...todos,
+      countCompleted: payloadState.filter((_todo) => _todo.completed).length,
+      payload: payloadState,
+      isUpdating: true,
+    });
+  };
+
+  const handleChangeTodosCompleted: ChangeTodos = (isAllCompleted) => {
+    const payloadState: Todo[] = [
+      ...todos.payload.map((todo) =>
+        todo.completed === !isAllCompleted
+          ? { ...todo, completed: isAllCompleted }
+          : todo
+      ),
+    ];
+    setTodos({
+      ...todos,
+      countCompleted: payloadState.filter((_todo) => _todo.completed).length,
       payload: payloadState,
       isUpdating: true,
     });
@@ -101,21 +118,6 @@ const Todos: FC<TodosProps> = () => {
       ...todos,
       payload: payloadState,
       editing: [],
-      isUpdating: true,
-    });
-  };
-
-  const handleChangeTodosCompleted: ChangeTodos = (isAllCompleted) => {
-    const payloadState: Todo[] = [
-      ...todos.payload.map((todo) =>
-        todo.completed === !isAllCompleted
-          ? { ...todo, completed: isAllCompleted }
-          : todo
-      ),
-    ];
-    setTodos({
-      ...todos,
-      payload: payloadState,
       isUpdating: true,
     });
   };
