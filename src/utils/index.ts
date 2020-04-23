@@ -113,6 +113,7 @@ export const changeTodoCompleted = (todos: Todos, todo: Todo) => {
   );
   return {
     ...todos,
+    countCompleted: payloadState.filter((_todo) => _todo.completed).length,
     payload: payloadState,
     isUpdating: true,
   };
