@@ -15,7 +15,7 @@ export const themeOverrides = (darkMode: boolean) =>
   createMuiTheme({
     appDrawer: { breakpoint: "md" },
     palette: {
-      type: darkMode ? "light" : "dark",
+      type: darkMode ? "dark" : "light",
       primary: {
         main: orange[500],
       },
@@ -60,11 +60,12 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginTop: "4rem",
     },
     listItem: {
-      color: "white",
+      color: orange[500],
     },
     listItemText: {
       textDecoration: "inherit",
     },
+
     listItemTextCompleted: {
       textDecoration: "line-through",
     },
