@@ -1,12 +1,8 @@
-import AddIcon from "@material-ui/icons/Add";
-import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import TextField from "@material-ui/core/TextField";
 import React, {
   ChangeEvent,
   FC,
-  FormEvent,
   KeyboardEvent,
   ReactElement,
   useState,
@@ -17,26 +13,26 @@ interface AddProps {
   handleAddTodo: AddTodo;
 }
 
+type AddState = {
+  title: string;
+};
+
 const AddForm: FC<AddProps> = ({
   todos,
   handleAddTodo,
 }: AddProps): ReactElement => {
-  const [newTitle, setNewTitle] = useState<string>();
+  const [state, setState] = useState<AddState>({
+    title: "",
+  });
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setNewTitle(e.target.value);
-  };
-
-  const onAdd = (e: FormEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    handleAddTodo(newTitle);
-    setNewTitle("");
+    setState({ ...state, title: e.target.value });
   };
 
   const onEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === "Enter" && newTitle !== "") {
-      handleAddTodo(newTitle);
-      setNewTitle("");
+    if (e.key === "Enter" && state.title !== "") {
+      handleAddTodo(state.title);
+      setState({ ...state, title: "" });
     }
   };
   return (
@@ -49,20 +45,9 @@ const AddForm: FC<AddProps> = ({
         onChange={onChange}
         onKeyPress={onEnter}
         type="text"
-        value={newTitle}
+        value={state.title}
         variant="outlined"
       />
-      <ListItemSecondaryAction>
-        <IconButton
-          aria-label="Add"
-          color="primary"
-          disabled={newTitle === ""}
-          edge="end"
-          onClick={onAdd}
-        >
-          <AddIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
     </ListItem>
   );
 };

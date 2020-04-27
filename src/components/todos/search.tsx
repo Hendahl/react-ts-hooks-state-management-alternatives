@@ -1,30 +1,53 @@
-import SearchIcon from "@material-ui/icons/Search";
+import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import React, { ChangeEvent, FC, ReactElement, useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import React, { FC, ReactElement } from "react";
-import ClearIcon from "@material-ui/icons/Clear";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 
-const SearchForm: FC = (): ReactElement => {
+interface SearchFormProps {
+  handleSearchToggle: SearchToggle;
+  handleSearchTodos: SearchTodos;
+  todos: Todos;
+}
+
+type SearchState = {
+  searchTerm: string;
+};
+
+const SearchForm: FC<SearchFormProps> = ({
+  handleSearchToggle,
+  handleSearchTodos,
+  todos,
+}): ReactElement => {
+  const [state, setState] = useState<SearchState>({
+    searchTerm: "",
+  });
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setState({ ...state, searchTerm: e.target.value });
+    handleSearchTodos(e.target.value);
+  };
+
   return (
     <ListItem>
-      <ListItemIcon>
-        <IconButton aria-label="Search" color="primary" edge="end">
-          <SearchIcon />
-        </IconButton>
-      </ListItemIcon>
       <TextField
         autoComplete="off"
+        error={todos.visible.length === 0}
         fullWidth
         id="title"
-        label="What needs to be done?"
-        type="text"
+        label="Search todos"
+        onChange={onChange}
+        type="search"
         variant="outlined"
       />
       <ListItemSecondaryAction>
-        <IconButton aria-label="Search" color="primary" edge="end">
+        <IconButton
+          aria-label="Search"
+          color="primary"
+          edge="end"
+          onClick={handleSearchToggle}
+        >
           <ClearIcon />
         </IconButton>
       </ListItemSecondaryAction>

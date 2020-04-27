@@ -14,6 +14,7 @@ type Todo = {
 type Todos = {
   countAll: number;
   countCompleted: number;
+  isSearching: boolean;
   isUpdating: boolean;
   payload: Todo[];
   visibilityFilter: string;
@@ -31,6 +32,8 @@ type EditingTodo = (todo: Todo) => void;
 type FilterTodos = (visibiltityFilter: string) => void;
 type GetTodos = () => void;
 type SaveTodoTitle = () => void;
+type SearchToggle = () => void;
+type SearchTodos = (searchTerm: string) => void;
 type UndoEdit = () => void;
 type UpdateTodos = () => void;
 

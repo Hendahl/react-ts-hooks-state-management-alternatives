@@ -10,6 +10,7 @@ export const initialTodos: Todos = {
   countAll: 0,
   countCompleted: 0,
   editing: [],
+  isSearching: false,
   isUpdating: false,
   payload: [],
   visibilityFilter: filter.ALL_TODOS,

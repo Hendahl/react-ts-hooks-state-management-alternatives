@@ -14,6 +14,7 @@ interface FilterProps {
   handleChangeTodosCompleted: ChangeTodos;
   handleDeleteTodos: DeleteTodos;
   handleFilterTodos: FilterTodos;
+  handleSearchToggle: SearchToggle;
   todos: Todos;
 }
 
@@ -21,6 +22,7 @@ const FilterTodos: FC<FilterProps> = ({
   handleChangeTodosCompleted,
   handleDeleteTodos,
   handleFilterTodos,
+  handleSearchToggle,
   todos,
 }: FilterProps): ReactElement => {
   const classes = useStyles();
@@ -33,7 +35,6 @@ const FilterTodos: FC<FilterProps> = ({
   }, [todos]);
 
   const onFilter = (e: FormEvent<HTMLButtonElement>): void => {
-    console.log(e.currentTarget.id);
     e.preventDefault();
     handleFilterTodos(e.currentTarget.id);
   };
@@ -101,15 +102,16 @@ const FilterTodos: FC<FilterProps> = ({
             aria-label="Delete all"
             onClick={handleDeleteTodos}
           >
-            <SearchIcon />
+            <DeleteIcon />
           </IconButton>
           <IconButton
             color="primary"
+            disabled={todos.isSearching}
             edge="end"
-            aria-label="Delete all"
-            onClick={handleDeleteTodos}
+            aria-label="Search"
+            onClick={handleSearchToggle}
           >
-            <DeleteIcon />
+            <SearchIcon />
           </IconButton>
         </>
       )}

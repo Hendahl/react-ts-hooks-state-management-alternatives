@@ -65,6 +65,7 @@ const Todos: FC<TodosProps> = () => {
       ...todos,
       editing: allreadyIncluded ? [] : [todo],
       isUpdating: true,
+      isSearching: false,
     });
   };
 
@@ -131,6 +132,26 @@ const Todos: FC<TodosProps> = () => {
     });
   };
 
+  const handleSearchToggle: SearchToggle = () => {
+    setTodos({
+      ...todos,
+      isSearching: !todos.isSearching,
+      visibilityFilter: filter.ALL_TODOS,
+      isUpdating: true,
+    });
+  };
+
+  const handleSearchTodos: SearchTodos = (searchTerm) => {
+    const visibleState = todos.payload.filter((_todo) =>
+      _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setTodos({
+      ...todos,
+      visibilityFilter: filter.ALL_TODOS,
+      visible: visibleState,
+    });
+  };
+
   return (
     <Container>
       <Typography variant="h3" component="h2">
@@ -148,14 +169,24 @@ const Todos: FC<TodosProps> = () => {
         />
       )}
       <List>
-        <AddForm todos={todos} handleAddTodo={handleAddTodo} />
-        <SearchForm />
-        <FilterTodos
-          handleChangeTodosCompleted={handleChangeTodosCompleted}
-          handleDeleteTodos={handleDeleteTodos}
-          handleFilterTodos={handleFilterTodos}
-          todos={todos}
-        />
+        {todos.isSearching ? (
+          <SearchForm
+            handleSearchToggle={handleSearchToggle}
+            handleSearchTodos={handleSearchTodos}
+            todos={todos}
+          />
+        ) : (
+          <>
+            <AddForm todos={todos} handleAddTodo={handleAddTodo} />
+            <FilterTodos
+              handleChangeTodosCompleted={handleChangeTodosCompleted}
+              handleDeleteTodos={handleDeleteTodos}
+              handleFilterTodos={handleFilterTodos}
+              handleSearchToggle={handleSearchToggle}
+              todos={todos}
+            />
+          </>
+        )}
         {todos.visible.map((_todo) => (
           <Todo
             handleChangeTodoCompleted={handleChangeTodoCompleted}
