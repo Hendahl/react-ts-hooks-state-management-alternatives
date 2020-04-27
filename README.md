@@ -2,7 +2,7 @@
 
 A classic React TypeScript Todo App with alternative state management side by side.
 
-![Demoimage](src/assets/ui.png)
+[Demo](https://aws.d3al2t08gynlqi.amplifyapp.com)
 
 ## Purpose:
 
