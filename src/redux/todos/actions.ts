@@ -68,3 +68,15 @@ export const setFilter: FilterTodos = (visibilityFilter) => {
     dispatch({ type: actions.SET_FILTER, visibiltityFilter: visibilityFilter });
   };
 };
+
+export const searchToggle: SearchToggle = () => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: actions.SEARCH_TOGGLE });
+  };
+};
+
+export const searchTodos: SearchTodos = (searchTerm) => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: actions.SEARCH_TODOS, searchTerm: searchTerm });
+  };
+};

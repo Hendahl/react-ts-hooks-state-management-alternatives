@@ -9,6 +9,7 @@ import Progress from "../shared/progress";
 import React, { FC, useEffect } from "react";
 import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
+import SearchForm from "./search";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 interface TodosProps {
@@ -40,11 +41,17 @@ const Todos: FC = () => {
       <Progress isUpdating={todos.isUpdating} />
       {todos.editing.length !== 0 && <EditForm />}
       <List>
-        <AddForm />
-        {todos.visible.map((_todo) => (
+        {todos.isSearching ? (
+          <SearchForm />
+        ) : (
+          <>
+            <AddForm />
+            <FilterTodos />
+          </>
+        )}
+        {todos.visible.map((_todo: Todo) => (
           <Todo key={_todo.id} todo={_todo} />
         ))}
-        <FilterTodos />
       </List>
     </Container>
   );

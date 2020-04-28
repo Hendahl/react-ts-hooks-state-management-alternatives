@@ -7,6 +7,7 @@ import FilterTodos from "./filter";
 import List from "@material-ui/core/List";
 import Progress from "../shared/progress";
 import React, { FC, useEffect, useState } from "react";
+import SearchForm from "./search";
 import Todo from "./todo";
 import Typography from "@material-ui/core/Typography";
 
@@ -61,6 +62,14 @@ const Todos: FC<TodosProps> = () => {
     setTodos(utils.setFilter(todos, visibilityFilter));
   };
 
+  const handleSearchToggle: SearchToggle = () => {
+    setTodos(utils.searchToggle(todos));
+  };
+
+  const handleSearchTodos: SearchTodos = (searchTerm) => {
+    setTodos(utils.searchTodos(todos, searchTerm));
+  };
+
   return (
     <Container>
       <Typography variant="h3" component="h2">
@@ -78,11 +87,24 @@ const Todos: FC<TodosProps> = () => {
         />
       )}
       <List>
-        <AddForm
-          todos={todos}
-          handleAddTodo={handleAddTodo}
-          handleChangeTodosCompleted={handleChangeTodosCompleted}
-        />
+        {todos.isSearching ? (
+          <SearchForm
+            handleSearchToggle={handleSearchToggle}
+            handleSearchTodos={handleSearchTodos}
+            todos={todos}
+          />
+        ) : (
+          <>
+            <AddForm todos={todos} handleAddTodo={handleAddTodo} />
+            <FilterTodos
+              handleChangeTodosCompleted={handleChangeTodosCompleted}
+              handleDeleteTodos={handleDeleteTodos}
+              handleFilterTodos={handleFilterTodos}
+              handleSearchToggle={handleSearchToggle}
+              todos={todos}
+            />
+          </>
+        )}
         {todos.visible.map((_todo) => (
           <Todo
             handleChangeTodoCompleted={handleChangeTodoCompleted}
@@ -92,11 +114,6 @@ const Todos: FC<TodosProps> = () => {
             todo={_todo}
           />
         ))}
-        <FilterTodos
-          handleDeleteTodos={handleDeleteTodos}
-          handleFilterTodos={handleFilterTodos}
-          todos={todos}
-        />
       </List>
     </Container>
   );

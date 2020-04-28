@@ -39,17 +39,17 @@ const Todo: FC<TodoProps> = ({ todo }) => {
       <ListItemSecondaryAction>
         <IconButton
           edge="end"
-          aria-label="edit"
-          onClick={() => dispatch(actions.editingTodo(todo))}
-        >
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          edge="end"
           aria-label="Delete Todo"
           onClick={() => dispatch(actions.deleteTodo(todo))}
         >
           <DeleteIcon />
+        </IconButton>
+        <IconButton
+          edge="end"
+          aria-label="edit"
+          onClick={() => dispatch(actions.editingTodo(todo))}
+        >
+          <EditIcon />
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>

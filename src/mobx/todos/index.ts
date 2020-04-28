@@ -33,9 +33,11 @@ type TodoModel = Instance<typeof Todo>;
 export const Todos = types
   .model({
     payload: types.optional(types.array(Todo), []),
+    isSearching: types.boolean,
     isUpdating: types.boolean,
     visibilityFilter: types.string,
     editing: types.optional(types.array(Todo), []),
+    visible: types.optional(types.array(Todo), []),
   })
   .views((self) => ({
     get countCompletedView() {
@@ -146,6 +148,7 @@ export const Todos = types
           countCompleted: self.countCompletedView,
           payload: getSnapshot(self).payload,
           visibilityFilter: self.visibilityFilter,
+          isSearching: self.isSearching,
           isUpdating: self.isUpdating,
           visible: [],
           editing: getSnapshot(self).editing,
@@ -155,6 +158,17 @@ export const Todos = types
     },
     getTodos() {
       applySnapshot(self, utils.getStoredTodos());
+    },
+    searchTodos(searchTerm: string) {
+      const updatedState = self.payload.filter((_todo) =>
+        _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      self.visible.replace(updatedState);
+      self.isUpdating = true;
+    },
+
+    searchToggle() {
+      self.isSearching = !self.isSearching;
     },
   }));
 

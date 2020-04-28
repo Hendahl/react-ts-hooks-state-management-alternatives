@@ -33,6 +33,12 @@ const reducer = (todos: Todos, action: Action) => {
     case actions.SET_FILTER: {
       return utils.setFilter(todos, action.visibiltityFilter);
     }
+    case actions.SEARCH_TODOS: {
+      return utils.searchTodos(todos, action.searchTerm);
+    }
+    case actions.SEARCH_TOGGLE: {
+      return utils.searchToggle(todos);
+    }
     case actions.UPDATE_TODOS: {
       return utils.updateTodos(todos);
     }

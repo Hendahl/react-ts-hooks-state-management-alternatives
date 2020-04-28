@@ -10,6 +10,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
 import Container from "@material-ui/core/Container";
 import EditForm from "./edit";
+import SearchForm from "./search";
 
 const Todos: FC = observer(() => {
   const { todos } = useStore();
@@ -28,11 +29,17 @@ const Todos: FC = observer(() => {
       <Progress isUpdating={todos.isUpdating} />
       {todos.editing.length !== 0 && <EditForm />}
       <List>
-        <AddForm />
-        {todos.visibleView.map((_todo) => (
+        {todos.isSearching ? (
+          <SearchForm />
+        ) : (
+          <>
+            <AddForm />
+            <FilterTodos />
+          </>
+        )}
+        {todos.visibleView.map((_todo: Todo) => (
           <Todo key={_todo.id} todo={_todo} />
         ))}
-        <FilterTodos />
       </List>
     </Container>
   );

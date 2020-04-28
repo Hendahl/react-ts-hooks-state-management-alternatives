@@ -16,6 +16,7 @@ export const initialTodos: Todos = {
   countAll: 0,
   countCompleted: 0,
   editing: [],
+  isSearching: false,
   isUpdating: false,
   payload: [],
   visibilityFilter: filter.ALL_TODOS,
@@ -152,5 +153,24 @@ export const setFilter = (todos: Todos, visibilityFilter: string) => {
     ...todos,
     visibilityFilter: visibilityFilter,
     isUpdating: true,
+  };
+};
+
+export const searchToggle = (todos: Todos) => {
+  return {
+    ...todos,
+    isSearching: !todos.isSearching,
+    isUpdating: true,
+  };
+};
+
+export const searchTodos = (todos: Todos, searchTerm: string) => {
+  const visibleState = todos.payload.filter((_todo) =>
+    _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  return {
+    ...todos,
+    visibilityFilter: filter.ALL_TODOS,
+    visible: visibleState,
   };
 };

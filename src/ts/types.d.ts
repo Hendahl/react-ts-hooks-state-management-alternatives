@@ -14,6 +14,7 @@ type Todo = {
 type Todos = {
   countAll: number;
   countCompleted: number;
+  isSearching: boolean;
   isUpdating: boolean;
   payload: Todo[];
   visibilityFilter: string;
@@ -22,7 +23,6 @@ type Todos = {
 };
 
 type AddState = {
-  isAllCompleted: boolean;
   title: string;
 };
 
@@ -36,6 +36,8 @@ type EditingTodo = (todo: Todo) => void;
 type FilterTodos = (visibiltityFilter: string) => void;
 type GetTodos = () => void;
 type SaveTodoTitle = () => void;
+type SearchToggle = () => void;
+type SearchTodos = (searchTerm: string) => void;
 type UndoEdit = () => void;
 type UpdateTodos = () => void;
 
@@ -45,6 +47,7 @@ type Action =
   | { type: "ALL_TODOS" }
   | { type: "CHANGE_TODO_COMPLETED"; todo: Todo }
   | { type: "CHANGE_TODO_TITLE"; todo: Todo }
+  | { type: "CHANGE_TODOS_COMPLETED"; isAllCompleted: boolean }
   | { type: "COMPLETED_TODOS" }
   | { type: "DELETE_TODO"; id: number }
   | { type: "DELETE_TODOS" }
@@ -52,5 +55,6 @@ type Action =
   | { type: "GET_TODOS" }
   | { type: "SAVE_TODO" }
   | { type: "SET_FILTER"; visibiltityFilter: string }
-  | { type: "CHANGE_TODOS_COMPLETED"; isAllCompleted: boolean }
+  | { type: "SEARCH_TODOS"; searchTerm: string }
+  | { type: "SEARCH_TOGGLE" }
   | { type: "UPDATE_TODOS" };

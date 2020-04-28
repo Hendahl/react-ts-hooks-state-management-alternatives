@@ -40,17 +40,17 @@ const Todo: FC<TodoProps> = observer(({ todo }) => {
       <ListItemSecondaryAction>
         <IconButton
           edge="end"
-          aria-label="edit"
-          onClick={() => todos.editingTodo(todo)}
-        >
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          edge="end"
           aria-label="Delete Todo"
           onClick={() => todos.deleteTodo(todo)}
         >
           <DeleteIcon />
+        </IconButton>
+        <IconButton
+          edge="end"
+          aria-label="edit"
+          onClick={() => todos.editingTodo(todo)}
+        >
+          <EditIcon />
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
