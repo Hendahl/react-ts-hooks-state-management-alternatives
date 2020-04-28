@@ -14,7 +14,6 @@ import Select from "@material-ui/core/Select";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
 import { useStyles } from "../../theme";
-import SearchIcon from "@material-ui/icons/Search";
 
 const FilterTodos: FC = observer(() => {
   const classes = useStyles();
@@ -126,15 +125,6 @@ const FilterTodos: FC = observer(() => {
             onClick={handleDeleteTodos}
           >
             <DeleteIcon />
-          </IconButton>
-          <IconButton
-            color="primary"
-            disabled={todos.isSearching}
-            edge="end"
-            aria-label="Search"
-            onClick={() => todos.searchToggle()}
-          >
-            <SearchIcon />
           </IconButton>
         </>
       )}
