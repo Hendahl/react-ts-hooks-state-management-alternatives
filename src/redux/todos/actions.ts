@@ -6,7 +6,7 @@ export const addTodo: AddTodo = (title) => {
   };
 };
 
-export const saveTodoTitle: SaveTodoTitle = () => {
+export const saveTodoTitle: SaveTodo = () => {
   return (dispatch: Dispatch) => {
     dispatch({ type: actions.SAVE_TODO });
   };
@@ -24,19 +24,19 @@ export const deleteTodos: DeleteTodos = () => {
   };
 };
 
-export const editingTodo: EditingTodo = (todo) => {
+export const editingTodo: Editing = (todo) => {
   return (dispatch: Dispatch) => {
     dispatch({ type: actions.EDITING_TODO, todo: todo });
   };
 };
 
-export const changeTodoCompleted: ChangeTodo = (todo) => {
+export const changeTodoCompleted: EditTodo = (todo) => {
   return (dispatch: Dispatch) => {
     dispatch({ type: actions.CHANGE_TODO_COMPLETED, todo: todo });
   };
 };
 
-export const changeTodoTitle: ChangeTodo = (todo) => {
+export const changeTodoTitle: EditTodo = (todo) => {
   return (dispatch: Dispatch) => {
     dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todo });
   };

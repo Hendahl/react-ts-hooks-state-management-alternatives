@@ -14,84 +14,80 @@ import React, {
 } from "react";
 
 interface EditFormProps {
-  handleSaveTodoTitle: SaveTodoTitle;
-  handleEditingTodo: EditingTodo;
-  handleChangeTodoTitle: ChangeTodo;
+  onEditTodo: EditTodo;
+  onSaveTodo: SaveTodo;
+  onShowEdit: Editing;
   todo: Todo;
 }
 
 const EditForm: FC<EditFormProps> = ({
-  handleSaveTodoTitle,
-  handleChangeTodoTitle,
-  handleEditingTodo,
+  onEditTodo,
+  onSaveTodo,
+  onShowEdit,
   todo,
 }): ReactElement => {
-  const [existingTitle] = useState<string>(todo.title);
+  const [stateTitle] = useState<string>(todo.title);
 
-  const onChangeTodoTitle = (e: ChangeEvent<HTMLInputElement>): void => {
-    handleChangeTodoTitle({
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    onEditTodo({
       ...todo,
       title: e.target.value,
     });
   };
 
-  const onSaveTodoOnEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (
-      e.key === "Enter" &&
-      todo.title !== "" &&
-      todo.title !== existingTitle
-    ) {
-      handleSaveTodoTitle();
+  const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === "Enter" && todo.title !== "" && todo.title !== stateTitle) {
+      onSaveTodo();
     }
   };
 
-  const onUndo = () => {
-    handleChangeTodoTitle({
+  const handleUndo = () => {
+    onEditTodo({
       ...todo,
-      title: existingTitle,
+      title: stateTitle,
     });
   };
 
   return (
     <Dialog open={true} aria-labelledby="todo-dialog-title" fullWidth={true}>
-      <DialogTitle id="todo-dialog-title">Edit : {existingTitle}</DialogTitle>
+      <DialogTitle id="todo-dialog-title">Edit : {stateTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>Change title of the todo ...</DialogContentText>
         <TextField
           autoComplete="off"
           autoFocus
-          margin="dense"
+          fullWidth
           id="title"
           label="Title"
-          fullWidth
+          margin="dense"
+          onChange={handleChange}
+          onKeyPress={handleEnter}
           value={todo.title}
-          onChange={onChangeTodoTitle}
-          onKeyPress={onSaveTodoOnEnter}
         />
         <TextField
           disabled={true}
-          margin="dense"
+          fullWidth
           id="id"
           label="Id"
-          fullWidth
+          margin="dense"
           value={todo.id}
         />
       </DialogContent>
       <DialogActions>
         <Button
           color="primary"
-          disabled={todo.title === existingTitle}
-          onClick={onUndo}
+          disabled={todo.title === stateTitle}
+          onClick={handleUndo}
         >
           Reset
         </Button>
-        <Button color="primary" onClick={() => handleEditingTodo(todo)}>
+        <Button color="primary" onClick={() => onShowEdit(todo)}>
           Cancel
         </Button>
         <Button
           color="primary"
-          disabled={todo.title === "" || todo.title === existingTitle}
-          onClick={() => handleSaveTodoTitle()}
+          disabled={todo.title === "" || todo.title === stateTitle}
+          onClick={() => onSaveTodo()}
         >
           Save
         </Button>

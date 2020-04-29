@@ -1,5 +1,4 @@
 import ListItem from "@material-ui/core/ListItem";
-import TextField from "@material-ui/core/TextField";
 import React, {
   ChangeEvent,
   FC,
@@ -7,32 +6,23 @@ import React, {
   ReactElement,
   useState,
 } from "react";
+import TextField from "@material-ui/core/TextField";
 
 interface AddProps {
-  todos: Todos;
-  handleAddTodo: AddTodo;
+  onAddTodo: AddTodo;
 }
 
-type AddState = {
-  title: string;
-};
+const AddForm: FC<AddProps> = ({ onAddTodo }): ReactElement => {
+  const [stateTitle, setStateTitle] = useState<string>("");
 
-const AddForm: FC<AddProps> = ({
-  todos,
-  handleAddTodo,
-}: AddProps): ReactElement => {
-  const [state, setState] = useState<AddState>({
-    title: "",
-  });
-
-  const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setState({ ...state, title: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setStateTitle(e.target.value);
   };
 
-  const onEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === "Enter" && state.title !== "") {
-      handleAddTodo(state.title);
-      setState({ ...state, title: "" });
+  const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === "Enter" && stateTitle !== "") {
+      onAddTodo(stateTitle);
+      setStateTitle("");
     }
   };
   return (
@@ -42,10 +32,10 @@ const AddForm: FC<AddProps> = ({
         fullWidth
         id="title"
         label="What needs to be done?"
-        onChange={onChange}
-        onKeyPress={onEnter}
+        onChange={handleChange}
+        onKeyPress={handleEnter}
         type="text"
-        value={state.title}
+        value={stateTitle}
         variant="outlined"
       />
     </ListItem>

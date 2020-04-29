@@ -123,10 +123,10 @@ export const changeTodoCompleted = (todos: Todos, todo: Todo) => {
 /* Since we only handle edit of one Todo at the time we toogle the existence, if you need a multi editing -> you should
     rewrite this... */
 export const editingTodo = (todos: Todos, todo: Todo) => {
-  const allreadyIncluded: boolean = todos.editing.includes(todo);
+  const isAllreadyIncluded: boolean = todos.editing.includes(todo);
   return {
     ...todos,
-    editing: allreadyIncluded ? [] : [todo],
+    editing: isAllreadyIncluded ? [] : [todo],
     isUpdating: true,
   };
 };

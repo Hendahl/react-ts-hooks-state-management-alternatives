@@ -6,22 +6,18 @@ import React, { ChangeEvent, FC, ReactElement } from "react";
 import TextField from "@material-ui/core/TextField";
 
 interface SearchFormProps {
-  handleSearchToggle: SearchToggle;
-  handleSearchTodos: SearchTodos;
+  onShowSearch: SearchToggle;
+  onSearchTodos: SearchTodos;
   todos: Todos;
 }
 
-type SearchState = {
-  searchTerm: string;
-};
-
 const SearchForm: FC<SearchFormProps> = ({
-  handleSearchToggle,
-  handleSearchTodos,
+  onSearchTodos,
+  onShowSearch,
   todos,
 }): ReactElement => {
-  const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    handleSearchTodos(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    onSearchTodos(e.target.value);
   };
 
   return (
@@ -32,7 +28,7 @@ const SearchForm: FC<SearchFormProps> = ({
         fullWidth
         id="title"
         label="Search todos"
-        onChange={onChange}
+        onChange={handleChange}
         type="search"
         variant="outlined"
       />
@@ -41,7 +37,7 @@ const SearchForm: FC<SearchFormProps> = ({
           aria-label="Search"
           color="primary"
           edge="end"
-          onClick={handleSearchToggle}
+          onClick={onShowSearch}
         >
           <ClearIcon />
         </IconButton>

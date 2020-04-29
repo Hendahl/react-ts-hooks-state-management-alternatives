@@ -82,11 +82,11 @@ export const Todos = types
     },
 
     editingTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
-      const allreadyIncluded: boolean = self.editing.length !== 0;
+      const isAllreadyIncluded: boolean = self.editing.length !== 0;
       const todoSnapshot = getSnapshot(self).payload.filter(
         (_todo) => _todo.id === todo.id
       );
-      if (allreadyIncluded) {
+      if (isAllreadyIncluded) {
         self.editing.replace(
           self.editing.filter((_todo) => _todo.id !== todoSnapshot[0].id)
         );
