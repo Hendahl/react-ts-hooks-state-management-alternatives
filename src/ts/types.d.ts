@@ -22,33 +22,14 @@ type Todos = {
   editing: Todo[];
 };
 
-type AddTodo = (string) => void;
+type AddTodo = (title: string) => void;
 type DeleteTodo = (todo: Todo) => void;
 type DeleteTodos = () => void;
-type Dispatch = (arg: Action) => void;
-type ChangeTodo = (todo: Todo) => void;
-type ChangeTodos = (boolean) => void;
-type EditingTodo = (todo: Todo) => void;
+type EditTodo = (todo: Todo) => void;
 type FilterTodos = (visibiltityFilter: string) => void;
-type GetTodos = () => void;
-type SaveTodoTitle = () => void;
-type SearchToggle = () => void;
+type SaveTodo = () => void;
 type SearchTodos = (searchTerm: string) => void;
-type UndoEdit = () => void;
-type UpdateTodos = () => void;
-
-type Action =
-  | { type: "ACTIVE_TODOS" }
-  | { type: "ADD_TODO"; title: string }
-  | { type: "ALL_TODOS" }
-  | { type: "CHANGE_TODO_COMPLETED"; todo: Todo }
-  | { type: "CHANGE_TODO_TITLE"; todo: Todo }
-  | { type: "COMPLETED_TODOS" }
-  | { type: "DELETE_TODO"; id: number }
-  | { type: "DELETE_TODOS" }
-  | { type: "EDITING_TODO"; todo: Todo }
-  | { type: "GET_TODOS" }
-  | { type: "SAVE_TODO" }
-  | { type: "SET_FILTER"; visibiltityFilter: string }
-  | { type: "CHANGE_TODOS_COMPLETED"; isAllCompleted: boolean }
-  | { type: "UPDATE_TODOS" };
+type ShowEdit = (todo: Todo) => void;
+type ShowShearch = () => void;
+type ToggleTodo = (todo: Todo) => void;
+type ToggleTodos = (isAllCompleted: boolean) => void;

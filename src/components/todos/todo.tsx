@@ -10,33 +10,32 @@ import Switch from "@material-ui/core/Switch";
 import { useStyles } from "../../theme";
 
 interface TodoProps {
-  handleDeleteTodo: DeleteTodo;
-  handleChangeTodoCompleted: ChangeTodo;
-  handleEditingTodo: EditingTodo;
+  onDeleteTodo: (todo: Todo) => void;
+  onShowEdit: (todo: Todo) => void;
+  onToggleTodo: (todo: Todo) => void;
   todo: Todo;
 }
 
-const Todo: FC<TodoProps> = ({
-  handleDeleteTodo,
-  handleChangeTodoCompleted,
-  handleEditingTodo,
+const TodoComponent: FC<TodoProps> = ({
+  onDeleteTodo,
+  onShowEdit,
+  onToggleTodo,
   todo,
 }): ReactElement => {
   const classes = useStyles();
-
   return (
     <>
       <ListItem
         role={undefined}
         button
         divider={true}
-        onClick={() => handleEditingTodo(todo)}
+        onClick={() => onShowEdit(todo)}
       >
         <ListItemIcon>
           <Switch
             checked={todo.completed}
             color="primary"
-            onChange={() => handleChangeTodoCompleted(todo)}
+            onChange={() => onToggleTodo(todo)}
             value="completed"
             size="small"
           />
@@ -54,14 +53,14 @@ const Todo: FC<TodoProps> = ({
           <IconButton
             edge="end"
             aria-label="delete"
-            onClick={() => handleDeleteTodo(todo)}
+            onClick={() => onDeleteTodo(todo)}
           >
             <DeleteIcon />
           </IconButton>
           <IconButton
             edge="end"
             aria-label="edit"
-            onClick={() => handleEditingTodo(todo)}
+            onClick={() => onShowEdit(todo)}
           >
             <EditIcon />
           </IconButton>
@@ -71,4 +70,4 @@ const Todo: FC<TodoProps> = ({
   );
 };
 
-export default Todo;
+export default TodoComponent;
