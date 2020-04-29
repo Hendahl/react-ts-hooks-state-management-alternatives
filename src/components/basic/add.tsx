@@ -8,11 +8,11 @@ import React, {
 } from "react";
 import TextField from "@material-ui/core/TextField";
 
-interface AddProps {
-  onAddTodo: AddTodo;
+interface AddFormProps {
+  onAddTodo: (title: string) => void;
 }
 
-const AddForm: FC<AddProps> = ({ onAddTodo }): ReactElement => {
+const AddComponent: FC<AddFormProps> = ({ onAddTodo }): ReactElement => {
   const [stateTitle, setStateTitle] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -25,6 +25,7 @@ const AddForm: FC<AddProps> = ({ onAddTodo }): ReactElement => {
       setStateTitle("");
     }
   };
+
   return (
     <ListItem>
       <TextField
@@ -42,4 +43,4 @@ const AddForm: FC<AddProps> = ({ onAddTodo }): ReactElement => {
   );
 };
 
-export default AddForm;
+export default AddComponent;

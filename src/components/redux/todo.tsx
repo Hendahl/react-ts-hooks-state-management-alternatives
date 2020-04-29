@@ -15,7 +15,7 @@ interface TodoProps {
   todo: Todo;
 }
 
-const Todo: FC<TodoProps> = ({ todo }) => {
+const TodoComponent: FC<TodoProps> = ({ todo }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   return (
@@ -26,7 +26,7 @@ const Todo: FC<TodoProps> = ({ todo }) => {
           color="primary"
           value="completed"
           size="small"
-          onChange={() => dispatch(actions.changeTodoCompleted(todo))}
+          onChange={() => dispatch(actions.toggleTodo(todo))}
         />
       </ListItemIcon>
       <ListItemText
@@ -47,7 +47,7 @@ const Todo: FC<TodoProps> = ({ todo }) => {
         <IconButton
           edge="end"
           aria-label="edit"
-          onClick={() => dispatch(actions.editingTodo(todo))}
+          onClick={() => dispatch(actions.showEdit(todo))}
         >
           <EditIcon />
         </IconButton>
@@ -56,4 +56,4 @@ const Todo: FC<TodoProps> = ({ todo }) => {
   );
 };
 
-export default Todo;
+export default TodoComponent;

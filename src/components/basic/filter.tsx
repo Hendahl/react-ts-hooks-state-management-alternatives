@@ -20,35 +20,38 @@ import React, {
 import SearchIcon from "@material-ui/icons/Search";
 import Select from "@material-ui/core/Select";
 import { useStyles } from "../../theme";
-
-interface FilterProps {
-  onDeleteTodos: DeleteTodos;
-  onFilterTodos: FilterTodos;
-  onShowSearch: SearchToggle;
-  onToggleTodos: ChangeTodos;
+interface FilterFormProps {
+  onDeleteTodos: () => void;
+  onFilterTodos: (visibiltityFilter: string) => void;
+  onShowSearch: () => void;
+  onToggleTodos: (IsAllCompleted: boolean) => void;
   todos: Todos;
 }
 
-const FilterTodos: FC<FilterProps> = ({
+const FilterComponent: FC<FilterFormProps> = ({
   onDeleteTodos,
   onFilterTodos,
   onShowSearch,
   onToggleTodos,
   todos,
-}: FilterProps): ReactElement => {
+}: FilterFormProps): ReactElement => {
   const classes = useStyles();
-  const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(
-    false
-  );
-  const [stateFilter, setStateFilter] = useState<string>(filter.ALL_TODOS);
+
+  const [state, setState] = useState({
+    isAllCompleted: false,
+    todosFilter: filter.ALL_TODOS,
+  });
 
   useEffect(() => {
     if (todos.payload[0]) {
-      setStateIsAllCompleted(
-        (stateIsAllCompleted) => !todos.payload[0].completed
-      );
+      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
     }
   }, [todos]);
+
+  const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
+    setState({ ...state, todosFilter: e.target.value as string });
+    onFilterTodos(e.target.value as string);
+  };
 
   const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
@@ -56,13 +59,10 @@ const FilterTodos: FC<FilterProps> = ({
   };
 
   const handleToggleTodos = (): void => {
-    setStateIsAllCompleted(stateIsAllCompleted);
-    onToggleTodos(stateIsAllCompleted);
-  };
-
-  const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
-    setStateFilter(e.target.value as string);
-    onFilterTodos(e.target.value as string);
+    if (todos.payload[0]) {
+      setState({ ...state, isAllCompleted: !state.isAllCompleted });
+    }
+    onToggleTodos(state.isAllCompleted);
   };
 
   return (
@@ -72,7 +72,7 @@ const FilterTodos: FC<FilterProps> = ({
           <ListItemIcon>
             <IconButton
               aria-label="Edit Completed"
-              color={stateIsAllCompleted ? "primary" : "inherit"}
+              color={state.isAllCompleted ? "primary" : "inherit"}
               disabled={todos.countAll === 0}
               edge="end"
               onClick={handleToggleTodos}
@@ -123,7 +123,7 @@ const FilterTodos: FC<FilterProps> = ({
             <FormControl variant="outlined" fullWidth>
               <Select
                 id="filter-select"
-                value={stateFilter}
+                value={state.todosFilter}
                 onChange={handleChange}
               >
                 <MenuItem value={filter.ALL_TODOS}>
@@ -161,4 +161,4 @@ const FilterTodos: FC<FilterProps> = ({
   );
 };
 
-export default FilterTodos;
+export default FilterComponent;

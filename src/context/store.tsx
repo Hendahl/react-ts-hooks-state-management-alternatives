@@ -4,7 +4,7 @@ import reducer from "./todos";
 
 type ContextType = {
   todos: Todos;
-  dispatch: Dispatch<Action>;
+  dispatch: Dispatch<ContextAction>;
 };
 
 export const Context = createContext<ContextType>(utils.getStoredTodos());

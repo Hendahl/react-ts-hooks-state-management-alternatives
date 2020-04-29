@@ -9,20 +9,18 @@ import React, {
   useState,
 } from "react";
 
-const AddForm: FC = (): ReactElement => {
+const AddComponent: FC = (): ReactElement => {
   const { todos } = useStore();
-  const [state, setState] = useState<AddState>({
-    title: "",
-  });
+  const [stateTitle, setStateTitle] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setState({ ...state, title: e.target.value });
+    setStateTitle(e.target.value);
   };
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === "Enter" && state.title !== "") {
-      todos.addTodo(state.title);
-      setState({ ...state, title: "" });
+    if (e.key === "Enter" && stateTitle !== "") {
+      todos.addTodo(stateTitle);
+      setStateTitle("");
     }
   };
 
@@ -36,11 +34,11 @@ const AddForm: FC = (): ReactElement => {
         onChange={handleChange}
         onKeyPress={handleEnter}
         type="text"
-        value={state.title}
+        value={stateTitle}
         variant="outlined"
       />
     </ListItem>
   );
 };
 
-export default AddForm;
+export default AddComponent;

@@ -14,13 +14,13 @@ import React, {
 } from "react";
 
 interface EditFormProps {
-  onEditTodo: EditTodo;
-  onSaveTodo: SaveTodo;
-  onShowEdit: Editing;
+  onEditTodo: (todo: Todo) => void;
+  onSaveTodo: () => void;
+  onShowEdit: (todo: Todo) => void;
   todo: Todo;
 }
 
-const EditForm: FC<EditFormProps> = ({
+const EditComponent: FC<EditFormProps> = ({
   onEditTodo,
   onSaveTodo,
   onShowEdit,
@@ -96,4 +96,4 @@ const EditForm: FC<EditFormProps> = ({
   );
 };
 
-export default EditForm;
+export default EditComponent;

@@ -1,17 +1,33 @@
 import * as actions from "../../redux/todos/actions";
-import AddForm from "./add";
+import AddComponent from "./add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import EditForm from "./edit";
-import FilterTodos from "./filter";
+import EditComponent from "./edit";
+import FilterComponent from "./filter";
 import List from "@material-ui/core/List";
-import Progress from "../shared/progress";
+import ProgressComponent from "./progress";
 import React, { FC, useEffect } from "react";
-import Todo from "./todo";
+import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
-import SearchForm from "./search";
+import SearchComponent from "./search";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
+type Todo = {
+  completed: boolean;
+  id: number;
+  title: string;
+};
+
+type Todos = {
+  countAll: number;
+  countCompleted: number;
+  isSearching: boolean;
+  isUpdating: boolean;
+  payload: Todo[];
+  visibilityFilter: string;
+  visible: Todo[];
+  editing: Todo[];
+};
 interface TodosProps {
   todos: Todos;
 }
@@ -38,19 +54,19 @@ const Todos: FC = () => {
           Todos - Redux
         </Box>
       </Typography>
-      <Progress isUpdating={todos.isUpdating} />
-      {todos.editing.length !== 0 && <EditForm />}
+      <ProgressComponent isUpdating={todos.isUpdating} />
+      {todos.editing.length !== 0 && <EditComponent />}
       <List>
         {todos.isSearching ? (
-          <SearchForm />
+          <SearchComponent />
         ) : (
           <>
-            <AddForm />
-            <FilterTodos />
+            <AddComponent />
+            <FilterComponent />
           </>
         )}
         {todos.visible.map((_todo: Todo) => (
-          <Todo key={_todo.id} todo={_todo} />
+          <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>
     </Container>

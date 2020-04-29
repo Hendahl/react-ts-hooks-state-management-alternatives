@@ -3,11 +3,11 @@ import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import React, { ChangeEvent, FC, ReactElement, useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import { Context } from "../../context/store";
-import React, { ChangeEvent, FC, ReactElement, useContext } from "react";
 
-const SearchForm: FC = (): ReactElement => {
+const SearchComponent: FC = (): ReactElement => {
   const { todos, dispatch } = useContext(Context);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -31,7 +31,7 @@ const SearchForm: FC = (): ReactElement => {
           aria-label="Search"
           color="primary"
           edge="end"
-          onClick={() => dispatch({ type: actions.SEARCH_TOGGLE })}
+          onClick={() => dispatch({ type: actions.SHOW_SEARCH })}
         >
           <ClearIcon />
         </IconButton>
@@ -40,4 +40,4 @@ const SearchForm: FC = (): ReactElement => {
   );
 };
 
-export default SearchForm;
+export default SearchComponent;

@@ -15,7 +15,7 @@ interface TodoProps {
   todo: Todo;
 }
 
-const Todo: FC<TodoProps> = observer(({ todo }) => {
+const TodoComponent: FC<TodoProps> = observer(({ todo }) => {
   const classes = useStyles();
   const { todos } = useStore();
 
@@ -24,7 +24,7 @@ const Todo: FC<TodoProps> = observer(({ todo }) => {
       <ListItemIcon>
         <Switch
           checked={todo.completed}
-          onChange={() => todos.changeTodoCompleted(todo)}
+          onChange={() => todos.toggleTodo(todo)}
           color="primary"
           value="completed"
           size="small"
@@ -48,7 +48,7 @@ const Todo: FC<TodoProps> = observer(({ todo }) => {
         <IconButton
           edge="end"
           aria-label="edit"
-          onClick={() => todos.editingTodo(todo)}
+          onClick={() => todos.showEdit(todo)}
         >
           <EditIcon />
         </IconButton>
@@ -57,4 +57,4 @@ const Todo: FC<TodoProps> = observer(({ todo }) => {
   );
 });
 
-export default Todo;
+export default TodoComponent;

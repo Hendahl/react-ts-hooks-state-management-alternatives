@@ -9,83 +9,75 @@ import TextField from "@material-ui/core/TextField";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
 
-const EditForm: FC = observer(() => {
+const EditComponent: FC = observer(() => {
   const { todos } = useStore();
-  const editTodo = todos.editing[0];
-  const [existingTitle] = useState<string>(editTodo.title);
+  const todo = todos.editing[0];
+  const [stateTitle] = useState<string>(todo.title);
 
-  const handleChangeTodoTitle = (e: ChangeEvent<HTMLInputElement>): void => {
-    todos.changeTodoTitle({
-      ...editTodo,
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    todos.editTodo({
+      ...todo,
       title: e.target.value,
     });
   };
 
-  const handleUndo: UndoEdit = () => {
-    todos.changeTodoTitle({
-      ...editTodo,
-      title: existingTitle,
-    });
+  const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === "Enter" && todo.title !== "" && todo.title !== stateTitle) {
+      todos.saveTodo();
+    }
   };
 
-  const handleSaveTodoTitleOnEnter = (
-    e: KeyboardEvent<HTMLInputElement>
-  ): void => {
-    if (
-      e.key === "Enter" &&
-      editTodo.title !== "" &&
-      editTodo.title !== existingTitle
-    ) {
-      todos.saveTodoTitle();
-    }
+  const handleUndo = () => {
+    todos.editTodo({
+      ...todo,
+      title: stateTitle,
+    });
   };
 
   return (
     <Dialog
       open={true}
-      aria-labelledby=" changeTodoCompleted-dialog-title"
+      aria-labelledby=" toggleTodo-dialog-title"
       fullWidth={true}
     >
-      <DialogTitle id=" changeTodoCompleted-dialog-title">
-        Edit {existingTitle}
-      </DialogTitle>
+      <DialogTitle id=" toggleTodo-dialog-title">Edit {stateTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>Change title of the todo ...</DialogContentText>
         <TextField
           autoComplete="off"
           autoFocus
-          margin="dense"
+          fullWidth
           id="title"
           label="Title"
-          fullWidth
-          value={editTodo.title}
-          onChange={handleChangeTodoTitle}
-          onKeyPress={handleSaveTodoTitleOnEnter}
+          margin="dense"
+          onChange={handleChange}
+          onKeyPress={handleEnter}
+          value={todo.title}
         />
         <TextField
           disabled={true}
-          margin="dense"
+          fullWidth
           id="id"
           label="Id"
-          fullWidth
-          value={editTodo.id}
+          margin="dense"
+          value={todo.id}
         />
       </DialogContent>
       <DialogActions>
         <Button
           color="primary"
+          disabled={todo.title === stateTitle}
           onClick={handleUndo}
-          disabled={editTodo.title === existingTitle}
         >
           Undo
         </Button>
-        <Button color="primary" onClick={() => todos.editingTodo(editTodo)}>
+        <Button color="primary" onClick={() => todos.showEdit(todo)}>
           Cancel
         </Button>
         <Button
           color="primary"
-          onClick={() => todos.saveTodoTitle()}
-          disabled={editTodo.title === "" || editTodo.title === existingTitle}
+          disabled={todo.title === "" || todo.title === stateTitle}
+          onClick={() => todos.saveTodo()}
         >
           Save
         </Button>
@@ -94,4 +86,4 @@ const EditForm: FC = observer(() => {
   );
 });
 
-export default EditForm;
+export default EditComponent;

@@ -15,34 +15,38 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
 import { useStyles } from "../../theme";
 
-const FilterTodos: FC = observer(() => {
+const FilterComponent: FC = observer(() => {
   const classes = useStyles();
   const { todos } = useStore();
-  const [isAllCompleted, setIsAllCompleted] = useState<boolean>(false);
-  const [filterState, setFilterState] = useState<string>(filter.ALL_TODOS);
+  const [state, setState] = useState({
+    isAllCompleted: false,
+    todosFilter: filter.ALL_TODOS,
+  });
 
   useEffect(() => {
     if (todos.payload[0]) {
-      setIsAllCompleted(!todos.payload[0].completed);
+      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
     }
   }, [todos.payload]);
 
   const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
-    setFilterState(e.target.value as string);
-  };
-
-  const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    todos.setFilter(e.currentTarget.id);
-  };
-
-  const handleEditAll = (): void => {
-    setIsAllCompleted(!isAllCompleted);
-    todos.changeTodosCompleted(isAllCompleted);
+    setState({ ...state, todosFilter: e.target.value as string });
   };
 
   const handleDeleteTodos = () => {
     todos.deleteTodos();
+  };
+
+  const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    todos.filterTodos(e.currentTarget.id);
+  };
+
+  const handleToggleTodos = (): void => {
+    if (todos.payload[0]) {
+      setState({ ...state, isAllCompleted: !state.isAllCompleted });
+    }
+    todos.toggleTodos(state.isAllCompleted);
   };
 
   return (
@@ -52,10 +56,10 @@ const FilterTodos: FC = observer(() => {
           <ListItemIcon>
             <IconButton
               aria-label="Edit Completed"
-              color={isAllCompleted ? "primary" : "inherit"}
+              color={state.isAllCompleted ? "primary" : "inherit"}
               disabled={todos.countAllView === 0}
               edge="end"
-              onClick={handleEditAll}
+              onClick={handleToggleTodos}
             >
               <KeyboardArrowDownIcon />
             </IconButton>
@@ -63,9 +67,9 @@ const FilterTodos: FC = observer(() => {
           <Hidden smDown>
             <ButtonGroup
               aria-label="text primary button group"
+              className={classes.buttonGroup}
               color="primary"
               variant="text"
-              className={classes.buttonGroup}
             >
               <Button
                 disabled={
@@ -103,8 +107,8 @@ const FilterTodos: FC = observer(() => {
             <FormControl variant="outlined" fullWidth>
               <Select
                 id="filter-select"
-                value={filterState}
                 onChange={handleChange}
+                value={state.todosFilter}
               >
                 <MenuItem value={filter.ALL_TODOS}>
                   ALL ({todos.countAllView})
@@ -119,9 +123,9 @@ const FilterTodos: FC = observer(() => {
             </FormControl>
           </Hidden>
           <IconButton
+            aria-label="Delete all"
             color="primary"
             edge="end"
-            aria-label="Delete all"
             onClick={handleDeleteTodos}
           >
             <DeleteIcon />
@@ -132,4 +136,4 @@ const FilterTodos: FC = observer(() => {
   );
 });
 
-export default FilterTodos;
+export default FilterComponent;

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useStyles } from "../../theme";
 import { withRouter } from "react-router-dom";
-import CodeIcon from "@material-ui/icons/Code";
+import ViewListIcon from "@material-ui/icons/ViewList";
 import Divider from "@material-ui/core/Divider";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import HomeIcon from "@material-ui/icons/Home";
@@ -38,7 +38,7 @@ const AppMenu: FC = () => {
           to="/basic"
         >
           <ListItemIcon>
-            <CodeIcon color="primary" />
+            <ViewListIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="Basic" />
         </ListItem>
@@ -49,7 +49,7 @@ const AppMenu: FC = () => {
           to="/context"
         >
           <ListItemIcon>
-            <CodeIcon color="primary" />
+            <ViewListIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="Context" />
         </ListItem>
@@ -60,7 +60,7 @@ const AppMenu: FC = () => {
           to="/redux"
         >
           <ListItemIcon>
-            <CodeIcon color="primary" />
+            <ViewListIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="Redux" />
         </ListItem>
@@ -71,7 +71,7 @@ const AppMenu: FC = () => {
           to="/mobx"
         >
           <ListItemIcon>
-            <CodeIcon color="primary" />
+            <ViewListIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="MobX" />
         </ListItem>

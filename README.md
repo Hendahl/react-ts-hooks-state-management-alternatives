@@ -10,7 +10,7 @@ For education and demonstrations to easily show alternative solutions for managi
 
 ## Note:
 
-This is a demo with several state solutions in the same App, which means that structures are not optimal in all parts and deviations from common patterns exist. But on the other hand, you probably won't combine Redux and MobX in this way (yes I Know about Mobdux :). There is even a branch for each alternative with a more optimized structure.
+This is a demo with several state solutions in the same App, which means that structures are not optimal in all parts, duplicated code and deviations from common patterns exists.
 
 ## Alternatives:
 

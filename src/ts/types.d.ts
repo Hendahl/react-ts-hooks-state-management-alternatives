@@ -1,10 +1,3 @@
-type Classes = {
-  listItem: string;
-  listItemText: string;
-  title: string;
-  titleCompleted: string;
-};
-
 type Todo = {
   completed: boolean;
   id: number;
@@ -21,40 +14,3 @@ type Todos = {
   visible: Todo[];
   editing: Todo[];
 };
-
-type AddState = {
-  title: string;
-};
-
-type AddTodo = (title: string) => void;
-type DeleteTodo = (todo: Todo) => void;
-type DeleteTodos = () => void;
-type Dispatch = (arg: Action) => void;
-type EditTodo = (todo: Todo) => void;
-type ChangeTodos = (completed: boolean) => void;
-type Editing = (todo: Todo) => void;
-type FilterTodos = (visibiltityFilter: string) => void;
-type GetTodos = () => void;
-type SaveTodo = () => void;
-type SearchToggle = () => void;
-type SearchTodos = (searchTerm: string) => void;
-type UndoEdit = () => void;
-type UpdateTodos = () => void;
-
-type Action =
-  | { type: "ACTIVE_TODOS" }
-  | { type: "ADD_TODO"; title: string }
-  | { type: "ALL_TODOS" }
-  | { type: "CHANGE_TODO_COMPLETED"; todo: Todo }
-  | { type: "CHANGE_TODO_TITLE"; todo: Todo }
-  | { type: "CHANGE_TODOS_COMPLETED"; isAllCompleted: boolean }
-  | { type: "COMPLETED_TODOS" }
-  | { type: "DELETE_TODO"; id: number }
-  | { type: "DELETE_TODOS" }
-  | { type: "EDITING_TODO"; todo: Todo }
-  | { type: "GET_TODOS" }
-  | { type: "SAVE_TODO" }
-  | { type: "SET_FILTER"; visibiltityFilter: string }
-  | { type: "SEARCH_TODOS"; searchTerm: string }
-  | { type: "SEARCH_TOGGLE" }
-  | { type: "UPDATE_TODOS" };

@@ -10,20 +10,19 @@ import Switch from "@material-ui/core/Switch";
 import { useStyles } from "../../theme";
 
 interface TodoProps {
-  onDeleteTodo: DeleteTodo;
-  onShowEdit: Editing;
-  onToggleTodo: EditTodo;
+  onDeleteTodo: (todo: Todo) => void;
+  onShowEdit: (todo: Todo) => void;
+  onToggleTodo: (todo: Todo) => void;
   todo: Todo;
 }
 
-const Todo: FC<TodoProps> = ({
+const TodoComponent: FC<TodoProps> = ({
   onDeleteTodo,
   onShowEdit,
   onToggleTodo,
   todo,
 }): ReactElement => {
   const classes = useStyles();
-
   return (
     <>
       <ListItem
@@ -71,4 +70,4 @@ const Todo: FC<TodoProps> = ({
   );
 };
 
-export default Todo;
+export default TodoComponent;

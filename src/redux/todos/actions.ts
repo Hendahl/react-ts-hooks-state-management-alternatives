@@ -6,12 +6,6 @@ export const addTodo: AddTodo = (title) => {
   };
 };
 
-export const saveTodoTitle: SaveTodo = () => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: actions.SAVE_TODO });
-  };
-};
-
 export const deleteTodo: DeleteTodo = (todo) => {
   return (dispatch: Dispatch) => {
     dispatch({ type: actions.DELETE_TODO, id: todo.id });
@@ -24,29 +18,17 @@ export const deleteTodos: DeleteTodos = () => {
   };
 };
 
-export const editingTodo: Editing = (todo) => {
+export const editTodo: EditTodo = (todo) => {
   return (dispatch: Dispatch) => {
-    dispatch({ type: actions.EDITING_TODO, todo: todo });
+    dispatch({ type: actions.EDIT_TODO, todo: todo });
   };
 };
 
-export const changeTodoCompleted: EditTodo = (todo) => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: actions.CHANGE_TODO_COMPLETED, todo: todo });
-  };
-};
-
-export const changeTodoTitle: EditTodo = (todo) => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: actions.CHANGE_TODO_TITLE, todo: todo });
-  };
-};
-
-export const changeTodosCompleted: ChangeTodos = (isAllCompleted) => {
+export const filterTodos: FilterTodos = (visibilityFilter) => {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: actions.CHANGE_TODOS_COMPLETED,
-      isAllCompleted: isAllCompleted,
+      type: actions.FILTER_TODOS,
+      visibiltityFilter: visibilityFilter,
     });
   };
 };
@@ -57,26 +39,47 @@ export const getTodos: GetTodos = () => {
   };
 };
 
-export const updateTodos: UpdateTodos = () => {
+export const saveTodo: SaveTodo = () => {
   return (dispatch: Dispatch) => {
-    dispatch({ type: actions.UPDATE_TODOS });
-  };
-};
-
-export const setFilter: FilterTodos = (visibilityFilter) => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: actions.SET_FILTER, visibiltityFilter: visibilityFilter });
-  };
-};
-
-export const searchToggle: SearchToggle = () => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: actions.SEARCH_TOGGLE });
+    dispatch({ type: actions.SAVE_TODO });
   };
 };
 
 export const searchTodos: SearchTodos = (searchTerm) => {
   return (dispatch: Dispatch) => {
     dispatch({ type: actions.SEARCH_TODOS, searchTerm: searchTerm });
+  };
+};
+
+export const showEdit: ShowEdit = (todo) => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: actions.SHOW_EDIT, todo: todo });
+  };
+};
+
+export const showSearch: ShowSearch = () => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: actions.SHOW_SEARCH });
+  };
+};
+
+export const toggleTodo: ToggleTodo = (todo) => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: actions.TOGGLE_TODO, todo: todo });
+  };
+};
+
+export const toggleTodos: ToggleTodos = (isAllCompleted) => {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: actions.TOGGLE_TODOS,
+      isAllCompleted: isAllCompleted,
+    });
+  };
+};
+
+export const updateTodos: UpdateTodos = () => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: actions.UPDATE_TODOS });
   };
 };

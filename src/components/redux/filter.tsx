@@ -1,14 +1,19 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { useStyles } from "../../theme";
 import * as actions from "../../redux/todos/actions";
 import * as filter from "../../constants/filter";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import DeleteIcon from "@material-ui/icons/Delete";
+import FormControl from "@material-ui/core/FormControl";
+import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import MenuItem from "@material-ui/core/MenuItem";
+import SearchIcon from "@material-ui/icons/Search";
+import Select from "@material-ui/core/Select";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { useStyles } from "../../theme";
 import React, {
   FC,
   FormEvent,
@@ -17,47 +22,46 @@ import React, {
   useState,
   ChangeEvent,
 } from "react";
-import SearchIcon from "@material-ui/icons/Search";
-import Hidden from "@material-ui/core/Hidden";
-import Select from "@material-ui/core/Select";
-import FormControl from "@material-ui/core/FormControl";
-import MenuItem from "@material-ui/core/MenuItem";
 
-interface FilterProps {
+interface FilterFormProps {
   todos: Todos;
 }
 
-const FilterTodos: FC = (): ReactElement => {
+const FilterComponent: FC = (): ReactElement => {
   const classes = useStyles();
-  const typedUseSelector: TypedUseSelectorHook<FilterProps> = useSelector;
+  const typedUseSelector: TypedUseSelectorHook<FilterFormProps> = useSelector;
   const todos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
-  const [isAllCompleted, setIsAllCompleted] = useState<boolean>(false);
-  const [filterState, setFilterState] = useState<string>(filter.ALL_TODOS);
+  const [state, setState] = useState({
+    isAllCompleted: false,
+    todosFilter: filter.ALL_TODOS,
+  });
 
   useEffect(() => {
     if (todos.payload[0]) {
-      setIsAllCompleted((isAllCompleted) => !todos.payload[0].completed);
+      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
     }
   }, [todos]);
 
   const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
-    setFilterState(e.target.value as string);
-    dispatch(actions.setFilter(e.target.value as string));
-  };
-
-  const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    dispatch(actions.setFilter(e.currentTarget.id));
+    setState({ ...state, todosFilter: e.target.value as string });
+    dispatch(actions.filterTodos(e.target.value as string));
   };
 
   const handleDeleteTodos = () => {
     dispatch(actions.deleteTodos());
   };
 
-  const handleEditAll = (): void => {
-    setIsAllCompleted(isAllCompleted);
-    dispatch(actions.changeTodosCompleted(isAllCompleted));
+  const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    dispatch(actions.filterTodos(e.currentTarget.id));
+  };
+
+  const handleToggleTodos = (): void => {
+    if (todos.payload[0]) {
+      setState({ ...state, isAllCompleted: !state.isAllCompleted });
+    }
+    dispatch(actions.toggleTodos(state.isAllCompleted));
   };
 
   return (
@@ -67,10 +71,10 @@ const FilterTodos: FC = (): ReactElement => {
           <ListItemIcon>
             <IconButton
               aria-label="Edit Completed"
-              color={isAllCompleted ? "primary" : "inherit"}
+              color={state.isAllCompleted ? "primary" : "inherit"}
               disabled={todos.countAll === 0}
               edge="end"
-              onClick={handleEditAll}
+              onClick={handleToggleTodos}
             >
               <KeyboardArrowDownIcon />
             </IconButton>
@@ -118,7 +122,7 @@ const FilterTodos: FC = (): ReactElement => {
             <FormControl variant="outlined" fullWidth>
               <Select
                 id="filter-select"
-                value={filterState}
+                value={state.todosFilter}
                 onChange={handleChange}
               >
                 <MenuItem value={filter.ALL_TODOS}>
@@ -146,7 +150,7 @@ const FilterTodos: FC = (): ReactElement => {
             disabled={todos.isSearching}
             edge="end"
             aria-label="Search"
-            onClick={() => dispatch(actions.searchToggle())}
+            onClick={() => dispatch(actions.showSearch())}
           >
             <SearchIcon />
           </IconButton>
@@ -156,4 +160,4 @@ const FilterTodos: FC = (): ReactElement => {
   );
 };
 
-export default FilterTodos;
+export default FilterComponent;

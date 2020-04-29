@@ -1,14 +1,14 @@
 import * as actions from "../../constants/actions";
-import AddForm from "./add";
+import AddComponent from "./add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import EditForm from "./edit";
-import FilterTodos from "./filter";
+import EditComponent from "./edit";
+import FilterComponent from "./filter";
 import List from "@material-ui/core/List";
-import Progress from "../shared/progress";
+import ProgressComponent from "./progress";
 import React, { FC, useContext, useEffect } from "react";
-import SearchForm from "./search";
-import Todo from "./todo";
+import SearchComponent from "./search";
+import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
 import { Context } from "../../context/store";
 
@@ -17,7 +17,6 @@ const Todos: FC = () => {
 
   useEffect(() => {
     if (todos.isUpdating) {
-      console.log(todos.visible);
       dispatch({ type: actions.UPDATE_TODOS });
     }
   }, [todos, dispatch]);
@@ -29,19 +28,19 @@ const Todos: FC = () => {
           Todos - Context
         </Box>
       </Typography>
-      <Progress isUpdating={todos.isUpdating} />
-      {todos.editing.length !== 0 && <EditForm />}
+      <ProgressComponent isUpdating={todos.isUpdating} />
+      {todos.editing.length !== 0 && <EditComponent />}
       <List>
         {todos.isSearching ? (
-          <SearchForm />
+          <SearchComponent />
         ) : (
           <>
-            <AddForm />
-            <FilterTodos />
+            <AddComponent />
+            <FilterComponent />
           </>
         )}
         {todos.visible.map((_todo: Todo) => (
-          <Todo key={_todo.id} todo={_todo} />
+          <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>
     </Container>

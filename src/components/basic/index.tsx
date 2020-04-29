@@ -1,20 +1,18 @@
 import * as filter from "../../constants/filter";
 import * as utils from "../../utils";
-import AddForm from "./add";
+import AddComponent from "./add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import EditForm from "./edit";
-import FilterTodos from "./filter";
+import EditComponent from "./edit";
+import FilterComponent from "./filter";
 import List from "@material-ui/core/List";
-import Progress from "./progress";
+import ProgressComponent from "./progress";
 import React, { FC, useEffect, useState } from "react";
-import SearchForm from "./search";
-import Todo from "./todo";
+import SearchComponent from "./search";
+import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
 
-/*
-todos state structure  
-{
+const initialTodos: Todos = {
   countAll: 0,
   countCompleted: 0,
   editing: [],
@@ -23,32 +21,27 @@ todos state structure
   payload: [],
   visibilityFilter: filter.ALL_TODOS,
   visible: [],
-}
-*/
+};
 
-type AddTodo = (title: string) => void;
-type DeleteTodo = (todo: Todo) => void;
-type DeleteTodos = () => void;
-type EditTodo = (todo: Todo) => void;
-type FilterTodos = (visibiltityFilter: string) => void;
-type SaveTodo = () => void;
-type SearchTodos = (searchTerm: string) => void;
-type ShowEdit = (todo: Todo) => void;
-type ShowShearch = () => void;
-type ToggleTodo = (todo: Todo) => void;
-type ToggleTodos = (isAllCompleted: boolean) => void;
-
-interface TodosProps {
-  stateTodos: Todos;
-  todo: Todo;
-}
-
-const Todos: FC<TodosProps> = () => {
+const Todos: FC = () => {
   const [stateTodos, setStateTodos] = useState<Todos>(utils.getStoredTodos());
 
   useEffect(() => {
     if (stateTodos.isUpdating) {
-      setStateTodos(utils.updateTodos(stateTodos));
+      const stateUpdated: Todos = {
+        ...stateTodos,
+        isUpdating: false,
+        visible:
+          stateTodos.visibilityFilter === filter.ALL_TODOS
+            ? stateTodos.payload
+            : stateTodos.payload.filter((_todo) =>
+                stateTodos.visibilityFilter === filter.COMPLETED_TODOS
+                  ? _todo.completed
+                  : !_todo.completed
+              ),
+      };
+      utils.setStoredTodos(stateUpdated);
+      setStateTodos(stateUpdated);
     }
   }, [stateTodos]);
 
@@ -81,10 +74,10 @@ const Todos: FC<TodosProps> = () => {
 
   const deleteTodos: DeleteTodos = () => {
     utils.setStoredTodos({
-      ...utils.initialTodos,
+      ...initialTodos,
     });
     setStateTodos({
-      ...utils.initialTodos,
+      ...initialTodos,
     });
   };
 
@@ -182,9 +175,9 @@ const Todos: FC<TodosProps> = () => {
           Todos - Basic
         </Box>
       </Typography>
-      <Progress isUpdating={stateTodos.isUpdating} />
+      <ProgressComponent isUpdating={stateTodos.isUpdating} />
       {stateTodos.editing.length !== 0 && (
-        <EditForm
+        <EditComponent
           onEditTodo={editTodo}
           onSaveTodo={saveTodo}
           onShowEdit={showEdit}
@@ -193,15 +186,15 @@ const Todos: FC<TodosProps> = () => {
       )}
       <List>
         {stateTodos.isSearching ? (
-          <SearchForm
+          <SearchComponent
             onShowSearch={showSearch}
             onSearchTodos={searchTodos}
             todos={stateTodos}
           />
         ) : (
           <>
-            <AddForm onAddTodo={addTodo} />
-            <FilterTodos
+            <AddComponent onAddTodo={addTodo} />
+            <FilterComponent
               onDeleteTodos={deleteTodos}
               onFilterTodos={filterTodos}
               onShowSearch={showSearch}
@@ -211,7 +204,7 @@ const Todos: FC<TodosProps> = () => {
           </>
         )}
         {stateTodos.visible.map((_todo) => (
-          <Todo
+          <TodoComponent
             key={_todo.id}
             onDeleteTodo={deleteTodo}
             onShowEdit={showEdit}

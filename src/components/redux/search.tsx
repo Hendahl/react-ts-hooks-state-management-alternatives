@@ -11,7 +11,7 @@ interface TodosProps {
   todos: Todos;
 }
 
-const SearchForm: FC = (): ReactElement => {
+const SearchComponent: FC = (): ReactElement => {
   const typedUseSelector: TypedUseSelectorHook<TodosProps> = useSelector;
   const todos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const SearchForm: FC = (): ReactElement => {
           aria-label="Search"
           color="primary"
           edge="end"
-          onClick={() => dispatch(actions.searchToggle())}
+          onClick={() => dispatch(actions.showSearch())}
         >
           <ClearIcon />
         </IconButton>
@@ -46,4 +46,4 @@ const SearchForm: FC = (): ReactElement => {
   );
 };
 
-export default SearchForm;
+export default SearchComponent;

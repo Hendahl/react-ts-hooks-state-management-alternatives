@@ -1,15 +1,15 @@
-import AddForm from "./add";
+import AddComponent from "./add";
 import Box from "@material-ui/core/Box";
-import FilterTodos from "./filter";
+import Container from "@material-ui/core/Container";
+import EditComponent from "./edit";
+import FilterComponent from "./filter";
 import List from "@material-ui/core/List";
-import Progress from "../shared/progress";
+import ProgressComponent from "./progress";
 import React, { FC, useMemo } from "react";
-import Todo from "./todo";
+import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
-import Container from "@material-ui/core/Container";
-import EditForm from "./edit";
 
 const Todos: FC = observer(() => {
   const { todos } = useStore();
@@ -25,13 +25,13 @@ const Todos: FC = observer(() => {
           Todos - MobX
         </Box>
       </Typography>
-      <Progress isUpdating={todos.isUpdating} />
-      {todos.editing.length !== 0 && <EditForm />}
+      <ProgressComponent isUpdating={todos.isUpdating} />
+      {todos.editing.length !== 0 && <EditComponent />}
       <List>
-        <AddForm />
-        <FilterTodos />
+        <AddComponent />
+        <FilterComponent />
         {todos.visibleView.map((_todo: Todo) => (
-          <Todo key={_todo.id} todo={_todo} />
+          <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>
     </Container>
