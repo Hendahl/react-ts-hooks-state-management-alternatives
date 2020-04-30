@@ -11,6 +11,7 @@ export const initialTodos: Todos = {
   countCompleted: 0,
   editing: [],
   payload: [],
+  isSearching: false,
   isUpdating: false,
   visibilityFilter: filter.ALL_TODOS,
   visible: [],

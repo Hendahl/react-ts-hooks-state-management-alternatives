@@ -15,7 +15,7 @@ interface TodoProps {
   todo: Todo;
 }
 
-const Todo: FC<TodoProps> = ({ todo }) => {
+const TodoComponent: FC<TodoProps> = ({ todo }) => {
   const { dispatch } = useContext(Context);
   const classes = useStyles();
 
@@ -27,9 +27,7 @@ const Todo: FC<TodoProps> = ({ todo }) => {
           color="primary"
           value="completed"
           size="small"
-          onChange={() =>
-            dispatch({ type: actions.CHANGE_TODO_COMPLETED, todo: todo })
-          }
+          onChange={() => dispatch({ type: actions.TOGGLE_TODO, todo: todo })}
         />
       </ListItemIcon>
       <ListItemText
@@ -42,21 +40,21 @@ const Todo: FC<TodoProps> = ({ todo }) => {
       <ListItemSecondaryAction>
         <IconButton
           edge="end"
-          aria-label="edit"
-          onClick={() => dispatch({ type: actions.EDITING_TODO, todo: todo })}
-        >
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          edge="end"
           aria-label="Delete Todo"
           onClick={() => dispatch({ type: actions.DELETE_TODO, id: todo.id })}
         >
           <DeleteIcon />
+        </IconButton>
+        <IconButton
+          edge="end"
+          aria-label="edit"
+          onClick={() => dispatch({ type: actions.SHOW_EDIT, todo: todo })}
+        >
+          <EditIcon />
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
   );
 };
 
-export default Todo;
+export default TodoComponent;

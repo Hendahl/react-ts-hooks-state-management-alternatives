@@ -2,38 +2,107 @@ import * as actions from "../../constants/actions";
 import * as filter from "../../constants/filter";
 import * as utils from "../../utils";
 
-const reducer = (todos: Todos, action: Action) => {
+const initialTodos: Todos = {
+  countAll: 0,
+  countCompleted: 0,
+  editing: [],
+  isSearching: false,
+  isUpdating: false,
+  payload: [],
+  visibilityFilter: filter.ALL_TODOS,
+  visible: [],
+};
+
+const reducer = (todos: Todos, action: ContextAction) => {
   switch (action.type) {
     case actions.ADD_TODO: {
+      const statePayload = [
+        { id: utils.uuid(), completed: false, title: action.title },
+        ...todos.payload,
+      ];
       return {
         ...todos,
         countAll: todos.countAll + 1,
-        payload: [
-          { id: utils.uuid(), completed: false, title: action.title },
-          ...todos.payload,
-        ],
         isUpdating: true,
+        payload: statePayload,
         visibilityFilter: filter.ALL_TODOS,
       };
     }
+
     case actions.DELETE_TODO: {
+      const statePayload = todos.payload.filter(
+        (_todo) => _todo.id !== action.id
+      );
       return {
         ...todos,
-        countAll: todos.countAll - 1,
-        payload: todos.payload.filter((_todo) => _todo.id !== action.id),
+        countAll: --todos.countAll,
+        countCompleted: statePayload.length,
         isUpdating: true,
+        payload: statePayload.filter((_todo) => _todo.id !== action.id),
       };
     }
     case actions.DELETE_TODOS: {
-      const defaultValues = utils.initialTodos;
       utils.setStoredTodos({
-        ...defaultValues,
+        ...initialTodos,
       });
       return {
-        ...defaultValues,
+        ...initialTodos,
       };
     }
-    case actions.EDITING_TODO: {
+
+    case actions.EDIT_TODO: {
+      const stateEditing = todos.editing.map((_todo) =>
+        _todo.id === action.todo.id
+          ? { ..._todo, title: action.todo.title }
+          : _todo
+      );
+      return {
+        ...todos,
+        editing: stateEditing,
+      };
+    }
+
+    case actions.FILTER_TODOS: {
+      return {
+        ...todos,
+        isUpdating: true,
+        visibilityFilter: action.visibiltityFilter,
+      };
+    }
+
+    case actions.GET_TODOS: {
+      return utils.getStoredTodos();
+    }
+
+    case actions.SAVE_TODO: {
+      const stateTodo = todos.editing[0];
+      const statePayload: Todo[] = [
+        ...todos.payload.map((_todo) =>
+          _todo.id === stateTodo.id
+            ? { ..._todo, title: stateTodo.title }
+            : _todo
+        ),
+      ];
+      return {
+        ...todos,
+        payload: statePayload,
+        editing: [],
+        isUpdating: true,
+      };
+    }
+
+    case actions.SEARCH_TODOS: {
+      const stateVisible = todos.payload.filter((_todo) =>
+        _todo.title.toLowerCase().includes(action.searchTerm.toLowerCase())
+      );
+      return {
+        ...todos,
+        visible: stateVisible,
+        visibilityFilter: filter.ALL_TODOS,
+      };
+    }
+
+    case actions.SHOW_EDIT: {
       const allreadyIncluded: boolean = todos.editing.includes(action.todo);
       return {
         ...todos,
@@ -42,87 +111,57 @@ const reducer = (todos: Todos, action: Action) => {
       };
     }
 
-    case actions.CHANGE_TODO_COMPLETED: {
-      const payloadState = todos.payload.map((_todo) =>
+    case actions.SHOW_SEARCH: {
+      return {
+        ...todos,
+        isSearching: !todos.isSearching,
+        isUpdating: true,
+      };
+    }
+
+    case actions.TOGGLE_TODO: {
+      const statePayload = todos.payload.map((_todo) =>
         _todo.id === action.todo.id
           ? { ..._todo, completed: !_todo.completed }
           : _todo
       );
       return {
         ...todos,
-        payload: payloadState,
+        countCompleted: statePayload.filter((_todo) => _todo.completed).length,
         isUpdating: true,
+        payload: statePayload,
       };
     }
-    case actions.CHANGE_TODO_TITLE: {
-      const editingState = todos.editing.map((_todo) =>
-        _todo.id === action.todo.id
-          ? { ..._todo, title: action.todo.title }
+
+    case actions.TOGGLE_TODOS: {
+      const statePayload = todos.payload.map((_todo) =>
+        _todo.completed === !action.isAllCompleted
+          ? { ..._todo, completed: action.isAllCompleted }
           : _todo
       );
       return {
         ...todos,
-        editing: editingState,
-      };
-    }
-    case actions.CHANGE_TODOS_COMPLETED: {
-      const payloadState: Todo[] = [
-        ...todos.payload.map((todo) =>
-          todo.completed === !action.isAllCompleted
-            ? { ...todo, completed: action.isAllCompleted }
-            : todo
-        ),
-      ];
-      return {
-        ...todos,
-        payload: payloadState,
+        countCompleted: statePayload.filter((_todo) => _todo.completed).length,
         isUpdating: true,
+        payload: statePayload,
       };
     }
-    case actions.GET_TODOS: {
-      return utils.getStoredTodos();
-    }
-    case actions.SET_FILTER: {
-      return {
-        ...todos,
-        visibilityFilter: action.visibiltityFilter,
-        isUpdating: true,
-      };
-    }
+
     case actions.UPDATE_TODOS: {
-      const payloadState: Todo[] = [...todos.payload];
-      const todosState: Todos = {
+      const stateUpdated: Todos = {
         ...todos,
-        countCompleted: payloadState.filter((_todo) => _todo.completed).length,
         isUpdating: false,
         visible:
           todos.visibilityFilter === filter.ALL_TODOS
-            ? payloadState
-            : payloadState.filter((_todo) =>
+            ? todos.payload
+            : todos.payload.filter((_todo) =>
                 todos.visibilityFilter === filter.COMPLETED_TODOS
                   ? _todo.completed
                   : !_todo.completed
               ),
       };
-      utils.setStoredTodos(todosState);
-      return todosState;
-    }
-
-    case actions.SAVE_TODO: {
-      const editingTodo = todos.editing[0];
-      const payloadState: Todo[] = [
-        ...todos.payload.map((_todo) =>
-          _todo.id === editingTodo.id
-            ? { ..._todo, title: editingTodo.title }
-            : _todo
-        ),
-      ];
-      return {
-        ...todos,
-        payload: payloadState,
-        editing: [],
-        isUpdating: true,
-      };
+      utils.setStoredTodos(stateUpdated);
+      return stateUpdated;
     }
 
     default:
