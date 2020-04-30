@@ -6,7 +6,7 @@ export const uuid = () => {
   return Date.now() + Math.floor(Math.random() * 50);
 };
 
-export const initialTodos: Todos = {
+export const defaultTodos: Todos = {
   countAll: 0,
   countCompleted: 0,
   editing: [],
@@ -19,18 +19,9 @@ export const initialTodos: Todos = {
 
 export const getStoredTodos = () => {
   const store = localStorage.getItem(LSKEY);
-  return (store && JSON.parse(store)) || initialTodos;
+  return (store && JSON.parse(store)) || defaultTodos;
 };
 
 export const setStoredTodos = (payload: Todos) => {
   return localStorage.setItem(LSKEY, JSON.stringify(payload));
-};
-
-export const deleteTodos = () => {
-  setStoredTodos({
-    ...initialTodos,
-  });
-  return {
-    ...initialTodos,
-  };
 };
