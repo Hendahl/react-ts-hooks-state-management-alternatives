@@ -13,14 +13,14 @@ import React, {
   useState,
 } from "react";
 
-interface EditFormProps {
+interface EditProps {
   onEditTodo: (todo: Todo) => void;
   onSaveTodo: () => void;
   onShowEdit: (todo: Todo) => void;
   todo: Todo;
 }
 
-const EditComponent: FC<EditFormProps> = ({
+const EditComponent: FC<EditProps> = ({
   onEditTodo,
   onSaveTodo,
   onShowEdit,

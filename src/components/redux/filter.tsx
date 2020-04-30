@@ -23,13 +23,13 @@ import React, {
   ChangeEvent,
 } from "react";
 
-interface FilterFormProps {
+interface FilterProps {
   todos: Todos;
 }
 
 const FilterComponent: FC = (): ReactElement => {
   const classes = useStyles();
-  const typedUseSelector: TypedUseSelectorHook<FilterFormProps> = useSelector;
+  const typedUseSelector: TypedUseSelectorHook<FilterProps> = useSelector;
   const todos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
   const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(

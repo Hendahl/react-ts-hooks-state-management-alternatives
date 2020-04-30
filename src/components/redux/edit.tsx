@@ -17,12 +17,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 type Undo = () => void;
 
-interface EditFormProps {
+interface EditProps {
   todos: Todos;
 }
 
 const EditComponent: FC = (): ReactElement => {
-  const typedUseSelector: TypedUseSelectorHook<EditFormProps> = useSelector;
+  const typedUseSelector: TypedUseSelectorHook<EditProps> = useSelector;
   const todo = typedUseSelector((state) => state.todos.editing[0]);
   const dispatch = useDispatch();
   const [stateTitle] = useState<string>(todo.title);

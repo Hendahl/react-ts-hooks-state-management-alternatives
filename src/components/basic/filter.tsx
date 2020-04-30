@@ -20,7 +20,7 @@ import React, {
 import SearchIcon from "@material-ui/icons/Search";
 import Select from "@material-ui/core/Select";
 import { useStyles } from "../../theme";
-interface FilterFormProps {
+interface FilterProps {
   onDeleteTodos: () => void;
   onFilterTodos: (visibiltityFilter: string) => void;
   onShowSearch: () => void;
@@ -28,13 +28,13 @@ interface FilterFormProps {
   todos: Todos;
 }
 
-const FilterComponent: FC<FilterFormProps> = ({
+const FilterComponent: FC<FilterProps> = ({
   onDeleteTodos,
   onFilterTodos,
   onShowSearch,
   onToggleTodos,
   todos,
-}: FilterFormProps): ReactElement => {
+}: FilterProps): ReactElement => {
   const classes = useStyles();
 
   const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(
