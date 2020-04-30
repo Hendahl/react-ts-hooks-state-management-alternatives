@@ -52,14 +52,14 @@ export default function reducer(
       };
     }
     case actions.EDIT_TODO: {
-      const editingState = todos.editing.map((_todo: Todo) =>
+      const stateEditing = todos.editing.map((_todo: Todo) =>
         _todo.id === action.todo.id
           ? { ..._todo, title: action.todo.title }
           : _todo
       );
       return {
         ...todos,
-        editing: editingState,
+        editing: stateEditing,
       };
     }
     case actions.FILTER_TODOS: {

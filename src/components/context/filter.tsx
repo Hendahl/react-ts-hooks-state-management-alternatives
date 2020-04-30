@@ -27,19 +27,19 @@ import { useStyles } from "../../theme";
 const FilterComponent: FC = (): ReactElement => {
   const classes = useStyles();
   const { todos, dispatch } = useContext(Context);
-  const [state, setState] = useState({
-    isAllCompleted: false,
-    todosFilter: filter.ALL_TODOS,
-  });
+  const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(
+    false
+  );
+  const [stateFilter, setStateFilter] = useState<string>(filter.ALL_TODOS);
 
   useEffect(() => {
     if (todos.payload[0]) {
-      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
+      setStateIsAllCompleted(!todos.payload[0].completed);
     }
   }, [todos]);
 
   const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
-    setState({ ...state, todosFilter: e.target.value as string });
+    setStateFilter(e.target.value as string);
     dispatch({
       type: actions.FILTER_TODOS,
       visibiltityFilter: e.target.value as string,
@@ -60,11 +60,11 @@ const FilterComponent: FC = (): ReactElement => {
 
   const handleToggleTodos = (): void => {
     if (todos.payload[0]) {
-      setState({ ...state, isAllCompleted: !state.isAllCompleted });
+      setStateIsAllCompleted(!stateIsAllCompleted);
     }
     dispatch({
       type: actions.TOGGLE_TODOS,
-      isAllCompleted: state.isAllCompleted,
+      isAllCompleted: stateIsAllCompleted,
     });
   };
 
@@ -75,7 +75,7 @@ const FilterComponent: FC = (): ReactElement => {
           <ListItemIcon>
             <IconButton
               aria-label="Edit Completed"
-              color={state.isAllCompleted ? "primary" : "inherit"}
+              color={stateIsAllCompleted ? "primary" : "inherit"}
               disabled={todos.countAll === 0}
               edge="end"
               onClick={handleToggleTodos}
@@ -126,7 +126,7 @@ const FilterComponent: FC = (): ReactElement => {
             <FormControl variant="outlined" fullWidth>
               <Select
                 id="filter-select"
-                value={state.todosFilter}
+                value={stateFilter}
                 onChange={handleChange}
               >
                 <MenuItem value={filter.ALL_TODOS}>

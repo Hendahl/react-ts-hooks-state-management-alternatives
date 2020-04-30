@@ -18,19 +18,19 @@ import { useStyles } from "../../theme";
 const FilterComponent: FC = observer(() => {
   const classes = useStyles();
   const { todos } = useStore();
-  const [state, setState] = useState({
-    isAllCompleted: false,
-    todosFilter: filter.ALL_TODOS,
-  });
+  const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(
+    false
+  );
+  const [stateFilter, setStateFilter] = useState<string>(filter.ALL_TODOS);
 
   useEffect(() => {
     if (todos.payload[0]) {
-      setState({ ...state, isAllCompleted: !todos.payload[0].completed });
+      setStateIsAllCompleted(!todos.payload[0].completed);
     }
   }, [todos.payload]);
 
   const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
-    setState({ ...state, todosFilter: e.target.value as string });
+    setStateFilter(e.target.value as string);
   };
 
   const handleDeleteTodos = () => {
@@ -44,9 +44,9 @@ const FilterComponent: FC = observer(() => {
 
   const handleToggleTodos = (): void => {
     if (todos.payload[0]) {
-      setState({ ...state, isAllCompleted: !state.isAllCompleted });
+      setStateIsAllCompleted(!stateIsAllCompleted);
     }
-    todos.toggleTodos(state.isAllCompleted);
+    todos.toggleTodos(stateIsAllCompleted);
   };
 
   return (
@@ -56,7 +56,7 @@ const FilterComponent: FC = observer(() => {
           <ListItemIcon>
             <IconButton
               aria-label="Edit Completed"
-              color={state.isAllCompleted ? "primary" : "inherit"}
+              color={stateIsAllCompleted ? "primary" : "inherit"}
               disabled={todos.countAllView === 0}
               edge="end"
               onClick={handleToggleTodos}
@@ -108,7 +108,7 @@ const FilterComponent: FC = observer(() => {
               <Select
                 id="filter-select"
                 onChange={handleChange}
-                value={state.todosFilter}
+                value={stateFilter}
               >
                 <MenuItem value={filter.ALL_TODOS}>
                   ALL ({todos.countAllView})

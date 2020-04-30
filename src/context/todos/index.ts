@@ -51,14 +51,14 @@ const reducer = (todos: Todos, action: ContextAction) => {
     }
 
     case actions.EDIT_TODO: {
-      const editingState = todos.editing.map((_todo) =>
+      const stateEditing = todos.editing.map((_todo) =>
         _todo.id === action.todo.id
           ? { ..._todo, title: action.todo.title }
           : _todo
       );
       return {
         ...todos,
-        editing: editingState,
+        editing: stateEditing,
       };
     }
 
