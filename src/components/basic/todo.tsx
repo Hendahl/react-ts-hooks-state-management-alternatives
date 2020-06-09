@@ -9,14 +9,14 @@ import React, { FC, ReactElement } from "react";
 import Switch from "@material-ui/core/Switch";
 import { useStyles } from "../../theme";
 
-interface TodoProps {
+interface ITodoComponent {
   onDeleteTodo: (todo: Todo) => void;
   onShowEdit: (todo: Todo) => void;
   onToggleTodo: (todo: Todo) => void;
   todo: Todo;
 }
 
-const TodoComponent: FC<TodoProps> = ({
+const TodoComponent: FC<ITodoComponent> = ({
   onDeleteTodo,
   onShowEdit,
   onToggleTodo,

@@ -10,7 +10,7 @@ For education and demonstrations to easily show alternative solutions for managi
 
 ## Note:
 
-This is a demo with several state solutions in the same App, which means that structures are not optimal in all parts, duplicated code and deviations from common patterns exists.
+This is a demo with several state solutions in the same App, which means that structures are not optimal in all parts, duplicated code and deviations from common patterns exists. There is a branch for every solution that is more optimal.
 
 ## Alternatives:
 

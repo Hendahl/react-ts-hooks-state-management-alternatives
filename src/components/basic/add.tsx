@@ -8,11 +8,11 @@ import React, {
 } from "react";
 import TextField from "@material-ui/core/TextField";
 
-interface AddFormProps {
+interface IAddComponent {
   onAddTodo: (title: string) => void;
 }
 
-const AddComponent: FC<AddFormProps> = ({ onAddTodo }): ReactElement => {
+const AddComponent: FC<IAddComponent> = ({ onAddTodo }): ReactElement => {
   const [stateTitle, setStateTitle] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {

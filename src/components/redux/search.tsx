@@ -7,12 +7,12 @@ import React, { ChangeEvent, FC, ReactElement } from "react";
 import TextField from "@material-ui/core/TextField";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
-interface TodosProps {
+interface ITodos {
   todos: Todos;
 }
 
 const SearchComponent: FC = (): ReactElement => {
-  const typedUseSelector: TypedUseSelectorHook<TodosProps> = useSelector;
+  const typedUseSelector: TypedUseSelectorHook<ITodos> = useSelector;
   const todos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
 

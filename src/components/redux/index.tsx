@@ -28,12 +28,12 @@ type Todos = {
   visible: Todo[];
   editing: Todo[];
 };
-interface TodosProps {
+interface ITodos {
   todos: Todos;
 }
 
 const Todos: FC = () => {
-  const typedUseSelector: TypedUseSelectorHook<TodosProps> = useSelector;
+  const typedUseSelector: TypedUseSelectorHook<ITodos> = useSelector;
   const todos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
 

@@ -11,11 +11,11 @@ import { useStore } from "../../mobx/store";
 import { useStyles } from "../../theme";
 import EditIcon from "@material-ui/icons/Edit";
 
-interface TodoProps {
+interface ITodoComponent {
   todo: Todo;
 }
 
-const TodoComponent: FC<TodoProps> = observer(({ todo }) => {
+const TodoComponent: FC<ITodoComponent> = observer(({ todo }) => {
   const classes = useStyles();
   const { todos } = useStore();
 

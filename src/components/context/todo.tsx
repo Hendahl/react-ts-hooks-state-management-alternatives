@@ -11,11 +11,11 @@ import Switch from "@material-ui/core/Switch";
 import { Context } from "../../context/store";
 import { useStyles } from "../../theme";
 
-interface TodoProps {
+interface ITodoComponent {
   todo: Todo;
 }
 
-const TodoComponent: FC<TodoProps> = ({ todo }) => {
+const TodoComponent: FC<ITodoComponent> = ({ todo }) => {
   const { dispatch } = useContext(Context);
   const classes = useStyles();
 
