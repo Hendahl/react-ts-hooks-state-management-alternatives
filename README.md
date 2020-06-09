@@ -34,3 +34,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### `npm test` or `yarn test`
 
 Runs Jest Tests
+
+### `npm e2e` or `yarn e2e`
+
+Runs Puppeter Test
