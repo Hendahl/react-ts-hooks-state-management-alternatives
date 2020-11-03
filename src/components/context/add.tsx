@@ -1,4 +1,4 @@
-import * as actions from "../../constants/actions";
+import * as types from "../../ts/types";
 import ListItem from "@material-ui/core/ListItem";
 import TextField from "@material-ui/core/TextField";
 import { Context } from "../../context/store";
@@ -21,7 +21,7 @@ const AddComponent: FC = (): ReactElement => {
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && stateTitle !== "") {
-      dispatch({ type: actions.ADD_TODO, title: stateTitle });
+      dispatch({ type: types.ADD_TODO, title: stateTitle });
       setStateTitle("");
     }
   };

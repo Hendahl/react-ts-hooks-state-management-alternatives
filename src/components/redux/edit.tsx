@@ -14,15 +14,16 @@ import React, {
 } from "react";
 import TextField from "@material-ui/core/TextField";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import * as types from "../../ts/types";
 
 type Undo = () => void;
 
-interface IEditComponent {
-  todos: Todos;
+interface EditI {
+  todos: types.Todos;
 }
 
 const EditComponent: FC = (): ReactElement => {
-  const typedUseSelector: TypedUseSelectorHook<IEditComponent> = useSelector;
+  const typedUseSelector: TypedUseSelectorHook<EditI> = useSelector;
   const todo = typedUseSelector((state) => state.todos.editing[0]);
   const dispatch = useDispatch();
   const [stateTitle] = useState<string>(todo.title);

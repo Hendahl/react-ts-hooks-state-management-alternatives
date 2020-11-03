@@ -2,7 +2,6 @@ import AddComponent from "./add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import EditComponent from "./edit";
-import FilterComponent from "./filter";
 import List from "@material-ui/core/List";
 import ProgressComponent from "./progress";
 import React, { FC, useMemo } from "react";
@@ -10,6 +9,7 @@ import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
+import * as types from "../../ts/types";
 
 const Todos: FC = observer(() => {
   const { todos } = useStore();
@@ -29,8 +29,7 @@ const Todos: FC = observer(() => {
       {todos.editing.length !== 0 && <EditComponent />}
       <List>
         <AddComponent />
-        <FilterComponent />
-        {todos.visibleView.map((_todo: Todo) => (
+        {todos.visibleView.map((_todo: types.Todo) => (
           <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>

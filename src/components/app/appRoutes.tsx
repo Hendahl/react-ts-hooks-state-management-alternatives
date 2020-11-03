@@ -6,6 +6,7 @@ import TodosBasic from "../basic";
 import TodosContext from "../../containers/context";
 import TodosMobx from "../../containers/mobx";
 import TodosRedux from "../../containers/redux";
+import TodosReduxToolkit from "../../containers/reduxtoolkit";
 
 const AppRoutes: FC = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes: FC = () => {
       <Route component={TodosBasic} exact path="/basic" />
       <Route component={TodosContext} exact path="/context" />
       <Route component={TodosRedux} exact path="/redux" />
+      <Route component={TodosReduxToolkit} exact path="/reduxtoolkit" />
       <Route component={TodosMobx} exact path="/mobx" />
       <Route component={NotFound} path="*" />
     </Switch>

@@ -67,6 +67,17 @@ const AppMenu: FC = () => {
         <ListItem
           component={Link}
           className={classes.listItem}
+          selected={currentPath === "/reduxtoolkit" ? true : false}
+          to="/reduxtoolkit"
+        >
+          <ListItemIcon>
+            <ViewListIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="Redux Toolkit" />
+        </ListItem>
+        <ListItem
+          component={Link}
+          className={classes.listItem}
           selected={currentPath === "/mobx" ? true : false}
           to="/mobx"
         >

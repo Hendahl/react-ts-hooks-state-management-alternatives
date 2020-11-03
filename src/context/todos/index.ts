@@ -1,21 +1,9 @@
-import * as actions from "../../constants/actions";
-import * as filter from "../../constants/filter";
+import * as types from "../../ts/types";
 import * as utils from "../../utils";
 
-const initialTodos: Todos = {
-  countAll: 0,
-  countCompleted: 0,
-  editing: [],
-  isSearching: false,
-  isUpdating: false,
-  payload: [],
-  visibilityFilter: filter.ALL_TODOS,
-  visible: [],
-};
-
-const reducer = (todos: Todos, action: ContextAction) => {
+const reducer = (todos: types.Todos, action: ContextAction) => {
   switch (action.type) {
-    case actions.ADD_TODO: {
+    case types.ADD_TODO: {
       const statePayload = [
         { id: utils.uuid(), completed: false, title: action.title },
         ...todos.payload,
@@ -25,11 +13,11 @@ const reducer = (todos: Todos, action: ContextAction) => {
         countAll: todos.countAll + 1,
         isUpdating: true,
         payload: statePayload,
-        visibilityFilter: filter.ALL_TODOS,
+        visibilityFilter: types.ALL_TODOS,
       };
     }
 
-    case actions.DELETE_TODO: {
+    case types.DELETE_TODO: {
       const statePayload = todos.payload.filter(
         (_todo) => _todo.id !== action.id
       );
@@ -41,16 +29,16 @@ const reducer = (todos: Todos, action: ContextAction) => {
         payload: statePayload.filter((_todo) => _todo.id !== action.id),
       };
     }
-    case actions.DELETE_TODOS: {
+    case types.DELETE_TODOS: {
       utils.setStoredTodos({
-        ...initialTodos,
+        ...types.initialTodos,
       });
       return {
-        ...initialTodos,
+        ...types.initialTodos,
       };
     }
 
-    case actions.EDIT_TODO: {
+    case types.EDIT_TODO: {
       const stateEditing = todos.editing.map((_todo) =>
         _todo.id === action.todo.id
           ? { ..._todo, title: action.todo.title }
@@ -62,7 +50,7 @@ const reducer = (todos: Todos, action: ContextAction) => {
       };
     }
 
-    case actions.FILTER_TODOS: {
+    case types.FILTER_TODOS: {
       return {
         ...todos,
         isUpdating: true,
@@ -70,13 +58,13 @@ const reducer = (todos: Todos, action: ContextAction) => {
       };
     }
 
-    case actions.GET_TODOS: {
+    case types.GET_TODOS: {
       return utils.getStoredTodos();
     }
 
-    case actions.SAVE_TODO: {
+    case types.SAVE_TODO: {
       const stateTodo = todos.editing[0];
-      const statePayload: Todo[] = [
+      const statePayload: types.Todo[] = [
         ...todos.payload.map((_todo) =>
           _todo.id === stateTodo.id
             ? { ..._todo, title: stateTodo.title }
@@ -91,18 +79,18 @@ const reducer = (todos: Todos, action: ContextAction) => {
       };
     }
 
-    case actions.SEARCH_TODOS: {
+    case types.SEARCH_TODOS: {
       const stateVisible = todos.payload.filter((_todo) =>
         _todo.title.toLowerCase().includes(action.searchTerm.toLowerCase())
       );
       return {
         ...todos,
         visible: stateVisible,
-        visibilityFilter: filter.ALL_TODOS,
+        visibilityFilter: types.ALL_TODOS,
       };
     }
 
-    case actions.SHOW_EDIT: {
+    case types.SHOW_EDIT: {
       const allreadyIncluded: boolean = todos.editing.includes(action.todo);
       return {
         ...todos,
@@ -111,7 +99,7 @@ const reducer = (todos: Todos, action: ContextAction) => {
       };
     }
 
-    case actions.SHOW_SEARCH: {
+    case types.SHOW_SEARCH: {
       return {
         ...todos,
         isSearching: !todos.isSearching,
@@ -119,7 +107,7 @@ const reducer = (todos: Todos, action: ContextAction) => {
       };
     }
 
-    case actions.TOGGLE_TODO: {
+    case types.TOGGLE_TODO: {
       const statePayload = todos.payload.map((_todo) =>
         _todo.id === action.todo.id
           ? { ..._todo, completed: !_todo.completed }
@@ -133,7 +121,7 @@ const reducer = (todos: Todos, action: ContextAction) => {
       };
     }
 
-    case actions.TOGGLE_TODOS: {
+    case types.TOGGLE_TODOS: {
       const statePayload = todos.payload.map((_todo) =>
         _todo.completed === !action.isAllCompleted
           ? { ..._todo, completed: action.isAllCompleted }
@@ -147,15 +135,15 @@ const reducer = (todos: Todos, action: ContextAction) => {
       };
     }
 
-    case actions.UPDATE_TODOS: {
-      const stateUpdated: Todos = {
+    case types.UPDATE_TODOS: {
+      const stateUpdated: types.Todos = {
         ...todos,
         isUpdating: false,
         visible:
-          todos.visibilityFilter === filter.ALL_TODOS
+          todos.visibilityFilter === types.ALL_TODOS
             ? todos.payload
             : todos.payload.filter((_todo) =>
-                todos.visibilityFilter === filter.COMPLETED_TODOS
+                todos.visibilityFilter === types.COMPLETED_TODOS
                   ? _todo.completed
                   : !_todo.completed
               ),

@@ -1,4 +1,4 @@
-import * as actions from "../../constants/actions";
+import * as types from "../../ts/types";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,11 +11,9 @@ import Switch from "@material-ui/core/Switch";
 import { Context } from "../../context/store";
 import { useStyles } from "../../theme";
 
-interface ITodoComponent {
-  todo: Todo;
-}
-
-const TodoComponent: FC<ITodoComponent> = ({ todo }) => {
+const TodoComponent: FC<{
+  todo: types.Todo;
+}> = ({ todo }) => {
   const { dispatch } = useContext(Context);
   const classes = useStyles();
 
@@ -27,7 +25,7 @@ const TodoComponent: FC<ITodoComponent> = ({ todo }) => {
           color="primary"
           value="completed"
           size="small"
-          onChange={() => dispatch({ type: actions.TOGGLE_TODO, todo: todo })}
+          onChange={() => dispatch({ type: types.TOGGLE_TODO, todo: todo })}
         />
       </ListItemIcon>
       <ListItemText
@@ -41,14 +39,14 @@ const TodoComponent: FC<ITodoComponent> = ({ todo }) => {
         <IconButton
           edge="end"
           aria-label="Delete Todo"
-          onClick={() => dispatch({ type: actions.DELETE_TODO, id: todo.id })}
+          onClick={() => dispatch({ type: types.DELETE_TODO, id: todo.id })}
         >
           <DeleteIcon />
         </IconButton>
         <IconButton
           edge="end"
           aria-label="edit"
-          onClick={() => dispatch({ type: actions.SHOW_EDIT, todo: todo })}
+          onClick={() => dispatch({ type: types.SHOW_EDIT, todo: todo })}
         >
           <EditIcon />
         </IconButton>

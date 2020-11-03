@@ -1,9 +1,10 @@
 import React, { createContext, useReducer, Dispatch, ReactNode } from "react";
 import * as utils from "../utils";
 import reducer from "./todos";
+import * as types from "../ts/types";
 
 type ContextType = {
-  todos: Todos;
+  todos: types.Todos;
   dispatch: Dispatch<ContextAction>;
 };
 

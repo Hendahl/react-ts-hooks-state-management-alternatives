@@ -1,4 +1,4 @@
-import * as filter from "../../constants/filter";
+import * as ts from "../../ts/types";
 import * as utils from "../../utils";
 import {
   applySnapshot,
@@ -9,17 +9,6 @@ import {
   SnapshotIn,
   types,
 } from "mobx-state-tree";
-
-const initialTodos: Todos = {
-  countAll: 0,
-  countCompleted: 0,
-  editing: [],
-  isSearching: false,
-  isUpdating: false,
-  payload: [],
-  visibilityFilter: filter.ALL_TODOS,
-  visible: [],
-};
 
 export const Todo = types
   .model({
@@ -56,10 +45,10 @@ export const Todos = types
       return self.payload.length;
     },
     get visibleView() {
-      return self.visibilityFilter === filter.ALL_TODOS
+      return self.visibilityFilter === ts.ALL_TODOS
         ? self.payload
         : self.payload.filter((_todo) =>
-            self.visibilityFilter === filter.COMPLETED_TODOS
+            self.visibilityFilter === ts.COMPLETED_TODOS
               ? _todo.completed
               : !_todo.completed
           );
@@ -78,7 +67,7 @@ export const Todos = types
       };
       self.isUpdating = true;
       self.payload.unshift(newTodo);
-      self.visibilityFilter = filter.ALL_TODOS;
+      self.visibilityFilter = ts.ALL_TODOS;
     },
     deleteTodo(todo: SnapshotIn<TodoModel>) {
       self.payload.replace(
@@ -89,9 +78,9 @@ export const Todos = types
     },
     deleteTodos() {
       utils.setStoredTodos({
-        ...initialTodos,
+        ...ts.initialTodos,
       });
-      applySnapshot(self, initialTodos);
+      applySnapshot(self, ts.initialTodos);
     },
     editTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
       const stateEditing = self.editing.map((_todo) =>
@@ -160,10 +149,10 @@ export const Todos = types
           isSearching: self.isSearching,
           isUpdating: false,
           visible:
-            self.visibilityFilter === filter.ALL_TODOS
+            self.visibilityFilter === ts.ALL_TODOS
               ? self.payload
-              : self.payload.filter((_todo: Todo) =>
-                  self.visibilityFilter === filter.COMPLETED_TODOS
+              : self.payload.filter((_todo: ts.Todo) =>
+                  self.visibilityFilter === ts.COMPLETED_TODOS
                     ? _todo.completed
                     : !_todo.completed
                 ),

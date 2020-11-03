@@ -11,29 +11,10 @@ import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
 import SearchComponent from "./search";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-
-type Todo = {
-  completed: boolean;
-  id: number;
-  title: string;
-};
-
-type Todos = {
-  countAll: number;
-  countCompleted: number;
-  isSearching: boolean;
-  isUpdating: boolean;
-  payload: Todo[];
-  visibilityFilter: string;
-  visible: Todo[];
-  editing: Todo[];
-};
-interface ITodos {
-  todos: Todos;
-}
+import * as types from "../../ts/types";
 
 const Todos: FC = () => {
-  const typedUseSelector: TypedUseSelectorHook<ITodos> = useSelector;
+  const typedUseSelector: TypedUseSelectorHook<types.TodosI> = useSelector;
   const todos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
 
@@ -65,7 +46,7 @@ const Todos: FC = () => {
             <FilterComponent />
           </>
         )}
-        {todos.visible.map((_todo: Todo) => (
+        {todos.visible.map((_todo: types.Todo) => (
           <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>

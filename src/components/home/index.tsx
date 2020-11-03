@@ -39,6 +39,15 @@ const Home: FC = () => {
             the components.
           </Typography>
           <Typography variant="h5" component="h3" gutterBottom>
+            <Link color="primary" component={RouterLink} to="/reduxtoolkit">
+              Redux Toolkit
+            </Link>
+          </Typography>
+          <Typography variant="body1" gutterBottom paragraph={true}>
+            Redux ToolKit, Actions and Reducers to pass data and actions through
+            the components by slices and storeconfig.
+          </Typography>
+          <Typography variant="h5" component="h3" gutterBottom>
             <Link color="primary" component={RouterLink} to="/Mobx">
               MobX
             </Link>
