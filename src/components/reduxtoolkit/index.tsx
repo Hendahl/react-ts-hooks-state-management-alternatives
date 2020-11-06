@@ -3,17 +3,19 @@ import Container from "@material-ui/core/Container";
 import React, { FC } from "react";
 import Typography from "@material-ui/core/Typography";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import * as types from "../../ts/types";
+import { incrementAction } from "../../reduxtoolkit/store";
 
 const Todos: FC = () => {
-  const typedUseSelector: TypedUseSelectorHook<types.TodosI> = useSelector;
-  const todos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
 
   return (
     <Container>
       <Typography variant="h3" component="h2">
-        <Box textAlign="center" m={1}>
+        <Box
+          textAlign="center"
+          m={1}
+          onClick={() => dispatch(incrementAction())}
+        >
           Todos - Redux
         </Box>
       </Typography>
