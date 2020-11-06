@@ -29,7 +29,7 @@ interface FilterI {
 const FilterComponent: FC = (): ReactElement => {
   const classes = useStyles();
   const typedUseSelector: TypedUseSelectorHook<FilterI> = useSelector;
-  const todos = typedUseSelector((state) => state.todos);
+  const storeTodos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
   const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(
     false
@@ -37,10 +37,10 @@ const FilterComponent: FC = (): ReactElement => {
   const [stateFilter, setStateFilter] = useState<string>(types.ALL_TODOS);
 
   useEffect(() => {
-    if (todos.payload[0]) {
-      setStateIsAllCompleted(!todos.payload[0].completed);
+    if (storeTodos.payload[0]) {
+      setStateIsAllCompleted(!storeTodos.payload[0].completed);
     }
-  }, [todos]);
+  }, [storeTodos]);
 
   const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
     setStateFilter(e.target.value as string);
@@ -57,7 +57,7 @@ const FilterComponent: FC = (): ReactElement => {
   };
 
   const handleToggleTodos = (): void => {
-    if (todos.payload[0]) {
+    if (storeTodos.payload[0]) {
       setStateIsAllCompleted(!stateIsAllCompleted);
     }
     dispatch(actions.toggleTodos(stateIsAllCompleted));
@@ -65,13 +65,13 @@ const FilterComponent: FC = (): ReactElement => {
 
   return (
     <ListItem>
-      {todos.countAll !== 0 && (
+      {storeTodos.countAll !== 0 && (
         <>
           <ListItemIcon>
             <IconButton
               aria-label="Edit Completed"
               color={stateIsAllCompleted ? "primary" : "inherit"}
-              disabled={todos.countAll === 0}
+              disabled={storeTodos.countAll === 0}
               edge="end"
               onClick={handleToggleTodos}
             >
@@ -87,33 +87,33 @@ const FilterComponent: FC = (): ReactElement => {
             >
               <Button
                 disabled={
-                  todos.visibilityFilter === types.ALL_TODOS ||
-                  todos.countAll === 0
+                  storeTodos.visibilityFilter === types.ALL_TODOS ||
+                  storeTodos.countAll === 0
                 }
                 id={types.ALL_TODOS}
                 onClick={handleFilterTodos}
               >
-                ALL ({todos.countAll})
+                ALL ({storeTodos.countAll})
               </Button>
               <Button
                 disabled={
-                  todos.visibilityFilter === types.ACTIVE_TODOS ||
-                  todos.countAll === 0
+                  storeTodos.visibilityFilter === types.ACTIVE_TODOS ||
+                  storeTodos.countAll === 0
                 }
                 id={types.ACTIVE_TODOS}
                 onClick={handleFilterTodos}
               >
-                ACTIVE ({todos.countAll - todos.countCompleted})
+                ACTIVE ({storeTodos.countAll - storeTodos.countCompleted})
               </Button>
               <Button
                 disabled={
-                  todos.visibilityFilter === types.COMPLETED_TODOS ||
-                  todos.countAll === 0
+                  storeTodos.visibilityFilter === types.COMPLETED_TODOS ||
+                  storeTodos.countAll === 0
                 }
                 id={types.COMPLETED_TODOS}
                 onClick={handleFilterTodos}
               >
-                COMPLETEDED ({todos.countCompleted})
+                COMPLETEDED ({storeTodos.countCompleted})
               </Button>
             </ButtonGroup>
           </Hidden>
@@ -125,13 +125,13 @@ const FilterComponent: FC = (): ReactElement => {
                 onChange={handleChange}
               >
                 <MenuItem value={types.ALL_TODOS}>
-                  ALL ({todos.countAll})
+                  ALL ({storeTodos.countAll})
                 </MenuItem>
                 <MenuItem value={types.ACTIVE_TODOS}>
-                  ACTIVE ({todos.countAll - todos.countCompleted})
+                  ACTIVE ({storeTodos.countAll - storeTodos.countCompleted})
                 </MenuItem>
                 <MenuItem value={types.COMPLETED_TODOS}>
-                  COMPLETED ({todos.countCompleted})
+                  COMPLETED ({storeTodos.countCompleted})
                 </MenuItem>
               </Select>
             </FormControl>
@@ -146,7 +146,7 @@ const FilterComponent: FC = (): ReactElement => {
           </IconButton>
           <IconButton
             color="primary"
-            disabled={todos.isSearching}
+            disabled={storeTodos.isSearching}
             edge="end"
             aria-label="Search"
             onClick={() => dispatch(actions.showSearch())}

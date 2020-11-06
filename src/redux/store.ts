@@ -4,12 +4,12 @@ import { applyMiddleware, compose, createStore } from "redux";
 import { createLogger } from "redux-logger";
 
 const logger = createLogger({
-  collapsed: true
+  collapsed: true,
 });
 
 const initialTodos = {};
 const enhancers = [];
-export const middleware = [thunk];
+export const middleware = [thunk]; // a bit overdo to have thunk in this example app maybee :)
 
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === "development") {

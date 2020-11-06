@@ -2,7 +2,7 @@ import * as types from "../../ts/types";
 import * as utils from "../../utils";
 export default function reducer(
   todos = utils.getStoredTodos(),
-  action: ReduxAction
+  action: types.ReduxAction
 ): types.Todos {
   switch (action.type) {
     case types.ADD_TODO: {

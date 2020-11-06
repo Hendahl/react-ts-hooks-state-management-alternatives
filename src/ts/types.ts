@@ -16,7 +16,35 @@ export const TOGGLE_TODO = "TOGGLE_TODO";
 export const TOGGLE_TODOS = "TOGGLE_TODOS";
 export const UPDATE_TODOS = "UPDATE_TODOS";
 
-export const LSKEY = "react-hooks-todos-all";
+export type ReduxAction =
+  | { type: typeof ADD_TODO; title: string }
+  | { type: typeof DELETE_TODO; id: number }
+  | { type: typeof DELETE_TODOS }
+  | { type: typeof EDIT_TODO; todo: Todo }
+  | { type: typeof FILTER_TODOS; visibiltityFilter: string }
+  | { type: typeof GET_TODOS }
+  | { type: typeof SAVE_TODO }
+  | { type: typeof SEARCH_TODOS; searchTerm: string }
+  | { type: typeof SHOW_EDIT; todo: Todo }
+  | { type: typeof SHOW_SEARCH }
+  | { type: typeof TOGGLE_TODO; todo: Todo }
+  | { type: typeof TOGGLE_TODOS; isAllCompleted: boolean }
+  | { type: typeof UPDATE_TODOS };
+
+export type AddTodo = (title: string) => void;
+export type DeleteTodo = (todo: Todo) => void;
+export type DeleteTodos = () => void;
+export type Dispatch = (arg: ReduxAction) => void;
+export type EditTodo = (todo: Todo) => void;
+export type FilterTodos = (visibiltityFilter: string) => void;
+export type GetTodos = () => void;
+export type SaveTodo = () => void;
+export type SearchTodos = (searchTerm: string) => void;
+export type ShowEdit = (todo: Todo) => void;
+export type ShowSearch = () => void;
+export type ToggleTodo = (todo: Todo) => void;
+export type ToggleTodos = (completed: boolean) => void;
+export type UpdateTodos = () => void;
 
 export type Todo = {
   completed: boolean;
@@ -50,14 +78,4 @@ export let initialTodos: Todos = {
   visible: [],
 };
 
-export type AddTodo = (title: string) => void;
-export type DeleteTodo = (todo: Todo) => void;
-export type DeleteTodos = () => void;
-export type EditTodo = (todo: Todo) => void;
-export type FilterTodos = (visibiltityFilter: string) => void;
-export type SaveTodo = () => void;
-export type SearchTodos = (searchTerm: string) => void;
-export type ShowEdit = (todo: Todo) => void;
-export type ShowShearch = () => void;
-export type ToggleTodo = (todo: Todo) => void;
-export type ToggleTodos = (isAllCompleted: boolean) => void;
+export const LSKEY = "react-hooks-todos-all";

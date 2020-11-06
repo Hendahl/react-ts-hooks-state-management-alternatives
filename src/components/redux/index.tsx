@@ -15,18 +15,19 @@ import * as types from "../../ts/types";
 
 const Todos: FC = () => {
   const typedUseSelector: TypedUseSelectorHook<types.TodosI> = useSelector;
-  const todos = typedUseSelector((state) => state.todos);
+  const storeTodos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(actions.getTodos());
+    // a callback is recommended here
   }, [dispatch]);
 
   useEffect(() => {
-    if (todos.isUpdating) {
+    if (storeTodos.isUpdating) {
       dispatch(actions.updateTodos());
     }
-  }, [todos, dispatch]);
+  }, [storeTodos, dispatch]);
 
   return (
     <Container>
@@ -35,10 +36,10 @@ const Todos: FC = () => {
           Todos - Redux
         </Box>
       </Typography>
-      <ProgressComponent isUpdating={todos.isUpdating} />
-      {todos.editing.length !== 0 && <EditComponent />}
+      <ProgressComponent isUpdating={storeTodos.isUpdating} />
+      {storeTodos.editing.length !== 0 && <EditComponent />}
       <List>
-        {todos.isSearching ? (
+        {storeTodos.isSearching ? (
           <SearchComponent />
         ) : (
           <>
@@ -46,7 +47,7 @@ const Todos: FC = () => {
             <FilterComponent />
           </>
         )}
-        {todos.visible.map((_todo: types.Todo) => (
+        {storeTodos.visible.map((_todo: types.Todo) => (
           <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>

@@ -10,7 +10,7 @@ import * as types from "../../ts/types";
 
 const SearchComponent: FC = (): ReactElement => {
   const typedUseSelector: TypedUseSelectorHook<types.TodosI> = useSelector;
-  const todos = typedUseSelector((state) => state.todos);
+  const storeTodos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -21,7 +21,7 @@ const SearchComponent: FC = (): ReactElement => {
     <ListItem>
       <TextField
         autoComplete="off"
-        error={todos.visible.length === 0}
+        error={storeTodos.visible.length === 0}
         fullWidth
         id="title"
         label="Search todos"

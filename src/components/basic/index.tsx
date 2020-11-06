@@ -125,7 +125,7 @@ const Todos: FC = () => {
     });
   };
 
-  const showSearch: types.ShowShearch = () => {
+  const showSearch: types.ShowSearch = () => {
     setStateTodos({
       ...stateTodos,
       isSearching: !stateTodos.isSearching,
