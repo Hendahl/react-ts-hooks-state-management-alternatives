@@ -14,12 +14,12 @@ import React, {
 } from "react";
 import TextField from "@material-ui/core/TextField";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 
 type Undo = () => void;
 
 interface EditI {
-  todos: types.Todos;
+  todos: t.Todos;
 }
 
 const EditComponent: FC = (): ReactElement => {

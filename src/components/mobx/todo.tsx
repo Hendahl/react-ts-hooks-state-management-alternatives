@@ -10,10 +10,10 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
 import { useStyles } from "../../theme";
 import EditIcon from "@material-ui/icons/Edit";
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 
 const TodoComponent: FC<{
-  todo: types.Todo;
+  todo: t.Todo;
 }> = observer(({ todo }) => {
   const classes = useStyles();
   const { todos } = useStore();

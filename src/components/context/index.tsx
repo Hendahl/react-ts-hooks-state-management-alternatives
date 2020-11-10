@@ -1,4 +1,4 @@
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 import AddComponent from "./add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
@@ -14,10 +14,9 @@ import { Context } from "../../context/store";
 
 const Todos: FC = () => {
   const { todos, dispatch } = useContext(Context);
-
   useEffect(() => {
     if (todos.isUpdating) {
-      dispatch({ type: types.UPDATE_TODOS });
+      dispatch({ type: t.UPDATE_TODOS });
     }
   }, [todos, dispatch]);
 
@@ -39,7 +38,7 @@ const Todos: FC = () => {
             <FilterComponent />
           </>
         )}
-        {todos.visible.map((_todo: types.Todo) => (
+        {todos.visible.map((_todo: t.Todo) => (
           <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>

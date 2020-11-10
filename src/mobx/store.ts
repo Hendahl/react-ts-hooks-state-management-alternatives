@@ -1,13 +1,14 @@
-import * as utils from "../utils";
 import { createContext, useContext } from "react";
 import { Instance, onSnapshot, types } from "mobx-state-tree";
 import { Todos } from "./todos";
+import { getTodosApi } from "../api";
+import { type } from "os";
 
 const RootModel = types.model({
   todos: Todos,
 });
 
-export const store = RootModel.create({ todos: utils.getStoredTodos() });
+export const store = RootModel.create({ todos: getTodosApi() });
 
 onSnapshot(store, (snapshot) => {
   store.todos.updateTodos();

@@ -1,4 +1,4 @@
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -29,7 +29,7 @@ const FilterComponent: FC = (): ReactElement => {
   const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(
     false
   );
-  const [stateFilter, setStateFilter] = useState<string>(types.ALL_TODOS);
+  const [stateFilter, setStateFilter] = useState<string>(t.ALL_TODOS);
 
   useEffect(() => {
     if (todos.payload[0]) {
@@ -40,19 +40,19 @@ const FilterComponent: FC = (): ReactElement => {
   const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
     setStateFilter(e.target.value as string);
     dispatch({
-      type: types.FILTER_TODOS,
+      type: t.FILTER_TODOS,
       visibiltityFilter: e.target.value as string,
     });
   };
 
   const handleDeleteTodos = () => {
-    dispatch({ type: types.DELETE_TODOS });
+    dispatch({ type: t.DELETE_TODOS });
   };
 
   const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     dispatch({
-      type: types.FILTER_TODOS,
+      type: t.FILTER_TODOS,
       visibiltityFilter: e.currentTarget.id,
     });
   };
@@ -62,7 +62,7 @@ const FilterComponent: FC = (): ReactElement => {
       setStateIsAllCompleted(!stateIsAllCompleted);
     }
     dispatch({
-      type: types.TOGGLE_TODOS,
+      type: t.TOGGLE_TODOS,
       isAllCompleted: stateIsAllCompleted,
     });
   };
@@ -91,30 +91,29 @@ const FilterComponent: FC = (): ReactElement => {
             >
               <Button
                 disabled={
-                  todos.visibilityFilter === types.ALL_TODOS ||
-                  todos.countAll === 0
+                  todos.visibilityFilter === t.ALL_TODOS || todos.countAll === 0
                 }
-                id={types.ALL_TODOS}
+                id={t.ALL_TODOS}
                 onClick={handleFilterTodos}
               >
                 ALL ({todos.countAll})
               </Button>
               <Button
                 disabled={
-                  todos.visibilityFilter === types.ACTIVE_TODOS ||
+                  todos.visibilityFilter === t.ACTIVE_TODOS ||
                   todos.countAll === 0
                 }
-                id={types.ACTIVE_TODOS}
+                id={t.ACTIVE_TODOS}
                 onClick={handleFilterTodos}
               >
                 ACTIVE ({todos.countAll - todos.countCompleted})
               </Button>
               <Button
                 disabled={
-                  todos.visibilityFilter === types.COMPLETED_TODOS ||
+                  todos.visibilityFilter === t.COMPLETED_TODOS ||
                   todos.countAll === 0
                 }
-                id={types.COMPLETED_TODOS}
+                id={t.COMPLETED_TODOS}
                 onClick={handleFilterTodos}
               >
                 COMPLETEDED ({todos.countCompleted})
@@ -128,13 +127,11 @@ const FilterComponent: FC = (): ReactElement => {
                 value={stateFilter}
                 onChange={handleChange}
               >
-                <MenuItem value={types.ALL_TODOS}>
-                  ALL ({todos.countAll})
-                </MenuItem>
-                <MenuItem value={types.ACTIVE_TODOS}>
+                <MenuItem value={t.ALL_TODOS}>ALL ({todos.countAll})</MenuItem>
+                <MenuItem value={t.ACTIVE_TODOS}>
                   ACTIVE ({todos.countAll - todos.countCompleted})
                 </MenuItem>
-                <MenuItem value={types.COMPLETED_TODOS}>
+                <MenuItem value={t.COMPLETED_TODOS}>
                   COMPLETED ({todos.countCompleted})
                 </MenuItem>
               </Select>
@@ -153,7 +150,7 @@ const FilterComponent: FC = (): ReactElement => {
             disabled={todos.isSearching}
             edge="end"
             aria-label="Search"
-            onClick={() => dispatch({ type: types.SHOW_SEARCH })}
+            onClick={() => dispatch({ type: t.SHOW_SEARCH })}
           >
             <SearchIcon />
           </IconButton>

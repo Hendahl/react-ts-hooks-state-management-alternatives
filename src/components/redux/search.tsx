@@ -6,10 +6,10 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import React, { ChangeEvent, FC, ReactElement } from "react";
 import TextField from "@material-ui/core/TextField";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 
 const SearchComponent: FC = (): ReactElement => {
-  const typedUseSelector: TypedUseSelectorHook<types.TodosI> = useSelector;
+  const typedUseSelector: TypedUseSelectorHook<t.TodosI> = useSelector;
   const storeTodos = typedUseSelector((state) => state.todos);
   const dispatch = useDispatch();
 

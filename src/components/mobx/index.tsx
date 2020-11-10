@@ -9,7 +9,7 @@ import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../mobx/store";
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 
 const Todos: FC = observer(() => {
   const { todos } = useStore();
@@ -29,7 +29,7 @@ const Todos: FC = observer(() => {
       {todos.editing.length !== 0 && <EditComponent />}
       <List>
         <AddComponent />
-        {todos.visibleView.map((_todo: types.Todo) => (
+        {todos.visibleView.map((_todo: t.Todo) => (
           <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>

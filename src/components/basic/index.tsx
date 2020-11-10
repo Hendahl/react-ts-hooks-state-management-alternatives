@@ -1,4 +1,4 @@
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 import * as utils from "../../utils";
 import AddComponent from "./add";
 import Box from "@material-ui/core/Box";
@@ -11,32 +11,35 @@ import React, { FC, useEffect, useState } from "react";
 import SearchComponent from "./search";
 import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
+import { getTodosApi, setTodosApi } from "../../api";
 
 const Todos: FC = () => {
-  const [stateTodos, setStateTodos] = useState<types.Todos>(
-    utils.getStoredTodos()
-  );
+  const [stateTodos, setStateTodos] = useState<t.Todos>(t.initialTodos);
+
+  useEffect(() => {
+    setStateTodos(getTodosApi());
+  }, []);
 
   useEffect(() => {
     if (stateTodos.isUpdating) {
-      const stateUpdated: types.Todos = {
+      const stateUpdated: t.Todos = {
         ...stateTodos,
         isUpdating: false,
         visible:
-          stateTodos.visibilityFilter === types.ALL_TODOS
+          stateTodos.visibilityFilter === t.ALL_TODOS
             ? stateTodos.payload
             : stateTodos.payload.filter((_todo) =>
-                stateTodos.visibilityFilter === types.COMPLETED_TODOS
+                stateTodos.visibilityFilter === t.COMPLETED_TODOS
                   ? _todo.completed
                   : !_todo.completed
               ),
       };
-      utils.setStoredTodos(stateUpdated);
+      setTodosApi(stateUpdated);
       setStateTodos(stateUpdated);
     }
   }, [stateTodos]);
 
-  const addTodo: types.AddTodo = (title) => {
+  const addTodo: t.AddTodo = (title) => {
     const statePayload = [
       { id: utils.uuid(), completed: false, title: title },
       ...stateTodos.payload,
@@ -46,11 +49,11 @@ const Todos: FC = () => {
       countAll: stateTodos.countAll + 1,
       isUpdating: true,
       payload: statePayload,
-      visibilityFilter: types.ALL_TODOS,
+      visibilityFilter: t.ALL_TODOS,
     });
   };
 
-  const deleteTodo: types.DeleteTodo = (todo) => {
+  const deleteTodo: t.DeleteTodo = (todo) => {
     const statePayload = stateTodos.payload.filter(
       (_todo) => _todo.id !== todo.id
     );
@@ -63,16 +66,16 @@ const Todos: FC = () => {
     });
   };
 
-  const deleteTodos: types.DeleteTodos = () => {
-    utils.setStoredTodos({
-      ...types.initialTodos,
+  const deleteTodos: t.DeleteTodos = () => {
+    setTodosApi({
+      ...t.initialTodos,
     });
     setStateTodos({
-      ...types.initialTodos,
+      ...t.initialTodos,
     });
   };
 
-  const editTodo: types.EditTodo = (todo) => {
+  const editTodo: t.EditTodo = (todo) => {
     const stateEditing = stateTodos.editing.map((_todo) =>
       _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
     );
@@ -82,7 +85,7 @@ const Todos: FC = () => {
     });
   };
 
-  const filterTodos: types.FilterTodos = (visibilityFilter) => {
+  const filterTodos: t.FilterTodos = (visibilityFilter) => {
     setStateTodos({
       ...stateTodos,
       isUpdating: true,
@@ -90,9 +93,9 @@ const Todos: FC = () => {
     });
   };
 
-  const saveTodo: types.SaveTodo = () => {
+  const saveTodo: t.SaveTodo = () => {
     const stateTodo = stateTodos.editing[0];
-    const statePayload: types.Todo[] = [
+    const statePayload: t.Todo[] = [
       ...stateTodos.payload.map((_todo) =>
         _todo.id === stateTodo.id ? { ..._todo, title: stateTodo.title } : _todo
       ),
@@ -105,18 +108,18 @@ const Todos: FC = () => {
     });
   };
 
-  const searchTodos: types.SearchTodos = (searchTerm) => {
+  const searchTodos: t.SearchTodos = (searchTerm) => {
     const stateVisible = stateTodos.payload.filter((_todo) =>
       _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setStateTodos({
       ...stateTodos,
-      visibilityFilter: types.ALL_TODOS,
+      visibilityFilter: t.ALL_TODOS,
       visible: stateVisible,
     });
   };
 
-  const showEdit: types.ShowEdit = (todo) => {
+  const showEdit: t.ShowEdit = (todo) => {
     const isAllreadyIncluded: boolean = stateTodos.editing.includes(todo);
     setStateTodos({
       ...stateTodos,
@@ -125,7 +128,7 @@ const Todos: FC = () => {
     });
   };
 
-  const showSearch: types.ShowSearch = () => {
+  const showSearch: t.ShowSearch = () => {
     setStateTodos({
       ...stateTodos,
       isSearching: !stateTodos.isSearching,
@@ -133,7 +136,7 @@ const Todos: FC = () => {
     });
   };
 
-  const toggleTodo: types.ToggleTodo = (todo) => {
+  const toggleTodo: t.ToggleTodo = (todo) => {
     const statePayload = stateTodos.payload.map((_todo) =>
       _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
     );
@@ -145,7 +148,7 @@ const Todos: FC = () => {
     });
   };
 
-  const toggleTodos: types.ToggleTodos = (isAllCompleted) => {
+  const toggleTodos: t.ToggleTodos = (isAllCompleted) => {
     const statePayload = stateTodos.payload.map((_todo) =>
       _todo.completed === !isAllCompleted
         ? { ..._todo, completed: isAllCompleted }

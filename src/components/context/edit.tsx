@@ -1,4 +1,4 @@
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -27,17 +27,17 @@ const EditComponent: FC = (): ReactElement => {
       ...todo,
       title: e.target.value,
     };
-    dispatch({ type: types.EDIT_TODO, todo: stateTodo });
+    dispatch({ type: t.EDIT_TODO, todo: stateTodo });
   };
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && todo.title !== "" && todo.title !== stateTitle) {
-      dispatch({ type: types.SAVE_TODO });
+      dispatch({ type: t.SAVE_TODO });
     }
   };
 
   const handleUndo = () => {
-    dispatch({ type: types.EDIT_TODO, todo: todo });
+    dispatch({ type: t.EDIT_TODO, todo: todo });
   };
 
   return (
@@ -79,14 +79,14 @@ const EditComponent: FC = (): ReactElement => {
         </Button>
         <Button
           color="primary"
-          onClick={() => dispatch({ type: types.SHOW_EDIT, todo: todo })}
+          onClick={() => dispatch({ type: t.SHOW_EDIT, todo: todo })}
         >
           Cancel
         </Button>
         <Button
           color="primary"
           disabled={todo.title === "" || todo.title === stateTitle}
-          onClick={() => dispatch({ type: types.SAVE_TODO })}
+          onClick={() => dispatch({ type: t.SAVE_TODO })}
         >
           Save
         </Button>

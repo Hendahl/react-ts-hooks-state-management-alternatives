@@ -1,4 +1,4 @@
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -15,10 +15,10 @@ import React, {
 } from "react";
 
 interface EditI {
-  onEditTodo: (todo: types.Todo) => void;
+  onEditTodo: (todo: t.Todo) => void;
   onSaveTodo: () => void;
-  onShowEdit: (todo: types.Todo) => void;
-  todo: types.Todo;
+  onShowEdit: (todo: t.Todo) => void;
+  todo: t.Todo;
 }
 
 const EditComponent: FC<EditI> = ({

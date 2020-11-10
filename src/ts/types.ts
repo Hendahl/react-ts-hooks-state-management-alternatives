@@ -16,7 +16,7 @@ export const TOGGLE_TODO = "TOGGLE_TODO";
 export const TOGGLE_TODOS = "TOGGLE_TODOS";
 export const UPDATE_TODOS = "UPDATE_TODOS";
 
-export type ReduxAction =
+export type ActionTypes =
   | { type: typeof ADD_TODO; title: string }
   | { type: typeof DELETE_TODO; id: number }
   | { type: typeof DELETE_TODOS }
@@ -34,7 +34,7 @@ export type ReduxAction =
 export type AddTodo = (title: string) => void;
 export type DeleteTodo = (todo: Todo) => void;
 export type DeleteTodos = () => void;
-export type Dispatch = (arg: ReduxAction) => void;
+export type Dispatch = (arg: ActionTypes) => void;
 export type EditTodo = (todo: Todo) => void;
 export type FilterTodos = (visibiltityFilter: string) => void;
 export type GetTodos = () => void;

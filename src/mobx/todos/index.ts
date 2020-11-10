@@ -1,4 +1,4 @@
-import * as ts from "../../ts/types";
+import * as t from "../../ts/types";
 import * as utils from "../../utils";
 import {
   applySnapshot,
@@ -9,6 +9,7 @@ import {
   SnapshotIn,
   types,
 } from "mobx-state-tree";
+import { getTodosApi, setTodosApi } from "../../api";
 
 export const Todo = types
   .model({
@@ -45,10 +46,10 @@ export const Todos = types
       return self.payload.length;
     },
     get visibleView() {
-      return self.visibilityFilter === ts.ALL_TODOS
+      return self.visibilityFilter === t.ALL_TODOS
         ? self.payload
         : self.payload.filter((_todo) =>
-            self.visibilityFilter === ts.COMPLETED_TODOS
+            self.visibilityFilter === t.COMPLETED_TODOS
               ? _todo.completed
               : !_todo.completed
           );
@@ -67,7 +68,7 @@ export const Todos = types
       };
       self.isUpdating = true;
       self.payload.unshift(newTodo);
-      self.visibilityFilter = ts.ALL_TODOS;
+      self.visibilityFilter = t.ALL_TODOS;
     },
     deleteTodo(todo: SnapshotIn<TodoModel>) {
       self.payload.replace(
@@ -77,10 +78,10 @@ export const Todos = types
       destroy(todo);
     },
     deleteTodos() {
-      utils.setStoredTodos({
-        ...ts.initialTodos,
+      setTodosApi({
+        ...t.initialTodos,
       });
-      applySnapshot(self, ts.initialTodos);
+      applySnapshot(self, t.initialTodos);
     },
     editTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
       const stateEditing = self.editing.map((_todo) =>
@@ -93,7 +94,7 @@ export const Todos = types
       self.isUpdating = true;
     },
     getTodos() {
-      applySnapshot(self, utils.getStoredTodos());
+      applySnapshot(self, getTodosApi());
     },
     saveTodo() {
       const showEdit = self.editing[0];
@@ -149,15 +150,15 @@ export const Todos = types
           isSearching: self.isSearching,
           isUpdating: false,
           visible:
-            self.visibilityFilter === ts.ALL_TODOS
+            self.visibilityFilter === t.ALL_TODOS
               ? self.payload
-              : self.payload.filter((_todo: ts.Todo) =>
-                  self.visibilityFilter === ts.COMPLETED_TODOS
+              : self.payload.filter((_todo: t.Todo) =>
+                  self.visibilityFilter === t.COMPLETED_TODOS
                     ? _todo.completed
                     : !_todo.completed
                 ),
         };
-        utils.setStoredTodos(stateUpdated);
+        setTodosApi(stateUpdated);
       }
     },
   }));

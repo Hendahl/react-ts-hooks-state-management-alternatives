@@ -1,85 +1,85 @@
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 
-export const addTodo: types.AddTodo = (title) => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.ADD_TODO, title: title });
+export const addTodo: t.AddTodo = (title) => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.ADD_TODO, title: title });
   };
 };
 
-export const deleteTodo: types.DeleteTodo = (todo) => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.DELETE_TODO, id: todo.id });
+export const deleteTodo: t.DeleteTodo = (todo) => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.DELETE_TODO, id: todo.id });
   };
 };
 
-export const deleteTodos: types.DeleteTodos = () => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.DELETE_TODOS });
+export const deleteTodos: t.DeleteTodos = () => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.DELETE_TODOS });
   };
 };
 
-export const editTodo: types.EditTodo = (todo) => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.EDIT_TODO, todo: todo });
+export const editTodo: t.EditTodo = (todo) => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.EDIT_TODO, todo: todo });
   };
 };
 
-export const filterTodos: types.FilterTodos = (visibilityFilter) => {
-  return (dispatch: types.Dispatch) => {
+export const filterTodos: t.FilterTodos = (visibilityFilter) => {
+  return (dispatch: t.Dispatch) => {
     dispatch({
-      type: types.FILTER_TODOS,
+      type: t.FILTER_TODOS,
       visibiltityFilter: visibilityFilter,
     });
   };
 };
 
-export const getTodos: types.GetTodos = () => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.GET_TODOS });
+export const getTodos: t.GetTodos = () => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.GET_TODOS });
   };
 };
 
-export const saveTodo: types.SaveTodo = () => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.SAVE_TODO });
+export const saveTodo: t.SaveTodo = () => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.SAVE_TODO });
   };
 };
 
-export const searchTodos: types.SearchTodos = (searchTerm) => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.SEARCH_TODOS, searchTerm: searchTerm });
+export const searchTodos: t.SearchTodos = (searchTerm) => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.SEARCH_TODOS, searchTerm: searchTerm });
   };
 };
 
-export const showEdit: types.ShowEdit = (todo) => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.SHOW_EDIT, todo: todo });
+export const showEdit: t.ShowEdit = (todo) => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.SHOW_EDIT, todo: todo });
   };
 };
 
-export const showSearch: types.ShowSearch = () => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.SHOW_SEARCH });
+export const showSearch: t.ShowSearch = () => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.SHOW_SEARCH });
   };
 };
 
-export const toggleTodo: types.ToggleTodo = (todo) => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.TOGGLE_TODO, todo: todo });
+export const toggleTodo: t.ToggleTodo = (todo) => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.TOGGLE_TODO, todo: todo });
   };
 };
 
-export const toggleTodos: types.ToggleTodos = (isAllCompleted) => {
-  return (dispatch: types.Dispatch) => {
+export const toggleTodos: t.ToggleTodos = (isAllCompleted) => {
+  return (dispatch: t.Dispatch) => {
     dispatch({
-      type: types.TOGGLE_TODOS,
+      type: t.TOGGLE_TODOS,
       isAllCompleted: isAllCompleted,
     });
   };
 };
 
-export const updateTodos: types.UpdateTodos = () => {
-  return (dispatch: types.Dispatch) => {
-    dispatch({ type: types.UPDATE_TODOS });
+export const updateTodos: t.UpdateTodos = () => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.UPDATE_TODOS });
   };
 };

@@ -1,4 +1,4 @@
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,10 +11,10 @@ import Switch from "@material-ui/core/Switch";
 import { useStyles } from "../../theme";
 
 const TodoComponent: FC<{
-  onDeleteTodo: (todo: types.Todo) => void;
-  onShowEdit: (todo: types.Todo) => void;
-  onToggleTodo: (todo: types.Todo) => void;
-  todo: types.Todo;
+  onDeleteTodo: (todo: t.Todo) => void;
+  onShowEdit: (todo: t.Todo) => void;
+  onToggleTodo: (todo: t.Todo) => void;
+  todo: t.Todo;
 }> = ({ onDeleteTodo, onShowEdit, onToggleTodo, todo }): ReactElement => {
   const classes = useStyles();
   return (

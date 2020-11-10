@@ -1,4 +1,4 @@
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
@@ -11,7 +11,7 @@ const SearchComponent: FC = (): ReactElement => {
   const { todos, dispatch } = useContext(Context);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    dispatch({ type: types.SEARCH_TODOS, searchTerm: e.target.value });
+    dispatch({ type: t.SEARCH_TODOS, searchTerm: e.target.value });
   };
 
   return (
@@ -31,7 +31,7 @@ const SearchComponent: FC = (): ReactElement => {
           aria-label="Search"
           color="primary"
           edge="end"
-          onClick={() => dispatch({ type: types.SHOW_SEARCH })}
+          onClick={() => dispatch({ type: t.SHOW_SEARCH })}
         >
           <ClearIcon />
         </IconButton>

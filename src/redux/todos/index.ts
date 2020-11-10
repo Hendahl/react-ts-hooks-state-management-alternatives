@@ -1,11 +1,12 @@
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 import * as utils from "../../utils";
+import { getTodosApi, setTodosApi } from "../../api";
 export default function reducer(
-  todos = utils.getStoredTodos(),
-  action: types.ReduxAction
-): types.Todos {
+  todos = t.initialTodos,
+  action: t.ActionTypes
+): t.Todos {
   switch (action.type) {
-    case types.ADD_TODO: {
+    case t.ADD_TODO: {
       const statePayload = [
         { id: utils.uuid(), completed: false, title: action.title },
         ...todos.payload,
@@ -15,33 +16,31 @@ export default function reducer(
         countAll: todos.countAll + 1,
         isUpdating: true,
         payload: statePayload,
-        visibilityFilter: types.ALL_TODOS,
+        visibilityFilter: t.ALL_TODOS,
       };
     }
-    case types.DELETE_TODO: {
+    case t.DELETE_TODO: {
       const statePayload = todos.payload.filter(
-        (_todo: types.Todo) => _todo.id !== action.id
+        (_todo: t.Todo) => _todo.id !== action.id
       );
       return {
         ...todos,
         countAll: --todos.countAll,
         countCompleted: statePayload.length,
         isUpdating: true,
-        payload: statePayload.filter(
-          (_todo: types.Todo) => _todo.id !== action.id
-        ),
+        payload: statePayload.filter((_todo: t.Todo) => _todo.id !== action.id),
       };
     }
-    case types.DELETE_TODOS: {
-      utils.setStoredTodos({
-        ...types.initialTodos,
+    case t.DELETE_TODOS: {
+      setTodosApi({
+        ...t.initialTodos,
       });
       return {
-        ...types.initialTodos,
+        ...t.initialTodos,
       };
     }
-    case types.EDIT_TODO: {
-      const stateEditing = todos.editing.map((_todo: types.Todo) =>
+    case t.EDIT_TODO: {
+      const stateEditing = todos.editing.map((_todo: t.Todo) =>
         _todo.id === action.todo.id
           ? { ..._todo, title: action.todo.title }
           : _todo
@@ -51,20 +50,20 @@ export default function reducer(
         editing: stateEditing,
       };
     }
-    case types.FILTER_TODOS: {
+    case t.FILTER_TODOS: {
       return {
         ...todos,
         isUpdating: true,
         visibilityFilter: action.visibiltityFilter,
       };
     }
-    case types.GET_TODOS: {
-      return utils.getStoredTodos();
+    case t.GET_TODOS: {
+      return getTodosApi();
     }
-    case types.SAVE_TODO: {
+    case t.SAVE_TODO: {
       const stateTodo = todos.editing[0];
-      const statePayload: types.Todo[] = [
-        ...todos.payload.map((_todo: types.Todo) =>
+      const statePayload: t.Todo[] = [
+        ...todos.payload.map((_todo: t.Todo) =>
           _todo.id === stateTodo.id
             ? { ..._todo, title: stateTodo.title }
             : _todo
@@ -77,17 +76,17 @@ export default function reducer(
         isUpdating: true,
       };
     }
-    case types.SEARCH_TODOS: {
-      const stateVisible = todos.payload.filter((_todo: types.Todo) =>
+    case t.SEARCH_TODOS: {
+      const stateVisible = todos.payload.filter((_todo: t.Todo) =>
         _todo.title.toLowerCase().includes(action.searchTerm.toLowerCase())
       );
       return {
         ...todos,
         visible: stateVisible,
-        visibilityFilter: types.ALL_TODOS,
+        visibilityFilter: t.ALL_TODOS,
       };
     }
-    case types.SHOW_EDIT: {
+    case t.SHOW_EDIT: {
       const allreadyIncluded: boolean = todos.editing.includes(action.todo);
       return {
         ...todos,
@@ -95,58 +94,56 @@ export default function reducer(
         isUpdating: true,
       };
     }
-    case types.SHOW_SEARCH: {
+    case t.SHOW_SEARCH: {
       return {
         ...todos,
         isSearching: !todos.isSearching,
         isUpdating: true,
       };
     }
-    case types.TOGGLE_TODO: {
-      const statePayload = todos.payload.map((_todo: types.Todo) =>
+    case t.TOGGLE_TODO: {
+      const statePayload = todos.payload.map((_todo: t.Todo) =>
         _todo.id === action.todo.id
           ? { ..._todo, completed: !_todo.completed }
           : _todo
       );
       return {
         ...todos,
-        countCompleted: statePayload.filter(
-          (_todo: types.Todo) => _todo.completed
-        ).length,
+        countCompleted: statePayload.filter((_todo: t.Todo) => _todo.completed)
+          .length,
         isUpdating: true,
         payload: statePayload,
       };
     }
-    case types.TOGGLE_TODOS: {
-      const statePayload = todos.payload.map((_todo: types.Todo) =>
+    case t.TOGGLE_TODOS: {
+      const statePayload = todos.payload.map((_todo: t.Todo) =>
         _todo.completed === !action.isAllCompleted
           ? { ..._todo, completed: action.isAllCompleted }
           : _todo
       );
       return {
         ...todos,
-        countCompleted: statePayload.filter(
-          (_todo: types.Todo) => _todo.completed
-        ).length,
+        countCompleted: statePayload.filter((_todo: t.Todo) => _todo.completed)
+          .length,
         isUpdating: true,
         payload: statePayload,
       };
     }
 
-    case types.UPDATE_TODOS: {
-      const stateUpdated: types.Todos = {
+    case t.UPDATE_TODOS: {
+      const stateUpdated: t.Todos = {
         ...todos,
         isUpdating: false,
         visible:
-          todos.visibilityFilter === types.ALL_TODOS
+          todos.visibilityFilter === t.ALL_TODOS
             ? todos.payload
-            : todos.payload.filter((_todo: types.Todo) =>
-                todos.visibilityFilter === types.COMPLETED_TODOS
+            : todos.payload.filter((_todo: t.Todo) =>
+                todos.visibilityFilter === t.COMPLETED_TODOS
                   ? _todo.completed
                   : !_todo.completed
               ),
       };
-      utils.setStoredTodos(stateUpdated);
+      setTodosApi(stateUpdated);
       return stateUpdated;
     }
     default:

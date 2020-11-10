@@ -10,10 +10,10 @@ import Switch from "@material-ui/core/Switch";
 import { useDispatch } from "react-redux";
 import { useStyles } from "../../theme";
 import EditIcon from "@material-ui/icons/Edit";
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 
 const TodoComponent: FC<{
-  todo: types.Todo;
+  todo: t.Todo;
 }> = ({ todo }) => {
   const dispatch = useDispatch();
   const classes = useStyles();

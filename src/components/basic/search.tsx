@@ -4,11 +4,11 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import React, { ChangeEvent, FC, ReactElement } from "react";
 import TextField from "@material-ui/core/TextField";
-import * as types from "../../ts/types";
+import * as t from "../../ts/types";
 interface SearchI {
   onShowSearch: () => void;
   onSearchTodos: (searchTerm: string) => void;
-  todos: types.Todos;
+  todos: t.Todos;
 }
 
 const SearchComponent: FC<SearchI> = ({
