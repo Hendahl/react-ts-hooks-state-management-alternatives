@@ -3,6 +3,7 @@ import { Instance, onSnapshot, types } from "mobx-state-tree";
 import { Todos } from "./todos";
 import { getTodosApi } from "../api";
 import { type } from "os";
+import * as t from "../ts/types";
 
 const RootModel = types.model({
   todos: Todos,

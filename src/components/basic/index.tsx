@@ -197,7 +197,7 @@ const Todos: FC = () => {
             />
           </>
         )}
-        {stateTodos.visible.map((_todo) => (
+        {stateTodos.payload.map((_todo) => (
           <TodoComponent
             key={_todo.id}
             onDeleteTodo={deleteTodo}

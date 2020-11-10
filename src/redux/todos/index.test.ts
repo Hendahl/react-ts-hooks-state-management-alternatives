@@ -1,8 +1,8 @@
-import * as actions from "../../constants/actions";
+import * as t from "../../ts/types";
 import reducer from "./index";
 
 describe("Reducer", () => {
-  it(actions.DELETE_TODOS, () => {
-    expect(reducer({}, { type: actions.DELETE_TODOS }));
+  it(t.DELETE_TODOS, () => {
+    expect(reducer({}, { type: t.DELETE_TODOS }));
   });
 });
