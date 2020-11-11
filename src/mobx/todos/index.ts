@@ -21,8 +21,8 @@ export const Todo = types
     toggleTodo() {
       getRoot<TodosModel>(self).toggleTodo(self);
     },
-    deleteTodo() {
-      getRoot<TodosModel>(self).deleteTodo(self);
+    removeTodo() {
+      getRoot<TodosModel>(self).removeTodo(self);
     },
     showEdit() {
       getRoot<TodosModel>(self).showEdit(self);
@@ -31,25 +31,25 @@ export const Todo = types
 
 export const Todos = types
   .model({
-    payload: types.optional(types.array(Todo), []),
+    data: types.optional(types.array(Todo), []),
     isSearching: types.boolean,
     isUpdating: types.boolean,
     visibilityFilter: types.string,
     editing: types.optional(types.array(Todo), []),
-    visible: types.optional(types.array(Todo), []),
+    visibleTodos: types.optional(types.array(Todo), []),
   })
   .views((self) => ({
     get countCompletedView() {
-      return self.payload.filter((_todo) => _todo.completed).length;
+      return self.data.filter((_todo) => _todo.completed).length;
     },
     get countAllView() {
-      return self.payload.length;
+      return self.data.length;
     },
-    get visibleView() {
-      return self.visibilityFilter === t.ALL_TODOS
-        ? self.payload
-        : self.payload.filter((_todo) =>
-            self.visibilityFilter === t.COMPLETED_TODOS
+    get visibleTodosView() {
+      return self.visibilityFilter === t.FILTER_ALL
+        ? self.data
+        : self.data.filter((_todo) =>
+            self.visibilityFilter === t.FILTER_COMPLETED
               ? _todo.completed
               : !_todo.completed
           );
@@ -67,17 +67,15 @@ export const Todos = types
         completed: false,
       };
       self.isUpdating = true;
-      self.payload.unshift(newTodo);
-      self.visibilityFilter = t.ALL_TODOS;
+      self.data.unshift(newTodo);
+      self.visibilityFilter = t.FILTER_ALL;
     },
-    deleteTodo(todo: SnapshotIn<TodoModel>) {
-      self.payload.replace(
-        self.payload.filter((_todo) => _todo.id !== todo.id)
-      );
+    removeTodo(todo: SnapshotIn<TodoModel>) {
+      self.data.replace(self.data.filter((_todo) => _todo.id !== todo.id));
       self.isUpdating = true;
       destroy(todo);
     },
-    deleteTodos() {
+    removeTodos() {
       setTodosApi({
         ...t.initialTodos,
       });
@@ -98,16 +96,16 @@ export const Todos = types
     },
     saveTodo() {
       const showEdit = self.editing[0];
-      const statePayload = self.payload.map((_todo) =>
+      const statePayload = self.data.map((_todo) =>
         _todo.id === showEdit.id ? { ..._todo, title: showEdit.title } : _todo
       );
       destroy(self.editing);
-      self.payload.replace(statePayload);
+      self.data.replace(statePayload);
       self.isUpdating = true;
     },
     showEdit(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
       const isAllreadyIncluded: boolean = self.editing.length !== 0;
-      const todoSnapshot = getSnapshot(self).payload.filter(
+      const todoSnapshot = getSnapshot(self).data.filter(
         (_todo) => _todo.id === todo.id
       );
       if (isAllreadyIncluded) {
@@ -122,19 +120,19 @@ export const Todos = types
       }
     },
     toggleTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
-      const statePayload = self.payload.map((_todo) =>
+      const statePayload = self.data.map((_todo) =>
         _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
       );
-      self.payload.replace(statePayload);
+      self.data.replace(statePayload);
       self.isUpdating = true;
     },
     toggleTodos(isAllCompleted: boolean) {
-      const statePayload = self.payload.map((_todo) =>
+      const statePayload = self.data.map((_todo) =>
         _todo.completed === !isAllCompleted
           ? { ..._todo, completed: isAllCompleted }
           : _todo
       );
-      self.payload.replace(statePayload);
+      self.data.replace(statePayload);
       self.isUpdating = true;
     },
 
@@ -145,15 +143,15 @@ export const Todos = types
           countAll: self.countAllView,
           countCompleted: self.countCompletedView,
           editing: getSnapshot(self).editing,
-          payload: getSnapshot(self).payload,
+          data: getSnapshot(self).data,
           visibilityFilter: self.visibilityFilter,
           isSearching: self.isSearching,
           isUpdating: false,
-          visible:
-            self.visibilityFilter === t.ALL_TODOS
-              ? self.payload
-              : self.payload.filter((_todo: t.Todo) =>
-                  self.visibilityFilter === t.COMPLETED_TODOS
+          visibleTodos:
+            self.visibilityFilter === t.FILTER_ALL
+              ? self.data
+              : self.data.filter((_todo: t.Todo) =>
+                  self.visibilityFilter === t.FILTER_COMPLETED
                     ? _todo.completed
                     : !_todo.completed
                 ),

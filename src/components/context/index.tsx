@@ -5,7 +5,7 @@ import Container from "@material-ui/core/Container";
 import EditComponent from "./edit";
 import FilterComponent from "./filter";
 import List from "@material-ui/core/List";
-import ProgressComponent from "./progress";
+import ProgressComponent from "../progress";
 import React, { FC, useContext, useEffect } from "react";
 import SearchComponent from "./search";
 import TodoComponent from "./todo";
@@ -16,7 +16,7 @@ const Todos: FC = () => {
   const { todos, dispatch } = useContext(Context);
   useEffect(() => {
     if (todos.isUpdating) {
-      dispatch({ type: t.UPDATE_TODOS });
+      dispatch({ type: t.TODOS_UPDATE });
     }
   }, [todos, dispatch]);
 
@@ -31,14 +31,14 @@ const Todos: FC = () => {
       {todos.editing.length !== 0 && <EditComponent />}
       <List>
         {todos.isSearching ? (
-          <SearchComponent />
+          <SearchComponent visibleTodosLength={todos.visibleTodos.length} />
         ) : (
           <>
             <AddComponent />
             <FilterComponent />
           </>
         )}
-        {todos.visible.map((_todo: t.Todo) => (
+        {todos.visibleTodos.map((_todo: t.Todo) => (
           <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>

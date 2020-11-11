@@ -39,7 +39,7 @@ const TodoComponent: FC<{
         <IconButton
           edge="end"
           aria-label="Delete Todo"
-          onClick={() => dispatch(actions.deleteTodo(todo))}
+          onClick={() => dispatch(actions.removeTodo(todo))}
         >
           <DeleteIcon />
         </IconButton>

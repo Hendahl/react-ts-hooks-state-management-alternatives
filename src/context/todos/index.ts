@@ -4,33 +4,31 @@ import { setTodosApi } from "../../api";
 
 const reducer = (todos: t.Todos, action: t.ActionTypes) => {
   switch (action.type) {
-    case t.ADD_TODO: {
+    case t.TODO_ADD: {
       const statePayload = [
         { id: utils.uuid(), completed: false, title: action.title },
-        ...todos.payload,
+        ...todos.data,
       ];
       return {
         ...todos,
         countAll: todos.countAll + 1,
         isUpdating: true,
-        payload: statePayload,
-        visibilityFilter: t.ALL_TODOS,
+        data: statePayload,
+        visibilityFilter: t.FILTER_ALL,
       };
     }
 
-    case t.DELETE_TODO: {
-      const statePayload = todos.payload.filter(
-        (_todo) => _todo.id !== action.id
-      );
+    case t.TODO_DELETE: {
+      const statePayload = todos.data.filter((_todo) => _todo.id !== action.id);
       return {
         ...todos,
         countAll: --todos.countAll,
         countCompleted: statePayload.length,
         isUpdating: true,
-        payload: statePayload.filter((_todo) => _todo.id !== action.id),
+        data: statePayload.filter((_todo) => _todo.id !== action.id),
       };
     }
-    case t.DELETE_TODOS: {
+    case t.TODOS_DELETE: {
       setTodosApi({
         ...t.initialTodos,
       });
@@ -39,7 +37,7 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
       };
     }
 
-    case t.EDIT_TODO: {
+    case t.TODO_EDIT: {
       const stateEditing = todos.editing.map((_todo) =>
         _todo.id === action.todo.id
           ? { ..._todo, title: action.todo.title }
@@ -51,7 +49,7 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
       };
     }
 
-    case t.FILTER_TODOS: {
+    case t.TODOS_FILTER: {
       return {
         ...todos,
         isUpdating: true,
@@ -59,10 +57,10 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
       };
     }
 
-    case t.SAVE_TODO: {
+    case t.TODO_SAVE: {
       const stateTodo = todos.editing[0];
       const statePayload: t.Todo[] = [
-        ...todos.payload.map((_todo) =>
+        ...todos.data.map((_todo) =>
           _todo.id === stateTodo.id
             ? { ..._todo, title: stateTodo.title }
             : _todo
@@ -70,20 +68,20 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
       ];
       return {
         ...todos,
-        payload: statePayload,
+        data: statePayload,
         editing: [],
         isUpdating: true,
       };
     }
 
-    case t.SEARCH_TODOS: {
-      const stateVisible = todos.payload.filter((_todo) =>
+    case t.TODOS_SEARCH: {
+      const stateVisible = todos.data.filter((_todo) =>
         _todo.title.toLowerCase().includes(action.searchTerm.toLowerCase())
       );
       return {
         ...todos,
-        visible: stateVisible,
-        visibilityFilter: t.ALL_TODOS,
+        visibleTodos: stateVisible,
+        visibilityFilter: t.FILTER_ALL,
       };
     }
 
@@ -104,8 +102,8 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
       };
     }
 
-    case t.TOGGLE_TODO: {
-      const statePayload = todos.payload.map((_todo) =>
+    case t.TODO_TOGGLE: {
+      const statePayload = todos.data.map((_todo) =>
         _todo.id === action.todo.id
           ? { ..._todo, completed: !_todo.completed }
           : _todo
@@ -114,12 +112,12 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
         ...todos,
         countCompleted: statePayload.filter((_todo) => _todo.completed).length,
         isUpdating: true,
-        payload: statePayload,
+        data: statePayload,
       };
     }
 
-    case t.TOGGLE_TODOS: {
-      const statePayload = todos.payload.map((_todo) =>
+    case t.TODOS_TOGGLE: {
+      const statePayload = todos.data.map((_todo) =>
         _todo.completed === !action.isAllCompleted
           ? { ..._todo, completed: action.isAllCompleted }
           : _todo
@@ -128,19 +126,19 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
         ...todos,
         countCompleted: statePayload.filter((_todo) => _todo.completed).length,
         isUpdating: true,
-        payload: statePayload,
+        data: statePayload,
       };
     }
 
-    case t.UPDATE_TODOS: {
+    case t.TODOS_UPDATE: {
       const stateUpdated: t.Todos = {
         ...todos,
         isUpdating: false,
-        visible:
-          todos.visibilityFilter === t.ALL_TODOS
-            ? todos.payload
-            : todos.payload.filter((_todo) =>
-                todos.visibilityFilter === t.COMPLETED_TODOS
+        visibleTodos:
+          todos.visibilityFilter === t.FILTER_ALL
+            ? todos.data
+            : todos.data.filter((_todo) =>
+                todos.visibilityFilter === t.FILTER_COMPLETED
                   ? _todo.completed
                   : !_todo.completed
               ),

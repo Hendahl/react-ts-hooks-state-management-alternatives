@@ -1,35 +1,35 @@
-export const ACTIVE_TODOS = "ACTIVE_TODOS";
-export const ALL_TODOS = "ALL_TODOS";
-export const COMPLETED_TODOS = "COMPLETED_TODOS";
+export const FILTER_ACTIVE = "FILTER_ACTIVE";
+export const FILTER_ALL = "FILTER_ALL";
+export const FILTER_COMPLETED = "FILTER_COMPLETED";
 
-export const ADD_TODO = "ADD_TODO";
-export const DELETE_TODO = "DELETE_TODO";
-export const DELETE_TODOS = "DELETE_TODOS";
-export const EDIT_TODO = "EDIT_TODO";
-export const FILTER_TODOS = "FILTER_TODOS";
-export const GET_TODOS = "GET_TODOS";
-export const SAVE_TODO = "SAVE_TODO";
-export const SEARCH_TODOS = "SEARCH_TODOS";
+export const TODO_ADD = "TODO_ADD";
+export const TODO_DELETE = "TODO_DELETE";
+export const TODOS_DELETE = "TODOS_DELETE";
+export const TODO_EDIT = "TODO_EDIT";
+export const TODOS_FILTER = "TODOS_FILTER";
+export const TODOS_GET = "TODOS_GET";
+export const TODO_SAVE = "TODO_SAVE";
+export const TODOS_SEARCH = "TODOS_SEARCH";
 export const SHOW_EDIT = "SHOW_EDIT";
 export const SHOW_SEARCH = "SHOW_SEARCH";
-export const TOGGLE_TODO = "TOGGLE_TODO";
-export const TOGGLE_TODOS = "TOGGLE_TODOS";
-export const UPDATE_TODOS = "UPDATE_TODOS";
+export const TODO_TOGGLE = "TODO_TOGGLE";
+export const TODOS_TOGGLE = "TODOS_TOGGLE";
+export const TODOS_UPDATE = "TODOS_UPDATE";
 
 export type ActionTypes =
-  | { type: typeof ADD_TODO; title: string }
-  | { type: typeof DELETE_TODO; id: number }
-  | { type: typeof DELETE_TODOS }
-  | { type: typeof EDIT_TODO; todo: Todo }
-  | { type: typeof FILTER_TODOS; visibiltityFilter: string }
-  | { type: typeof GET_TODOS }
-  | { type: typeof SAVE_TODO }
-  | { type: typeof SEARCH_TODOS; searchTerm: string }
+  | { type: typeof TODO_ADD; title: string }
+  | { type: typeof TODO_DELETE; id: number }
+  | { type: typeof TODOS_DELETE }
+  | { type: typeof TODO_EDIT; todo: Todo }
+  | { type: typeof TODOS_FILTER; visibiltityFilter: string }
+  | { type: typeof TODOS_GET }
+  | { type: typeof TODO_SAVE }
+  | { type: typeof TODOS_SEARCH; searchTerm: string }
   | { type: typeof SHOW_EDIT; todo: Todo }
   | { type: typeof SHOW_SEARCH }
-  | { type: typeof TOGGLE_TODO; todo: Todo }
-  | { type: typeof TOGGLE_TODOS; isAllCompleted: boolean }
-  | { type: typeof UPDATE_TODOS };
+  | { type: typeof TODO_TOGGLE; todo: Todo }
+  | { type: typeof TODOS_TOGGLE; isAllCompleted: boolean }
+  | { type: typeof TODOS_UPDATE };
 
 export type AddTodo = (title: string) => void;
 export type DeleteTodo = (todo: Todo) => void;
@@ -55,12 +55,12 @@ export type Todo = {
 export type Todos = {
   countAll: number;
   countCompleted: number;
+  data: Todo[];
+  editing: Todo[];
   isSearching: boolean;
   isUpdating: boolean;
-  payload: Todo[];
   visibilityFilter: string;
-  visible: Todo[];
-  editing: Todo[];
+  visibleTodos: Todo[];
 };
 
 export interface TodosI {
@@ -70,12 +70,12 @@ export interface TodosI {
 export let initialTodos: Todos = {
   countAll: 0,
   countCompleted: 0,
+  data: [],
   editing: [],
   isSearching: false,
   isUpdating: false,
-  payload: [],
-  visibilityFilter: ALL_TODOS,
-  visible: [],
+  visibilityFilter: FILTER_ALL,
+  visibleTodos: [],
 };
 
 export const LSKEY = "react-hooks-todos-all";

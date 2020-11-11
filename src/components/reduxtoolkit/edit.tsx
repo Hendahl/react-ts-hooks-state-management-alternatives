@@ -1,25 +1,33 @@
-import * as t from "../../ts/types";
+import * as actions from "../../redux/todos/actions";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
-import { Context } from "../../context/store";
 import React, {
   ChangeEvent,
   FC,
   ReactElement,
   KeyboardEvent,
-  useContext,
   useState,
 } from "react";
+import TextField from "@material-ui/core/TextField";
+import { useDispatch, useSelector } from "react-redux";
+import * as t from "../../ts/types";
+import { edit, save, showEdit } from "../../reduxtoolkit/todos";
+import { RootState } from "../../reduxtoolkit/rootReducer";
+
+type Undo = () => void;
+
+interface EditI {
+  todos: t.Todos;
+}
 
 const EditComponent: FC = (): ReactElement => {
-  const { todos, dispatch } = useContext(Context);
-  const todo = todos.editing[0];
-
+  const { editing } = useSelector((state: RootState) => state.todos);
+  const todo = editing[0];
+  const dispatch = useDispatch();
   const [stateTitle] = useState<string>(todo.title);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -27,45 +35,45 @@ const EditComponent: FC = (): ReactElement => {
       ...todo,
       title: e.target.value,
     };
-    dispatch({ type: t.TODO_EDIT, todo: stateTodo });
+    dispatch(edit(stateTodo));
   };
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && todo.title !== "" && todo.title !== stateTitle) {
-      dispatch({ type: t.TODO_SAVE });
+      dispatch(save());
     }
   };
 
-  const handleUndo = () => {
-    dispatch({ type: t.TODO_EDIT, todo: todo });
+  const handleUndo: Undo = () => {
+    const stateTodo = {
+      ...todo,
+      title: stateTitle,
+    };
+    dispatch(edit(stateTodo));
   };
 
   return (
-    <Dialog
-      open={true}
-      aria-labelledby="stateTodo-dialog-title"
-      fullWidth={true}
-    >
-      <DialogTitle id="stateTodo-dialog-title">Edit : {stateTitle}</DialogTitle>
+    <Dialog open={true} aria-labelledby="todo-dialog-title" fullWidth={true}>
+      <DialogTitle id="todo-dialog-title">Edit : {stateTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>Change title of the todo ...</DialogContentText>
         <TextField
           autoComplete="off"
           autoFocus
-          fullWidth
+          margin="dense"
           id="title"
           label="Title"
-          margin="dense"
+          fullWidth
+          value={todo.title}
           onChange={handleChange}
           onKeyPress={handleEnter}
-          value={todo.title}
         />
         <TextField
           disabled={true}
-          fullWidth
+          margin="dense"
           id="id"
           label="Id"
-          margin="dense"
+          fullWidth
           value={todo.id}
         />
       </DialogContent>
@@ -77,16 +85,13 @@ const EditComponent: FC = (): ReactElement => {
         >
           Undo
         </Button>
-        <Button
-          color="primary"
-          onClick={() => dispatch({ type: t.SHOW_EDIT, todo: todo })}
-        >
+        <Button color="primary" onClick={() => dispatch(showEdit(todo))}>
           Cancel
         </Button>
         <Button
           color="primary"
           disabled={todo.title === "" || todo.title === stateTitle}
-          onClick={() => dispatch({ type: t.TODO_SAVE })}
+          onClick={() => dispatch(save())}
         >
           Save
         </Button>

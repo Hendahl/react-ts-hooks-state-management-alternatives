@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useReducer,
-  Dispatch,
-  ReactNode,
-  useEffect,
-} from "react";
-import * as utils from "../utils";
+import React, { createContext, useReducer, Dispatch, ReactNode } from "react";
 import reducer from "./todos";
 import * as t from "../ts/types";
 import { getTodosApi } from "../api";

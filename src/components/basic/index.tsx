@@ -6,7 +6,7 @@ import Container from "@material-ui/core/Container";
 import EditComponent from "./edit";
 import FilterComponent from "./filter";
 import List from "@material-ui/core/List";
-import ProgressComponent from "./progress";
+import ProgressComponent from "../progress";
 import React, { FC, useEffect, useState } from "react";
 import SearchComponent from "./search";
 import TodoComponent from "./todo";
@@ -25,11 +25,11 @@ const Todos: FC = () => {
       const stateUpdated: t.Todos = {
         ...stateTodos,
         isUpdating: false,
-        visible:
-          stateTodos.visibilityFilter === t.ALL_TODOS
-            ? stateTodos.payload
-            : stateTodos.payload.filter((_todo) =>
-                stateTodos.visibilityFilter === t.COMPLETED_TODOS
+        visibleTodos:
+          stateTodos.visibilityFilter === t.FILTER_ALL
+            ? stateTodos.data
+            : stateTodos.data.filter((_todo) =>
+                stateTodos.visibilityFilter === t.FILTER_COMPLETED
                   ? _todo.completed
                   : !_todo.completed
               ),
@@ -42,19 +42,19 @@ const Todos: FC = () => {
   const addTodo: t.AddTodo = (title) => {
     const statePayload = [
       { id: utils.uuid(), completed: false, title: title },
-      ...stateTodos.payload,
+      ...stateTodos.data,
     ];
     setStateTodos({
       ...stateTodos,
       countAll: stateTodos.countAll + 1,
       isUpdating: true,
-      payload: statePayload,
-      visibilityFilter: t.ALL_TODOS,
+      data: statePayload,
+      visibilityFilter: t.FILTER_ALL,
     });
   };
 
-  const deleteTodo: t.DeleteTodo = (todo) => {
-    const statePayload = stateTodos.payload.filter(
+  const removeTodo: t.DeleteTodo = (todo) => {
+    const statePayload = stateTodos.data.filter(
       (_todo) => _todo.id !== todo.id
     );
     setStateTodos({
@@ -62,11 +62,11 @@ const Todos: FC = () => {
       countAll: --stateTodos.countAll,
       countCompleted: statePayload.length,
       isUpdating: true,
-      payload: statePayload.filter((_todo) => _todo.id !== todo.id),
+      data: statePayload.filter((_todo) => _todo.id !== todo.id),
     });
   };
 
-  const deleteTodos: t.DeleteTodos = () => {
+  const removeTodos: t.DeleteTodos = () => {
     setTodosApi({
       ...t.initialTodos,
     });
@@ -96,7 +96,7 @@ const Todos: FC = () => {
   const saveTodo: t.SaveTodo = () => {
     const stateTodo = stateTodos.editing[0];
     const statePayload: t.Todo[] = [
-      ...stateTodos.payload.map((_todo) =>
+      ...stateTodos.data.map((_todo) =>
         _todo.id === stateTodo.id ? { ..._todo, title: stateTodo.title } : _todo
       ),
     ];
@@ -104,18 +104,18 @@ const Todos: FC = () => {
       ...stateTodos,
       editing: [],
       isUpdating: true,
-      payload: statePayload,
+      data: statePayload,
     });
   };
 
   const searchTodos: t.SearchTodos = (searchTerm) => {
-    const stateVisible = stateTodos.payload.filter((_todo) =>
+    const stateVisible = stateTodos.data.filter((_todo) =>
       _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setStateTodos({
       ...stateTodos,
-      visibilityFilter: t.ALL_TODOS,
-      visible: stateVisible,
+      visibilityFilter: t.FILTER_ALL,
+      visibleTodos: stateVisible,
     });
   };
 
@@ -137,19 +137,19 @@ const Todos: FC = () => {
   };
 
   const toggleTodo: t.ToggleTodo = (todo) => {
-    const statePayload = stateTodos.payload.map((_todo) =>
+    const statePayload = stateTodos.data.map((_todo) =>
       _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
     );
     setStateTodos({
       ...stateTodos,
       countCompleted: statePayload.filter((_todo) => _todo.completed).length,
       isUpdating: true,
-      payload: statePayload,
+      data: statePayload,
     });
   };
 
   const toggleTodos: t.ToggleTodos = (isAllCompleted) => {
-    const statePayload = stateTodos.payload.map((_todo) =>
+    const statePayload = stateTodos.data.map((_todo) =>
       _todo.completed === !isAllCompleted
         ? { ..._todo, completed: isAllCompleted }
         : _todo
@@ -157,7 +157,7 @@ const Todos: FC = () => {
     setStateTodos({
       ...stateTodos,
       countCompleted: statePayload.filter((_todo) => _todo.completed).length,
-      payload: statePayload,
+      data: statePayload,
       isUpdating: true,
     });
   };
@@ -189,7 +189,7 @@ const Todos: FC = () => {
           <>
             <AddComponent onAddTodo={addTodo} />
             <FilterComponent
-              onDeleteTodos={deleteTodos}
+              onDeleteTodos={removeTodos}
               onFilterTodos={filterTodos}
               onShowSearch={showSearch}
               onToggleTodos={toggleTodos}
@@ -197,10 +197,10 @@ const Todos: FC = () => {
             />
           </>
         )}
-        {stateTodos.payload.map((_todo) => (
+        {stateTodos.data.map((_todo) => (
           <TodoComponent
             key={_todo.id}
-            onDeleteTodo={deleteTodo}
+            onDeleteTodo={removeTodo}
             onShowEdit={showEdit}
             onToggleTodo={toggleTodo}
             todo={_todo}

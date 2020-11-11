@@ -40,11 +40,11 @@ const FilterComponent: FC<FilterI> = ({
   const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(
     false
   );
-  const [stateFilter, setStateFilter] = useState<string>(t.ALL_TODOS);
+  const [stateFilter, setStateFilter] = useState<string>(t.FILTER_ALL);
 
   useEffect(() => {
-    if (todos.payload[0]) {
-      setStateIsAllCompleted(!todos.payload[0].completed);
+    if (todos.data[0]) {
+      setStateIsAllCompleted(!todos.data[0].completed);
     }
   }, [todos]);
 
@@ -59,7 +59,7 @@ const FilterComponent: FC<FilterI> = ({
   };
 
   const handleToggleTodos = (): void => {
-    if (todos.payload[0]) {
+    if (todos.data[0]) {
       setStateIsAllCompleted(!stateIsAllCompleted);
     }
     onToggleTodos(stateIsAllCompleted);
@@ -89,29 +89,30 @@ const FilterComponent: FC<FilterI> = ({
             >
               <Button
                 disabled={
-                  todos.visibilityFilter === t.ALL_TODOS || todos.countAll === 0
+                  todos.visibilityFilter === t.FILTER_ALL ||
+                  todos.countAll === 0
                 }
-                id={t.ALL_TODOS}
+                id={t.FILTER_ALL}
                 onClick={handleFilterTodos}
               >
                 ALL ({todos.countAll})
               </Button>
               <Button
                 disabled={
-                  todos.visibilityFilter === t.ACTIVE_TODOS ||
+                  todos.visibilityFilter === t.FILTER_ACTIVE ||
                   todos.countAll === 0
                 }
-                id={t.ACTIVE_TODOS}
+                id={t.FILTER_ACTIVE}
                 onClick={handleFilterTodos}
               >
                 ACTIVE ({todos.countAll - todos.countCompleted})
               </Button>
               <Button
                 disabled={
-                  todos.visibilityFilter === t.COMPLETED_TODOS ||
+                  todos.visibilityFilter === t.FILTER_COMPLETED ||
                   todos.countAll === 0
                 }
-                id={t.COMPLETED_TODOS}
+                id={t.FILTER_COMPLETED}
                 onClick={handleFilterTodos}
               >
                 COMPLETEDED ({todos.countCompleted})
@@ -125,11 +126,11 @@ const FilterComponent: FC<FilterI> = ({
                 value={stateFilter}
                 onChange={handleChange}
               >
-                <MenuItem value={t.ALL_TODOS}>ALL ({todos.countAll})</MenuItem>
-                <MenuItem value={t.ACTIVE_TODOS}>
+                <MenuItem value={t.FILTER_ALL}>ALL ({todos.countAll})</MenuItem>
+                <MenuItem value={t.FILTER_ACTIVE}>
                   ACTIVE ({todos.countAll - todos.countCompleted})
                 </MenuItem>
-                <MenuItem value={t.COMPLETED_TODOS}>
+                <MenuItem value={t.FILTER_COMPLETED}>
                   COMPLETED ({todos.countCompleted})
                 </MenuItem>
               </Select>

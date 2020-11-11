@@ -5,7 +5,7 @@ import Container from "@material-ui/core/Container";
 import EditComponent from "./edit";
 import FilterComponent from "./filter";
 import List from "@material-ui/core/List";
-import ProgressComponent from "./progress";
+import ProgressComponent from "../progress";
 import React, { FC, useEffect } from "react";
 import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
@@ -40,14 +40,16 @@ const Todos: FC = () => {
       {storeTodos.editing.length !== 0 && <EditComponent />}
       <List>
         {storeTodos.isSearching ? (
-          <SearchComponent />
+          <SearchComponent
+            visibleTodosLength={storeTodos.visibleTodos.length}
+          />
         ) : (
           <>
             <AddComponent />
             <FilterComponent />
           </>
         )}
-        {storeTodos.visible.map((_todo: t.Todo) => (
+        {storeTodos.visibleTodos.map((_todo: t.Todo) => (
           <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>

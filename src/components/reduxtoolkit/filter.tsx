@@ -11,71 +11,75 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import MenuItem from "@material-ui/core/MenuItem";
 import SearchIcon from "@material-ui/icons/Search";
 import Select from "@material-ui/core/Select";
-import { Context } from "../../context/store";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../reduxtoolkit/rootReducer";
 import { useStyles } from "../../theme";
+import {
+  filter,
+  removeAll,
+  showSearch,
+  toggleAll,
+} from "../../reduxtoolkit/todos";
 import React, {
-  ChangeEvent,
   FC,
   FormEvent,
   ReactElement,
-  useContext,
   useEffect,
   useState,
+  ChangeEvent,
 } from "react";
 
 const FilterComponent: FC = (): ReactElement => {
   const classes = useStyles();
-  const { todos, dispatch } = useContext(Context);
+  const {
+    countAll,
+    countCompleted,
+    data,
+    isSearching,
+    visibilityFilter,
+  } = useSelector((state: RootState) => state.todos);
+  const dispatch = useDispatch();
   const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(
     false
   );
   const [stateFilter, setStateFilter] = useState<string>(t.FILTER_ALL);
 
   useEffect(() => {
-    if (todos.data[0]) {
-      setStateIsAllCompleted(!todos.data[0].completed);
+    if (data[0]) {
+      setStateIsAllCompleted(!data[0].completed);
     }
-  }, [todos]);
+  }, [data]);
 
   const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
     setStateFilter(e.target.value as string);
-    dispatch({
-      type: t.TODOS_FILTER,
-      visibiltityFilter: e.target.value as string,
-    });
+    dispatch(filter({ filter: e.target.value as string }));
   };
 
   const handleDeleteTodos = () => {
-    dispatch({ type: t.TODOS_DELETE });
+    dispatch(removeAll());
   };
 
   const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    dispatch({
-      type: t.TODOS_FILTER,
-      visibiltityFilter: e.currentTarget.id,
-    });
+    dispatch(filter({ filter: e.currentTarget.id }));
   };
 
   const handleToggleTodos = (): void => {
-    if (todos.data[0]) {
+    if (data[0]) {
       setStateIsAllCompleted(!stateIsAllCompleted);
     }
-    dispatch({
-      type: t.TODOS_TOGGLE,
-      isAllCompleted: stateIsAllCompleted,
-    });
+    dispatch(toggleAll({ isAllCompleted: stateIsAllCompleted }));
   };
 
   return (
     <ListItem>
-      {todos.countAll !== 0 && (
+      {countAll !== 0 && (
         <>
           <ListItemIcon>
             <IconButton
               aria-label="Edit Completed"
               color={stateIsAllCompleted ? "primary" : "inherit"}
-              disabled={todos.countAll === 0}
+              disabled={countAll === 0}
               edge="end"
               onClick={handleToggleTodos}
             >
@@ -90,34 +94,29 @@ const FilterComponent: FC = (): ReactElement => {
               className={classes.buttonGroup}
             >
               <Button
-                disabled={
-                  todos.visibilityFilter === t.FILTER_ALL ||
-                  todos.countAll === 0
-                }
+                disabled={visibilityFilter === t.FILTER_ALL || countAll === 0}
                 id={t.FILTER_ALL}
                 onClick={handleFilterTodos}
               >
-                ALL ({todos.countAll})
+                ALL ({countAll})
               </Button>
               <Button
                 disabled={
-                  todos.visibilityFilter === t.FILTER_ACTIVE ||
-                  todos.countAll === 0
+                  visibilityFilter === t.FILTER_ACTIVE || countAll === 0
                 }
                 id={t.FILTER_ACTIVE}
                 onClick={handleFilterTodos}
               >
-                ACTIVE ({todos.countAll - todos.countCompleted})
+                ACTIVE ({countAll - countCompleted})
               </Button>
               <Button
                 disabled={
-                  todos.visibilityFilter === t.FILTER_COMPLETED ||
-                  todos.countAll === 0
+                  visibilityFilter === t.FILTER_COMPLETED || countAll === 0
                 }
                 id={t.FILTER_COMPLETED}
                 onClick={handleFilterTodos}
               >
-                COMPLETEDED ({todos.countCompleted})
+                COMPLETEDED ({countCompleted})
               </Button>
             </ButtonGroup>
           </Hidden>
@@ -128,12 +127,12 @@ const FilterComponent: FC = (): ReactElement => {
                 value={stateFilter}
                 onChange={handleChange}
               >
-                <MenuItem value={t.FILTER_ALL}>ALL ({todos.countAll})</MenuItem>
+                <MenuItem value={t.FILTER_ALL}>ALL ({countAll})</MenuItem>
                 <MenuItem value={t.FILTER_ACTIVE}>
-                  ACTIVE ({todos.countAll - todos.countCompleted})
+                  ACTIVE ({countAll - countCompleted})
                 </MenuItem>
                 <MenuItem value={t.FILTER_COMPLETED}>
-                  COMPLETED ({todos.countCompleted})
+                  COMPLETED ({countCompleted})
                 </MenuItem>
               </Select>
             </FormControl>
@@ -148,10 +147,10 @@ const FilterComponent: FC = (): ReactElement => {
           </IconButton>
           <IconButton
             color="primary"
-            disabled={todos.isSearching}
+            disabled={isSearching}
             edge="end"
             aria-label="Search"
-            onClick={() => dispatch({ type: t.SHOW_SEARCH })}
+            onClick={() => dispatch(showSearch())}
           >
             <SearchIcon />
           </IconButton>

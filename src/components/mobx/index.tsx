@@ -3,7 +3,7 @@ import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import EditComponent from "./edit";
 import List from "@material-ui/core/List";
-import ProgressComponent from "./progress";
+import ProgressComponent from "../progress";
 import React, { FC, useMemo } from "react";
 import TodoComponent from "./todo";
 import Typography from "@material-ui/core/Typography";
@@ -29,7 +29,7 @@ const Todos: FC = observer(() => {
       {todos.editing.length !== 0 && <EditComponent />}
       <List>
         <AddComponent />
-        {todos.visibleView.map((_todo: t.Todo) => (
+        {todos.visibleTodosView.map((_todo: t.Todo) => (
           <TodoComponent key={_todo.id} todo={_todo} />
         ))}
       </List>

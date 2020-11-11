@@ -1,18 +1,17 @@
-import * as t from "../../ts/types";
-import ListItem from "@material-ui/core/ListItem";
-import TextField from "@material-ui/core/TextField";
-import { Context } from "../../context/store";
 import React, {
   ChangeEvent,
   FC,
   KeyboardEvent,
   ReactElement,
-  useContext,
   useState,
 } from "react";
+import { add } from "../../reduxtoolkit/todos";
+import { useDispatch } from "react-redux";
+import ListItem from "@material-ui/core/ListItem";
+import TextField from "@material-ui/core/TextField";
 
 const AddComponent: FC = (): ReactElement => {
-  const { dispatch } = useContext(Context);
+  const dispatch = useDispatch();
   const [stateTitle, setStateTitle] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -21,7 +20,7 @@ const AddComponent: FC = (): ReactElement => {
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && stateTitle !== "") {
-      dispatch({ type: t.TODO_ADD, title: stateTitle });
+      dispatch(add({ title: stateTitle }));
       setStateTitle("");
     }
   };

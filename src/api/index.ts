@@ -5,6 +5,6 @@ export const getTodosApi = () => {
   return (store && JSON.parse(store)) || t.initialTodos;
 };
 
-export const setTodosApi = (payload: t.Todos) => {
-  return localStorage.setItem(t.LSKEY, JSON.stringify(payload));
+export const setTodosApi = (data: t.Todos) => {
+  return localStorage.setItem(t.LSKEY, JSON.stringify(data));
 };

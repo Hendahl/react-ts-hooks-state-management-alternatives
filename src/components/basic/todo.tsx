@@ -46,7 +46,7 @@ const TodoComponent: FC<{
         <ListItemSecondaryAction>
           <IconButton
             edge="end"
-            aria-label="delete"
+            aria-label="remove"
             onClick={() => onDeleteTodo(todo)}
           >
             <DeleteIcon />

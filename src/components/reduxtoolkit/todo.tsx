@@ -1,22 +1,22 @@
-import * as t from "../../ts/types";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import Switch from "@material-ui/core/Switch";
-import { Context } from "../../context/store";
+import { useDispatch } from "react-redux";
 import { useStyles } from "../../theme";
+import EditIcon from "@material-ui/icons/Edit";
+import * as t from "../../ts/types";
+import { remove, showEdit, toggle } from "../../reduxtoolkit/todos";
 
 const TodoComponent: FC<{
   todo: t.Todo;
 }> = ({ todo }) => {
-  const { dispatch } = useContext(Context);
+  const dispatch = useDispatch();
   const classes = useStyles();
-
   return (
     <ListItem role={undefined} button divider={true}>
       <ListItemIcon>
@@ -25,7 +25,7 @@ const TodoComponent: FC<{
           color="primary"
           value="completed"
           size="small"
-          onChange={() => dispatch({ type: t.TODO_TOGGLE, todo: todo })}
+          onChange={() => dispatch(toggle(todo))}
         />
       </ListItemIcon>
       <ListItemText
@@ -39,14 +39,14 @@ const TodoComponent: FC<{
         <IconButton
           edge="end"
           aria-label="Delete Todo"
-          onClick={() => dispatch({ type: t.TODO_DELETE, id: todo.id })}
+          onClick={() => dispatch(remove(todo))}
         >
           <DeleteIcon />
         </IconButton>
         <IconButton
           edge="end"
           aria-label="edit"
-          onClick={() => dispatch({ type: t.SHOW_EDIT, todo: todo })}
+          onClick={() => dispatch(showEdit(todo))}
         >
           <EditIcon />
         </IconButton>

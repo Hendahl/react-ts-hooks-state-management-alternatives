@@ -24,7 +24,7 @@ const SearchComponent: FC<SearchI> = ({
     <ListItem>
       <TextField
         autoComplete="off"
-        error={todos.visible.length === 0}
+        error={todos.visibleTodos.length === 0}
         fullWidth
         id="title"
         label="Search todos"

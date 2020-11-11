@@ -34,11 +34,11 @@ const FilterComponent: FC = (): ReactElement => {
   const [stateIsAllCompleted, setStateIsAllCompleted] = useState<boolean>(
     false
   );
-  const [stateFilter, setStateFilter] = useState<string>(t.ALL_TODOS);
+  const [stateFilter, setStateFilter] = useState<string>(t.FILTER_ALL);
 
   useEffect(() => {
-    if (storeTodos.payload[0]) {
-      setStateIsAllCompleted(!storeTodos.payload[0].completed);
+    if (storeTodos.data[0]) {
+      setStateIsAllCompleted(!storeTodos.data[0].completed);
     }
   }, [storeTodos]);
 
@@ -48,7 +48,7 @@ const FilterComponent: FC = (): ReactElement => {
   };
 
   const handleDeleteTodos = () => {
-    dispatch(actions.deleteTodos());
+    dispatch(actions.removeTodos());
   };
 
   const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
@@ -57,7 +57,7 @@ const FilterComponent: FC = (): ReactElement => {
   };
 
   const handleToggleTodos = (): void => {
-    if (storeTodos.payload[0]) {
+    if (storeTodos.data[0]) {
       setStateIsAllCompleted(!stateIsAllCompleted);
     }
     dispatch(actions.toggleTodos(stateIsAllCompleted));
@@ -87,30 +87,30 @@ const FilterComponent: FC = (): ReactElement => {
             >
               <Button
                 disabled={
-                  storeTodos.visibilityFilter === t.ALL_TODOS ||
+                  storeTodos.visibilityFilter === t.FILTER_ALL ||
                   storeTodos.countAll === 0
                 }
-                id={t.ALL_TODOS}
+                id={t.FILTER_ALL}
                 onClick={handleFilterTodos}
               >
                 ALL ({storeTodos.countAll})
               </Button>
               <Button
                 disabled={
-                  storeTodos.visibilityFilter === t.ACTIVE_TODOS ||
+                  storeTodos.visibilityFilter === t.FILTER_ACTIVE ||
                   storeTodos.countAll === 0
                 }
-                id={t.ACTIVE_TODOS}
+                id={t.FILTER_ACTIVE}
                 onClick={handleFilterTodos}
               >
                 ACTIVE ({storeTodos.countAll - storeTodos.countCompleted})
               </Button>
               <Button
                 disabled={
-                  storeTodos.visibilityFilter === t.COMPLETED_TODOS ||
+                  storeTodos.visibilityFilter === t.FILTER_COMPLETED ||
                   storeTodos.countAll === 0
                 }
-                id={t.COMPLETED_TODOS}
+                id={t.FILTER_COMPLETED}
                 onClick={handleFilterTodos}
               >
                 COMPLETEDED ({storeTodos.countCompleted})
@@ -124,13 +124,13 @@ const FilterComponent: FC = (): ReactElement => {
                 value={stateFilter}
                 onChange={handleChange}
               >
-                <MenuItem value={t.ALL_TODOS}>
+                <MenuItem value={t.FILTER_ALL}>
                   ALL ({storeTodos.countAll})
                 </MenuItem>
-                <MenuItem value={t.ACTIVE_TODOS}>
+                <MenuItem value={t.FILTER_ACTIVE}>
                   ACTIVE ({storeTodos.countAll - storeTodos.countCompleted})
                 </MenuItem>
-                <MenuItem value={t.COMPLETED_TODOS}>
+                <MenuItem value={t.FILTER_COMPLETED}>
                   COMPLETED ({storeTodos.countCompleted})
                 </MenuItem>
               </Select>

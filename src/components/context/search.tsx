@@ -7,18 +7,20 @@ import React, { ChangeEvent, FC, ReactElement, useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import { Context } from "../../context/store";
 
-const SearchComponent: FC = (): ReactElement => {
-  const { todos, dispatch } = useContext(Context);
+const SearchComponent: FC<{ visibleTodosLength: number }> = (
+  props
+): ReactElement => {
+  const { dispatch } = useContext(Context);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    dispatch({ type: t.SEARCH_TODOS, searchTerm: e.target.value });
+    dispatch({ type: t.TODOS_SEARCH, searchTerm: e.target.value });
   };
 
   return (
     <ListItem>
       <TextField
         autoComplete="off"
-        error={todos.visible.length === 0}
+        error={props.visibleTodosLength === 0}
         fullWidth
         id="title"
         label="Search todos"

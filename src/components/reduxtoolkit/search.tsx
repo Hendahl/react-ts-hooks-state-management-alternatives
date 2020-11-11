@@ -1,4 +1,3 @@
-import * as actions from "../../redux/todos/actions";
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
@@ -6,6 +5,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import React, { ChangeEvent, FC, ReactElement } from "react";
 import TextField from "@material-ui/core/TextField";
 import { useDispatch } from "react-redux";
+import { search, showSearch } from "../../reduxtoolkit/todos";
 
 const SearchComponent: FC<{ visibleTodosLength: number }> = (
   props
@@ -13,7 +13,7 @@ const SearchComponent: FC<{ visibleTodosLength: number }> = (
   const dispatch = useDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    dispatch(actions.searchTodos(e.target.value));
+    dispatch(search({ searchTerm: e.target.value }));
   };
 
   return (
@@ -33,7 +33,7 @@ const SearchComponent: FC<{ visibleTodosLength: number }> = (
           aria-label="Search"
           color="primary"
           edge="end"
-          onClick={() => dispatch(actions.showSearch())}
+          onClick={() => dispatch(showSearch())}
         >
           <ClearIcon />
         </IconButton>
