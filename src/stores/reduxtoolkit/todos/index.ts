@@ -18,13 +18,13 @@ const todosSlice = createSlice({
       ];
       state.visibilityFilter = t.FILTER_ALL;
     },
-    edit(state, { payload }: PayloadAction<t.Todo>) {},
+    edit(state, { payload }: PayloadAction<t.TodoT>) {},
     filter(state, { payload }: PayloadAction<{ filter: string }>) {
       const { filter } = payload;
       state.isUpdating = true;
       state.visibilityFilter = filter;
     },
-    get(state, { payload }: PayloadAction<t.Todos>) {
+    get(state, { payload }: PayloadAction<t.TodosT>) {
       const {
         countAll,
         countCompleted,
@@ -43,27 +43,27 @@ const todosSlice = createSlice({
       state.visibilityFilter = visibilityFilter;
       state.visibleTodos = visibleTodos;
     },
-    remove(state, { payload }: PayloadAction<t.Todo>) {
+    remove(state, { payload }: PayloadAction<t.TodoT>) {
       const { id } = payload;
       const statePayload = state.data.filter(
-        (_todo: t.Todo) => _todo.id !== id
+        (_todo: t.TodoT) => _todo.id !== id
       );
       state.countAll = --state.countAll;
       state.countCompleted = statePayload.length;
       state.isUpdating = true;
-      state.data = statePayload.filter((_todo: t.Todo) => _todo.id !== id);
+      state.data = statePayload.filter((_todo: t.TodoT) => _todo.id !== id);
     },
     removeAll() {
       setTodosApi(t.initialTodos);
       return t.initialTodos;
     },
-    toggle(state, { payload }: PayloadAction<t.Todo>) {
+    toggle(state, { payload }: PayloadAction<t.TodoT>) {
       const { id } = payload;
-      const statePayload = state.data.map((_todo: t.Todo) =>
+      const statePayload = state.data.map((_todo: t.TodoT) =>
         _todo.id === id ? { ..._todo, completed: !_todo.completed } : _todo
       );
       state.countCompleted = statePayload.filter(
-        (_todo: t.Todo) => _todo.completed
+        (_todo: t.TodoT) => _todo.completed
       ).length;
       state.isUpdating = true;
       state.data = statePayload;
@@ -71,13 +71,13 @@ const todosSlice = createSlice({
     save() {},
     search(state, { payload }: PayloadAction<{ searchTerm: string }>) {
       const { searchTerm } = payload;
-      const statePayload = state.data.filter((_todo: t.Todo) =>
+      const statePayload = state.data.filter((_todo: t.TodoT) =>
         _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
       state.visibleTodos = statePayload;
       state.visibilityFilter = t.FILTER_ALL;
     },
-    showEdit(state, { payload }: PayloadAction<t.Todo>) {
+    showEdit(state, { payload }: PayloadAction<t.TodoT>) {
       const allreadyIncluded: boolean = state.editing.includes(payload);
       console.log(allreadyIncluded);
       state.editing = allreadyIncluded ? [] : [payload];
@@ -89,26 +89,26 @@ const todosSlice = createSlice({
     },
     toggleAll(state, { payload }: PayloadAction<{ isAllCompleted: boolean }>) {
       const { isAllCompleted } = payload;
-      const statePayload = state.data.map((_todo: t.Todo) =>
+      const statePayload = state.data.map((_todo: t.TodoT) =>
         _todo.completed === !isAllCompleted
           ? { ..._todo, completed: isAllCompleted }
           : _todo
       );
       state.countCompleted = statePayload.filter(
-        (_todo: t.Todo) => _todo.completed
+        (_todo: t.TodoT) => _todo.completed
       ).length;
       state.isUpdating = true;
       state.data = statePayload;
     },
 
     update(state) {
-      const stateUpdated: t.Todos = {
+      const stateUpdated: t.TodosT = {
         ...state,
         isUpdating: false,
         visibleTodos:
           state.visibilityFilter === t.FILTER_ALL
             ? state.data
-            : state.data.filter((_todo: t.Todo) =>
+            : state.data.filter((_todo: t.TodoT) =>
                 state.visibilityFilter === t.FILTER_COMPLETED
                   ? _todo.completed
                   : !_todo.completed

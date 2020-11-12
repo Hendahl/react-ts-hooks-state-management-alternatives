@@ -2,7 +2,7 @@ import * as t from "../../../ts/types";
 import * as utils from "../../../utils";
 import { setTodosApi } from "../../../api";
 
-const reducer = (todos: t.Todos, action: t.ActionTypes) => {
+const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
   switch (action.type) {
     case t.ADD: {
       const statePayload = [
@@ -59,7 +59,7 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
 
     case t.SAVE: {
       const stateTodo = todos.editing[0];
-      const statePayload: t.Todo[] = [
+      const statePayload: t.TodoT[] = [
         ...todos.data.map((_todo) =>
           _todo.id === stateTodo.id
             ? { ..._todo, title: stateTodo.title }
@@ -103,7 +103,7 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
     }
 
     case t.TOGGLE: {
-      const statePayload = todos.data.map((_todo: t.Todo) =>
+      const statePayload = todos.data.map((_todo: t.TodoT) =>
         _todo.id === action.todo.id
           ? { ..._todo, completed: !_todo.completed }
           : _todo
@@ -131,7 +131,7 @@ const reducer = (todos: t.Todos, action: t.ActionTypes) => {
     }
 
     case t.UPDATE: {
-      const stateUpdated: t.Todos = {
+      const stateUpdated: t.TodosT = {
         ...todos,
         isUpdating: false,
         visibleTodos:

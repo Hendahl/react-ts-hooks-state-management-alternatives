@@ -4,7 +4,7 @@ import * as t from "../../ts/types";
 import { getTodosApi } from "../../api";
 
 type ContextType = {
-  todos: t.Todos;
+  todos: t.TodosT;
   dispatch: Dispatch<t.ActionTypes>;
 };
 

@@ -1,6 +1,6 @@
 # React-Hooks-State-Management-Alternatives...
 
-A classic React TypeScript Todo App with alternative state management side by side.
+A classic React TypeScript TodoT App with alternative state management side by side.
 
 [Demo](https://master.d39k33h7v1r5p9.amplifyapp.com/)
 

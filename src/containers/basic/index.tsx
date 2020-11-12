@@ -13,8 +13,8 @@ import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";
 import { getTodosApi, setTodosApi } from "../../api";
 
-const Todos: FC = () => {
-  const [stateTodos, setStateTodos] = useState<t.Todos>(t.initialTodos);
+const TodosT: FC = () => {
+  const [stateTodos, setStateTodos] = useState<t.TodosT>(t.initialTodos);
 
   useEffect(() => {
     setStateTodos(getTodosApi());
@@ -22,7 +22,7 @@ const Todos: FC = () => {
 
   useEffect(() => {
     if (stateTodos.isUpdating) {
-      const stateUpdated: t.Todos = {
+      const stateUpdated: t.TodosT = {
         ...stateTodos,
         isUpdating: false,
         visibleTodos:
@@ -95,7 +95,7 @@ const Todos: FC = () => {
 
   const handleSaveTodo: t.SaveTodo = () => {
     const stateTodo = stateTodos.editing[0];
-    const statePayload: t.Todo[] = [
+    const statePayload: t.TodoT[] = [
       ...stateTodos.data.map((_todo) =>
         _todo.id === stateTodo.id ? { ..._todo, title: stateTodo.title } : _todo
       ),
@@ -166,33 +166,33 @@ const Todos: FC = () => {
     <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
-          Todos - Basic
+          TodosT - Basic
         </Box>
       </Typography>
       <ProgressComponent isUpdating={stateTodos.isUpdating} />
       {stateTodos.editing.length !== 0 && (
         <EditComponent
-          onEditTodo={handleEditTodo}
-          onSaveTodo={handleSaveTodo}
-          onShowEdit={handleShowEdit}
+          editTodo={handleEditTodo}
+          saveTodo={handleSaveTodo}
+          showEdit={handleShowEdit}
           todo={stateTodos.editing[0]}
         />
       )}
       <List>
         {stateTodos.isSearching ? (
           <SearchComponent
-            onShowSearch={handleShowSearch}
-            onSearchTodos={handleSearchTodos}
+            showSearch={handleShowSearch}
+            searchTodos={handleSearchTodos}
             visibleTodosLength={stateTodos.visibleTodos.length}
           />
         ) : (
           <>
-            <AddComponent onAddTodo={addTodo} />
+            <AddComponent addTodo={addTodo} />
             <FilterComponent
-              onRemoveTodos={handleRemoveTodos}
-              onFilterTodos={handleFilterTodos}
-              onShowSearch={handleShowSearch}
-              onToggleTodos={handleToggleTodos}
+              removeTodos={handleRemoveTodos}
+              filterTodos={handleFilterTodos}
+              showSearch={handleShowSearch}
+              toggleTodos={handleToggleTodos}
               todos={stateTodos}
             />
           </>
@@ -200,9 +200,9 @@ const Todos: FC = () => {
         {stateTodos.visibleTodos.map((_todo) => (
           <TodoComponent
             key={_todo.id}
-            onRemoveTodo={handleRemoveTodo}
-            onShowEdit={handleShowEdit}
-            onToggleTodo={handleToggleTodo}
+            removeTodo={handleRemoveTodo}
+            showEdit={handleShowEdit}
+            toggleTodo={handleToggleTodo}
             todo={_todo}
           />
         ))}
@@ -211,4 +211,4 @@ const Todos: FC = () => {
   );
 };
 
-export default Todos;
+export default TodosT;

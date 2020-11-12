@@ -49,7 +49,7 @@ const App: FC = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              React Hooks Todos
+              React Hooks TodosT
             </Typography>
           </Toolbar>
         </AppBar>

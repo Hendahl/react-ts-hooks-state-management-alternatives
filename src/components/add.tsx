@@ -1,18 +1,9 @@
 import ListItem from "@material-ui/core/ListItem";
 import TextField from "@material-ui/core/TextField";
-import React, {
-  ChangeEvent,
-  FC,
-  KeyboardEvent,
-  ReactElement,
-  useState,
-} from "react";
+import React, { ChangeEvent, FC, KeyboardEvent, useState } from "react";
+import * as t from "../ts/types";
 
-interface IAddComponent {
-  onAddTodo: (title: string) => void;
-}
-
-const AddComponent: FC<IAddComponent> = ({ onAddTodo }): ReactElement => {
+const AddComponent: FC<{ addTodo: t.AddTodo }> = (props) => {
   const [stateTitle, setStateTitle] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -21,7 +12,7 @@ const AddComponent: FC<IAddComponent> = ({ onAddTodo }): ReactElement => {
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && stateTitle !== "") {
-      onAddTodo(stateTitle);
+      props.addTodo(stateTitle);
       setStateTitle("");
     }
   };

@@ -1,2 +1,2 @@
-type TodoModel = Instance<typeof Todo>;
-type TodosModel = Instance<typeof Todos>;
+type TodoModel = Instance<typeof TodoT>;
+type TodosModel = Instance<typeof TodosT>;

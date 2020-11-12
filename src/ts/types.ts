@@ -20,54 +20,54 @@ export type ActionTypes =
   | { type: typeof ADD; title: string }
   | { type: typeof REMOVE; id: number }
   | { type: typeof REMOVE_ALL }
-  | { type: typeof EDIT; todo: Todo }
+  | { type: typeof EDIT; todo: TodoT }
   | { type: typeof FILTER; visibiltityFilter: string }
   | { type: typeof GET }
   | { type: typeof SAVE }
   | { type: typeof SEARCH; searchTerm: string }
-  | { type: typeof SHOW_EDIT; todo: Todo }
+  | { type: typeof SHOW_EDIT; todo: TodoT }
   | { type: typeof SHOW_SEARCH }
-  | { type: typeof TOGGLE; todo: Todo }
+  | { type: typeof TOGGLE; todo: TodoT }
   | { type: typeof TOGGLE_ALL; isAllCompleted: boolean }
   | { type: typeof UPDATE };
 
 export type AddTodo = (title: string) => void;
-export type RemoveTodo = (todo: Todo) => void;
+export type RemoveTodo = (todo: TodoT) => void;
 export type RemoveTodos = () => void;
 export type Dispatch = (arg: ActionTypes) => void;
-export type EditTodo = (todo: Todo) => void;
+export type EditTodo = (todo: TodoT) => void;
 export type FilterTodos = (visibiltityFilter: string) => void;
 export type GetTodos = () => void;
 export type SaveTodo = () => void;
 export type SearchTodos = (searchTerm: string) => void;
-export type ShowEdit = (todo: Todo) => void;
+export type ShowEdit = (todo: TodoT) => void;
 export type ShowSearch = () => void;
-export type ToggleTodo = (todo: Todo) => void;
+export type ToggleTodo = (todo: TodoT) => void;
 export type ToggleTodos = (completed: boolean) => void;
 export type UpdateTodos = () => void;
 
-export type Todo = {
+export type TodoT = {
   completed: boolean;
   id: number;
   title: string;
 };
 
-export type Todos = {
+export type TodosT = {
   countAll: number;
   countCompleted: number;
-  data: Todo[];
-  editing: Todo[];
+  data: TodoT[];
+  editing: TodoT[];
   isSearching: boolean;
   isUpdating: boolean;
   visibilityFilter: string;
-  visibleTodos: Todo[];
+  visibleTodos: TodoT[];
 };
 
 export interface TodosI {
-  todos: Todos;
+  todos: TodosT;
 }
 
-export let initialTodos: Todos = {
+export let initialTodos: TodosT = {
   countAll: 0,
   countCompleted: 0,
   data: [],

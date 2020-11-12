@@ -76,43 +76,43 @@ const TodosContainer: FC = () => {
     <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
-          Todos - Redux
+          TodosT - Redux
         </Box>
       </Typography>
       <ProgressComponent isUpdating={storeTodos.isUpdating} />
       {storeTodos.editing.length !== 0 && (
         <EditComponent
-          onEditTodo={handleEditTodo}
-          onSaveTodo={handleSaveTodo}
-          onShowEdit={handleShowEdit}
+          editTodo={handleEditTodo}
+          saveTodo={handleSaveTodo}
+          showEdit={handleShowEdit}
           todo={storeTodos.editing[0]}
         />
       )}
       <List>
         {storeTodos.isSearching ? (
           <SearchComponent
-            onShowSearch={handleShowSearch}
-            onSearchTodos={handleSearchTodos}
+            showSearch={handleShowSearch}
+            searchTodos={handleSearchTodos}
             visibleTodosLength={storeTodos.visibleTodos.length}
           />
         ) : (
           <>
-            <AddComponent onAddTodo={handleAddTodo} />
+            <AddComponent addTodo={handleAddTodo} />
             <FilterComponent
-              onRemoveTodos={handleRemoveTodos}
-              onFilterTodos={handleFilterTodos}
-              onShowSearch={handleShowSearch}
-              onToggleTodos={handleToggleTodos}
+              removeTodos={handleRemoveTodos}
+              filterTodos={handleFilterTodos}
+              showSearch={handleShowSearch}
+              toggleTodos={handleToggleTodos}
               todos={storeTodos}
             />
           </>
         )}
-        {storeTodos.visibleTodos.map((_todo: t.Todo) => (
+        {storeTodos.visibleTodos.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
-            onRemoveTodo={handleRemoveTodo}
-            onShowEdit={handleShowEdit}
-            onToggleTodo={handleToggleTodo}
+            removeTodo={handleRemoveTodo}
+            showEdit={handleShowEdit}
+            toggleTodo={handleToggleTodo}
             todo={_todo}
           />
         ))}

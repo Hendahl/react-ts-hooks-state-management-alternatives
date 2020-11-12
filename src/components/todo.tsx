@@ -6,50 +6,50 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, { FC, ReactElement } from "react";
+import React, { FC } from "react";
 import Switch from "@material-ui/core/Switch";
 import { useStyles } from "../theme";
 
 const TodoComponent: FC<{
-  onRemoveTodo: (todo: t.Todo) => void;
-  onShowEdit: (todo: t.Todo) => void;
-  onToggleTodo: (todo: t.Todo) => void;
-  todo: t.Todo;
-}> = ({ onRemoveTodo, onShowEdit, onToggleTodo, todo }): ReactElement => {
+  removeTodo: t.RemoveTodo;
+  showEdit: t.ShowEdit;
+  toggleTodo: t.ToggleTodo;
+  todo: t.TodoT;
+}> = (props) => {
   const classes = useStyles();
   return (
     <>
       <ListItem role={undefined} button divider={true}>
         <ListItemIcon>
           <Switch
-            checked={todo.completed}
+            checked={props.todo.completed}
             color="primary"
-            onChange={() => onToggleTodo(todo)}
+            onChange={() => props.toggleTodo(props.todo)}
             value="completed"
             size="small"
           />
         </ListItemIcon>
         <ListItemText
           className={
-            todo.completed
+            props.todo.completed
               ? classes.listItemTextCompleted
               : classes.listItemText
           }
-          primary={todo.title}
-          secondary={todo.id}
+          primary={props.todo.title}
+          secondary={props.todo.id}
         />
         <ListItemSecondaryAction>
           <IconButton
             edge="end"
             aria-label="remove"
-            onClick={() => onRemoveTodo(todo)}
+            onClick={() => props.removeTodo(props.todo)}
           >
             <DeleteIcon />
           </IconButton>
           <IconButton
             edge="end"
             aria-label="edit"
-            onClick={() => onShowEdit(todo)}
+            onClick={() => props.showEdit(props.todo)}
           >
             <EditIcon />
           </IconButton>

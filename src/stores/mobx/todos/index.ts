@@ -11,7 +11,7 @@ import {
 } from "mobx-state-tree";
 import { getTodosApi, setTodosApi } from "../../../api";
 
-export const Todo = types
+export const TodoT = types
   .model({
     completed: types.boolean,
     id: types.identifierNumber,
@@ -29,14 +29,14 @@ export const Todo = types
     },
   }));
 
-export const Todos = types
+export const TodosT = types
   .model({
-    data: types.optional(types.array(Todo), []),
+    data: types.optional(types.array(TodoT), []),
     isSearching: types.boolean,
     isUpdating: types.boolean,
     visibilityFilter: types.string,
-    editing: types.optional(types.array(Todo), []),
-    visibleTodos: types.optional(types.array(Todo), []),
+    editing: types.optional(types.array(TodoT), []),
+    visibleTodos: types.optional(types.array(TodoT), []),
   })
   .views((self) => ({
     get countCompletedView() {
@@ -150,7 +150,7 @@ export const Todos = types
           visibleTodos:
             self.visibilityFilter === t.FILTER_ALL
               ? self.data
-              : self.data.filter((_todo: t.Todo) =>
+              : self.data.filter((_todo: t.TodoT) =>
                   self.visibilityFilter === t.FILTER_COMPLETED
                     ? _todo.completed
                     : !_todo.completed

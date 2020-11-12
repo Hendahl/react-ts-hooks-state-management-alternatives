@@ -46,26 +46,26 @@ const TodosContainer: FC = observer(() => {
     <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
-          Todos - MobX
+          TodosT - MobX
         </Box>
       </Typography>
       <ProgressComponent isUpdating={todos.isUpdating} />
       {todos.editing.length !== 0 && (
         <EditComponent
-          onEditTodo={handleEditTodo}
-          onSaveTodo={handleSaveTodo}
-          onShowEdit={handleShowEdit}
+          editTodo={handleEditTodo}
+          saveTodo={handleSaveTodo}
+          showEdit={handleShowEdit}
           todo={todos.editing[0]}
         />
       )}
       <List>
-        <AddComponent onAddTodo={handleAddTodo} />
-        {todos.visibleTodosView.map((_todo: t.Todo) => (
+        <AddComponent addTodo={handleAddTodo} />
+        {todos.visibleTodosView.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
-            onRemoveTodo={handleRemoveTodo}
-            onShowEdit={handleShowEdit}
-            onToggleTodo={handleToggleTodo}
+            removeTodo={handleRemoveTodo}
+            showEdit={handleShowEdit}
+            toggleTodo={handleToggleTodo}
             todo={_todo}
           />
         ))}

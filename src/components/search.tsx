@@ -2,29 +2,24 @@ import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import React, { ChangeEvent, FC, ReactElement } from "react";
+import React, { ChangeEvent, FC } from "react";
 import TextField from "@material-ui/core/TextField";
+import * as t from "../ts/types";
 
-interface SearchI {
-  onShowSearch: () => void;
-  onSearchTodos: (searchTerm: string) => void;
+const SearchComponent: FC<{
+  showSearch: t.ShowSearch;
+  searchTodos: t.SearchTodos;
   visibleTodosLength: number;
-}
-
-const SearchComponent: FC<SearchI> = ({
-  onSearchTodos,
-  onShowSearch,
-  visibleTodosLength,
-}): ReactElement => {
+}> = (props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    onSearchTodos(e.target.value);
+    props.searchTodos(e.target.value);
   };
 
   return (
     <ListItem>
       <TextField
         autoComplete="off"
-        error={visibleTodosLength === 0}
+        error={props.visibleTodosLength === 0}
         fullWidth
         id="title"
         label="Search todos"
@@ -37,7 +32,7 @@ const SearchComponent: FC<SearchI> = ({
           aria-label="Search"
           color="primary"
           edge="end"
-          onClick={onShowSearch}
+          onClick={props.showSearch}
         >
           <ClearIcon />
         </IconButton>
