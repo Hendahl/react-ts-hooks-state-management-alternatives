@@ -126,20 +126,20 @@ const FilterComponent: FC<{
           </Hidden>
           <IconButton
             color="primary"
-            edge="end"
-            aria-label="Delete all"
-            onClick={props.removeAll}
-          >
-            <DeleteIcon />
-          </IconButton>
-          <IconButton
-            color="primary"
             disabled={props.todos.isSearching}
             edge="end"
             aria-label="Search"
             onClick={props.showSearch}
           >
             <SearchIcon />
+          </IconButton>
+          <IconButton
+            color="primary"
+            edge="end"
+            aria-label="Delete all"
+            onClick={props.removeAll}
+          >
+            <DeleteIcon />
           </IconButton>
         </>
       )}

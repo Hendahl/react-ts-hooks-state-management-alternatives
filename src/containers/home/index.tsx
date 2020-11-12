@@ -40,12 +40,12 @@ const Home: FC = () => {
           </Typography>
           <Typography variant="h5" component="h3" gutterBottom>
             <Link color="primary" component={RouterLink} to="/reduxtoolkit">
-              Redux Toolkit
+              Redux Toolkit (Immer)
             </Link>
           </Typography>
           <Typography variant="body1" gutterBottom paragraph={true}>
             Redux ToolKit, Actions and Reducers to pass data and actions through
-            the components by slices and storeconfig. Immer is used here
+            the components by slices and storeconfig. Immer is used here...
           </Typography>
           <Typography variant="h5" component="h3" gutterBottom>
             <Link color="primary" component={RouterLink} to="/Mobx">

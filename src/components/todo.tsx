@@ -1,6 +1,5 @@
 import * as t from "../ts/types";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -12,7 +11,6 @@ import { useStyles } from "../theme";
 
 const TodoComponent: FC<{
   remove: t.Remove;
-  showEdit: t.ShowEdit;
   toggle: t.Toggle;
   todo: t.TodoT;
 }> = (props) => {
@@ -45,13 +43,6 @@ const TodoComponent: FC<{
             onClick={() => props.remove(props.todo)}
           >
             <DeleteIcon />
-          </IconButton>
-          <IconButton
-            edge="end"
-            aria-label="edit"
-            onClick={() => props.showEdit(props.todo)}
-          >
-            <EditIcon />
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>

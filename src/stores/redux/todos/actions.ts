@@ -18,12 +18,6 @@ export const removeAll: t.RemoveAll = () => {
   };
 };
 
-export const edit: t.Edit = (todo) => {
-  return (dispatch: t.Dispatch) => {
-    dispatch({ type: t.EDIT, todo: todo });
-  };
-};
-
 export const filter: t.Filter = (visibilityFilter) => {
   return (dispatch: t.Dispatch) => {
     dispatch({
@@ -39,21 +33,9 @@ export const get: t.Get = () => {
   };
 };
 
-export const save: t.Save = () => {
-  return (dispatch: t.Dispatch) => {
-    dispatch({ type: t.SAVE });
-  };
-};
-
 export const search: t.Search = (searchTerm) => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.SEARCH, searchTerm: searchTerm });
-  };
-};
-
-export const showEdit: t.ShowEdit = (todo) => {
-  return (dispatch: t.Dispatch) => {
-    dispatch({ type: t.SHOW_EDIT, todo: todo });
   };
 };
 

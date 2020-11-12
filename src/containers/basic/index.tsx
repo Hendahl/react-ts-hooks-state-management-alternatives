@@ -3,7 +3,6 @@ import * as utils from "../../utils";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import EditComponent from "../../components/edit";
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import ProgressComponent from "../../components/progress";
@@ -60,7 +59,7 @@ const TodosT: FC = () => {
     setStateTodos({
       ...stateTodos,
       countAll: --stateTodos.countAll,
-      countCompleted: statePayload.length,
+      countCompleted: statePayload.filter((_todo) => _todo.completed).length,
       isUpdating: true,
       data: statePayload.filter((_todo) => _todo.id !== todo.id),
     });
@@ -75,36 +74,11 @@ const TodosT: FC = () => {
     });
   };
 
-  const handleEdit: t.Edit = (todo) => {
-    const stateEditing = stateTodos.editing.map((_todo) =>
-      _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
-    );
-    setStateTodos({
-      ...stateTodos,
-      editing: stateEditing,
-    });
-  };
-
   const handleFilter: t.Filter = (visibilityFilter) => {
     setStateTodos({
       ...stateTodos,
       isUpdating: true,
       visibilityFilter: visibilityFilter,
-    });
-  };
-
-  const handleSave: t.Save = () => {
-    const stateTodo = stateTodos.editing[0];
-    const statePayload: t.TodoT[] = [
-      ...stateTodos.data.map((_todo) =>
-        _todo.id === stateTodo.id ? { ..._todo, title: stateTodo.title } : _todo
-      ),
-    ];
-    setStateTodos({
-      ...stateTodos,
-      editing: [],
-      isUpdating: true,
-      data: statePayload,
     });
   };
 
@@ -116,15 +90,6 @@ const TodosT: FC = () => {
       ...stateTodos,
       visibilityFilter: t.FILTER_ALL,
       visibleTodos: stateVisible,
-    });
-  };
-
-  const handleShowEdit: t.ShowEdit = (todo) => {
-    const isAllreadyIncluded: boolean = stateTodos.editing.includes(todo);
-    setStateTodos({
-      ...stateTodos,
-      editing: isAllreadyIncluded ? [] : [todo],
-      isUpdating: true,
     });
   };
 
@@ -170,14 +135,6 @@ const TodosT: FC = () => {
         </Box>
       </Typography>
       <ProgressComponent isUpdating={stateTodos.isUpdating} />
-      {stateTodos.editing.length !== 0 && (
-        <EditComponent
-          edit={handleEdit}
-          save={handleSave}
-          showEdit={handleShowEdit}
-          todo={stateTodos.editing[0]}
-        />
-      )}
       <List>
         {stateTodos.isSearching ? (
           <SearchComponent
@@ -201,7 +158,6 @@ const TodosT: FC = () => {
           <TodoComponent
             key={_todo.id}
             remove={handleRemove}
-            showEdit={handleShowEdit}
             toggle={handleToggle}
             todo={_todo}
           />

@@ -23,7 +23,8 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
       return {
         ...todos,
         countAll: --todos.countAll,
-        countCompleted: statePayload.length,
+        countCompleted: statePayload.filter((_todo: t.TodoT) => _todo.completed)
+          .length,
         isUpdating: true,
         data: statePayload.filter((_todo) => _todo.id !== action.id),
       };
@@ -37,40 +38,11 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
       };
     }
 
-    case t.EDIT: {
-      const stateEditing = todos.editing.map((_todo) =>
-        _todo.id === action.todo.id
-          ? { ..._todo, title: action.todo.title }
-          : _todo
-      );
-      return {
-        ...todos,
-        editing: stateEditing,
-      };
-    }
-
     case t.FILTER: {
       return {
         ...todos,
         isUpdating: true,
         visibilityFilter: action.visibiltityFilter,
-      };
-    }
-
-    case t.SAVE: {
-      const stateTodo = todos.editing[0];
-      const statePayload: t.TodoT[] = [
-        ...todos.data.map((_todo) =>
-          _todo.id === stateTodo.id
-            ? { ..._todo, title: stateTodo.title }
-            : _todo
-        ),
-      ];
-      return {
-        ...todos,
-        data: statePayload,
-        editing: [],
-        isUpdating: true,
       };
     }
 
@@ -84,16 +56,6 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
         visibilityFilter: t.FILTER_ALL,
       };
     }
-
-    case t.SHOW_EDIT: {
-      const allreadyIncluded: boolean = todos.editing.includes(action.todo);
-      return {
-        ...todos,
-        editing: allreadyIncluded ? [] : [action.todo],
-        isUpdating: true,
-      };
-    }
-
     case t.SHOW_SEARCH: {
       return {
         ...todos,

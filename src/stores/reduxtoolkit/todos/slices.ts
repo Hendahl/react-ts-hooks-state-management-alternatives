@@ -18,87 +18,63 @@ const todosSlice = createSlice({
       ];
       state.visibilityFilter = t.FILTER_ALL;
     },
-    edit(state, { payload }: PayloadAction<t.TodoT>) {},
     filter(state, { payload }: PayloadAction<{ filter: string }>) {
       const { filter } = payload;
       state.isUpdating = true;
       state.visibilityFilter = filter;
     },
     get(state, { payload }: PayloadAction<t.TodosT>) {
-      const {
-        countAll,
-        countCompleted,
-        data,
-        editing,
-        isSearching,
-        visibilityFilter,
-        visibleTodos,
-      } = payload;
-      state.countAll = countAll;
-      state.countCompleted = countCompleted;
-      state.data = data;
-      state.editing = editing;
-      state.isSearching = isSearching;
-      state.isUpdating = true;
-      state.visibilityFilter = visibilityFilter;
-      state.visibleTodos = visibleTodos;
+      const stateUpdated: t.TodosT = {
+        ...payload,
+        isUpdating: true,
+      };
+      setTodosApi(stateUpdated);
+      return stateUpdated;
     },
     remove(state, { payload }: PayloadAction<t.TodoT>) {
       const { id } = payload;
-      const statePayload = state.data.filter(
-        (_todo: t.TodoT) => _todo.id !== id
-      );
+      state.data = state.data.filter((_todo: t.TodoT) => _todo.id !== id);
       state.countAll = --state.countAll;
-      state.countCompleted = statePayload.length;
+      state.countCompleted = state.data.filter(
+        (_todo: t.TodoT) => _todo.completed
+      ).length;
       state.isUpdating = true;
-      state.data = statePayload.filter((_todo: t.TodoT) => _todo.id !== id);
     },
     removeAll() {
       setTodosApi(t.initialTodos);
       return t.initialTodos;
     },
-    toggle(state, { payload }: PayloadAction<t.TodoT>) {
-      const { id } = payload;
-      const statePayload = state.data.map((_todo: t.TodoT) =>
-        _todo.id === id ? { ..._todo, completed: !_todo.completed } : _todo
-      );
-      state.countCompleted = statePayload.filter(
-        (_todo: t.TodoT) => _todo.completed
-      ).length;
-      state.isUpdating = true;
-      state.data = statePayload;
-    },
-    save() {},
+
     search(state, { payload }: PayloadAction<{ searchTerm: string }>) {
       const { searchTerm } = payload;
-      const statePayload = state.data.filter((_todo: t.TodoT) =>
+      state.visibleTodos = state.data.filter((_todo: t.TodoT) =>
         _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      state.visibleTodos = statePayload;
       state.visibilityFilter = t.FILTER_ALL;
-    },
-    showEdit(state, { payload }: PayloadAction<t.TodoT>) {
-      const allreadyIncluded: boolean = state.editing.includes(payload);
-      console.log(allreadyIncluded);
-      state.editing = allreadyIncluded ? [] : [payload];
-      state.isUpdating = true;
     },
     showSearch(state) {
       state.isSearching = !state.isSearching;
       state.isUpdating = true;
     },
+    toggle(state, { payload }: PayloadAction<t.TodoT>) {
+      const { id } = payload;
+      state.data = state.data.map((_todo: t.TodoT) =>
+        _todo.id === id ? { ..._todo, completed: !_todo.completed } : _todo
+      );
+      state.countCompleted = state.data.filter((todo) => todo.completed).length;
+      state.isUpdating = true;
+    },
     toggleAll(state, { payload }: PayloadAction<{ isAllCompleted: boolean }>) {
       const { isAllCompleted } = payload;
-      const statePayload = state.data.map((_todo: t.TodoT) =>
+      state.data = state.data.map((_todo: t.TodoT) =>
         _todo.completed === !isAllCompleted
           ? { ..._todo, completed: isAllCompleted }
           : _todo
       );
-      state.countCompleted = statePayload.filter(
+      state.countCompleted = state.data.filter(
         (_todo: t.TodoT) => _todo.completed
       ).length;
       state.isUpdating = true;
-      state.data = statePayload;
     },
 
     update(state) {
@@ -122,14 +98,11 @@ const todosSlice = createSlice({
 
 export const {
   add,
-  edit,
   filter,
   get,
   remove,
   removeAll,
-  save,
   search,
-  showEdit,
   showSearch,
   toggle,
   toggleAll,

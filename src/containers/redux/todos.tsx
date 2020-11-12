@@ -3,7 +3,7 @@ import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import EditComponent from "../../components/edit";
+
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import ProgressComponent from "../../components/progress";
@@ -44,10 +44,6 @@ const TodosContainer: FC = () => {
     dispatch(actions.remove(todo));
   };
 
-  const handleShowEdit: t.ShowEdit = (todo) => {
-    dispatch(actions.showEdit(todo));
-  };
-
   const handleToggle: t.Toggle = (todo) => {
     dispatch(actions.toggle(todo));
   };
@@ -64,14 +60,6 @@ const TodosContainer: FC = () => {
     dispatch(actions.toggleAll(isAllCompleted));
   };
 
-  const handleSave: t.Save = () => {
-    dispatch(actions.save());
-  };
-
-  const handleEdit: t.Edit = (todo) => {
-    dispatch(actions.edit(todo));
-  };
-
   return (
     <Container>
       <Typography variant="h3" component="h2">
@@ -80,14 +68,6 @@ const TodosContainer: FC = () => {
         </Box>
       </Typography>
       <ProgressComponent isUpdating={storeTodos.isUpdating} />
-      {storeTodos.editing.length !== 0 && (
-        <EditComponent
-          edit={handleEdit}
-          save={handleSave}
-          showEdit={handleShowEdit}
-          todo={storeTodos.editing[0]}
-        />
-      )}
       <List>
         {storeTodos.isSearching ? (
           <SearchComponent
@@ -111,7 +91,6 @@ const TodosContainer: FC = () => {
           <TodoComponent
             key={_todo.id}
             remove={handleRemove}
-            showEdit={handleShowEdit}
             toggle={handleToggle}
             todo={_todo}
           />

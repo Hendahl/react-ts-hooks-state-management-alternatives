@@ -26,7 +26,8 @@ export default function reducer(
       return {
         ...todos,
         countAll: --todos.countAll,
-        countCompleted: statePayload.length,
+        countCompleted: statePayload.filter((_todo: t.TodoT) => _todo.completed)
+          .length,
         isUpdating: true,
         data: statePayload.filter((_todo: t.TodoT) => _todo.id !== action.id),
       };
@@ -39,17 +40,6 @@ export default function reducer(
         ...t.initialTodos,
       };
     }
-    case t.EDIT: {
-      const stateEditing = todos.editing.map((_todo: t.TodoT) =>
-        _todo.id === action.todo.id
-          ? { ..._todo, title: action.todo.title }
-          : _todo
-      );
-      return {
-        ...todos,
-        editing: stateEditing,
-      };
-    }
     case t.FILTER: {
       return {
         ...todos,
@@ -60,22 +50,7 @@ export default function reducer(
     case t.GET: {
       return getTodosApi();
     }
-    case t.SAVE: {
-      const stateTodo = todos.editing[0];
-      const statePayload: t.TodoT[] = [
-        ...todos.data.map((_todo: t.TodoT) =>
-          _todo.id === stateTodo.id
-            ? { ..._todo, title: stateTodo.title }
-            : _todo
-        ),
-      ];
-      return {
-        ...todos,
-        data: statePayload,
-        editing: [],
-        isUpdating: true,
-      };
-    }
+
     case t.SEARCH: {
       const stateVisible = todos.data.filter((_todo: t.TodoT) =>
         _todo.title.toLowerCase().includes(action.searchTerm.toLowerCase())
@@ -84,14 +59,6 @@ export default function reducer(
         ...todos,
         visibleTodos: stateVisible,
         visibilityFilter: t.FILTER_ALL,
-      };
-    }
-    case t.SHOW_EDIT: {
-      const allreadyIncluded: boolean = todos.editing.includes(action.todo);
-      return {
-        ...todos,
-        editing: allreadyIncluded ? [] : [action.todo],
-        isUpdating: true,
       };
     }
     case t.SHOW_SEARCH: {
