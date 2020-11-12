@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import store from "../../reduxtoolkit/store";
-import Todos from "../../components/reduxtoolkit";
+import store from "../../stores/reduxtoolkit";
+import TodosContainer from "./todos";
 import { Provider } from "react-redux";
 
 const ProviderContainer: FC = () => {
   return (
     <Provider store={store}>
-      <Todos />
+      <TodosContainer />
     </Provider>
   );
 };

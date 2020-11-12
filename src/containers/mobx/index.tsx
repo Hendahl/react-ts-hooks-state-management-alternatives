@@ -1,11 +1,11 @@
 import React, { FC } from "react";
-import Todos from "../../components/mobx";
-import { Provider, store } from "../../mobx/store";
+import TodosContainer from "./todos";
+import { Provider, store } from "../../stores/mobx";
 
 const ProviderContainer: FC = () => {
   return (
     <Provider value={store}>
-      <Todos />
+      <TodosContainer />
     </Provider>
   );
 };
