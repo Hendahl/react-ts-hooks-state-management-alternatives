@@ -10,7 +10,7 @@ const RootModel = types.model({
 export const store = RootModel.create({ todos: getTodosApi() });
 
 onSnapshot(store, (snapshot) => {
-  store.todos.updateTodos();
+  store.todos.updateAll();
 });
 
 export type RootInstance = Instance<typeof RootModel>;

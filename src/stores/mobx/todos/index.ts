@@ -18,11 +18,11 @@ export const TodoT = types
     title: types.string,
   })
   .actions((self) => ({
-    toggleTodo() {
-      getRoot<TodosModel>(self).toggleTodo(self);
+    toggle() {
+      getRoot<TodosModel>(self).toggle(self);
     },
-    removeTodo() {
-      getRoot<TodosModel>(self).removeTodo(self);
+    remove() {
+      getRoot<TodosModel>(self).remove(self);
     },
     showEdit() {
       getRoot<TodosModel>(self).showEdit(self);
@@ -59,7 +59,7 @@ export const TodosT = types
     },
   }))
   .actions((self) => ({
-    addTodo(title: string) {
+    add(title: string) {
       const id = utils.uuid();
       const newTodo = {
         id,
@@ -70,31 +70,31 @@ export const TodosT = types
       self.data.unshift(newTodo);
       self.visibilityFilter = t.FILTER_ALL;
     },
-    removeTodo(todo: SnapshotIn<TodoModel>) {
+    remove(todo: SnapshotIn<TodoModel>) {
       self.data.replace(self.data.filter((_todo) => _todo.id !== todo.id));
       self.isUpdating = true;
       destroy(todo);
     },
-    removeTodos() {
+    removeAll() {
       setTodosApi({
         ...t.initialTodos,
       });
       applySnapshot(self, t.initialTodos);
     },
-    editTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
+    edit(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
       const stateEditing = self.editing.map((_todo) =>
         _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
       );
       self.editing.replace(stateEditing);
     },
-    filterTodos(visibiltityFilter: string) {
+    filter(visibiltityFilter: string) {
       self.visibilityFilter = visibiltityFilter;
       self.isUpdating = true;
     },
-    getTodos() {
+    get() {
       applySnapshot(self, getTodosApi());
     },
-    saveTodo() {
+    save() {
       const showEdit = self.editing[0];
       const statePayload = self.data.map((_todo) =>
         _todo.id === showEdit.id ? { ..._todo, title: showEdit.title } : _todo
@@ -119,14 +119,14 @@ export const TodosT = types
         self.isUpdating = true;
       }
     },
-    toggleTodo(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
+    toggle(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
       const statePayload = self.data.map((_todo) =>
         _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
       );
       self.data.replace(statePayload);
       self.isUpdating = true;
     },
-    toggleTodos(isAllCompleted: boolean) {
+    toggleAll(isAllCompleted: boolean) {
       const statePayload = self.data.map((_todo) =>
         _todo.completed === !isAllCompleted
           ? { ..._todo, completed: isAllCompleted }
@@ -136,7 +136,7 @@ export const TodosT = types
       self.isUpdating = true;
     },
 
-    updateTodos() {
+    updateAll() {
       if (self.isUpdating) {
         self.isUpdating = false;
         const stateUpdated = {

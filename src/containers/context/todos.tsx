@@ -21,7 +21,7 @@ const TodosContainer: FC = () => {
     }
   }, [todos, dispatch]);
 
-  const handleAddTodo = (title: string) => {
+  const handleAdd = (title: string) => {
     dispatch({ type: t.ADD, title: title });
   };
 
@@ -29,11 +29,11 @@ const TodosContainer: FC = () => {
     dispatch({ type: t.SHOW_SEARCH });
   };
 
-  const handleSearchTodos: t.SearchTodos = (searchTerm) => {
+  const handleSearch: t.Search = (searchTerm) => {
     dispatch({ type: t.SEARCH, searchTerm });
   };
 
-  const handleRemoveTodo: t.RemoveTodo = (todo) => {
+  const handleRemove: t.Remove = (todo) => {
     dispatch({ type: t.REMOVE, id: todo.id });
   };
 
@@ -41,35 +41,35 @@ const TodosContainer: FC = () => {
     dispatch({ type: t.SHOW_EDIT, todo: todo });
   };
 
-  const handleToggleTodo: t.ToggleTodo = (todo) => {
+  const handleToggle: t.Toggle = (todo) => {
     dispatch({ type: t.TOGGLE, todo: todo });
   };
 
-  const handleRemoveTodos: t.RemoveTodos = () => {
+  const handleRemoveAll: t.RemoveAll = () => {
     dispatch({ type: t.REMOVE_ALL });
   };
 
-  const handleFilterTodos: t.FilterTodos = (visibilityFilter) => {
+  const handleFilter: t.Filter = (visibilityFilter) => {
     dispatch({
       type: t.FILTER,
       visibiltityFilter: visibilityFilter,
     });
   };
 
-  const handleToggleTodos: t.ToggleTodos = (isAllCompleted) => {
+  const handleToggleAll: t.ToggleAll = (isAllCompleted) => {
     dispatch({
       type: t.TOGGLE_ALL,
       isAllCompleted: isAllCompleted,
     });
   };
 
-  const handleSaveTodo: t.SaveTodo = () => {
+  const handleSave: t.Save = () => {
     dispatch({
       type: t.SAVE,
     });
   };
 
-  const handleEditTodo: t.EditTodo = (todo) => {
+  const handleEdit: t.Edit = (todo) => {
     dispatch({
       type: t.EDIT,
       todo: todo,
@@ -86,8 +86,8 @@ const TodosContainer: FC = () => {
       <ProgressComponent isUpdating={todos.isUpdating} />
       {todos.editing.length !== 0 && (
         <EditComponent
-          editTodo={handleEditTodo}
-          saveTodo={handleSaveTodo}
+          edit={handleEdit}
+          save={handleSave}
           showEdit={handleShowEdit}
           todo={todos.editing[0]}
         />
@@ -96,17 +96,17 @@ const TodosContainer: FC = () => {
         {todos.isSearching ? (
           <SearchComponent
             showSearch={handleShowSearch}
-            searchTodos={handleSearchTodos}
+            search={handleSearch}
             visibleTodosLength={todos.visibleTodos.length}
           />
         ) : (
           <>
-            <AddComponent addTodo={handleAddTodo} />
+            <AddComponent add={handleAdd} />
             <FilterComponent
-              removeTodos={handleRemoveTodos}
-              filterTodos={handleFilterTodos}
+              removeAll={handleRemoveAll}
+              filter={handleFilter}
               showSearch={handleShowSearch}
-              toggleTodos={handleToggleTodos}
+              toggleAll={handleToggleAll}
               todos={todos}
             />
           </>
@@ -114,9 +114,9 @@ const TodosContainer: FC = () => {
         {todos.visibleTodos.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
-            removeTodo={handleRemoveTodo}
+            remove={handleRemove}
             showEdit={handleShowEdit}
-            toggleTodo={handleToggleTodo}
+            toggle={handleToggle}
             todo={_todo}
           />
         ))}

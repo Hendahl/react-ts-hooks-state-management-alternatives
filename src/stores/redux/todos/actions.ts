@@ -1,30 +1,30 @@
 import * as t from "../../../ts/types";
 
-export const addTodo: t.AddTodo = (title) => {
+export const add: t.Add = (title) => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.ADD, title: title });
   };
 };
 
-export const removeTodo: t.RemoveTodo = (todo) => {
+export const remove: t.Remove = (todo) => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.REMOVE, id: todo.id });
   };
 };
 
-export const removeTodos: t.RemoveTodos = () => {
+export const removeAll: t.RemoveAll = () => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.REMOVE_ALL });
   };
 };
 
-export const editTodo: t.EditTodo = (todo) => {
+export const edit: t.Edit = (todo) => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.EDIT, todo: todo });
   };
 };
 
-export const filterTodos: t.FilterTodos = (visibilityFilter) => {
+export const filter: t.Filter = (visibilityFilter) => {
   return (dispatch: t.Dispatch) => {
     dispatch({
       type: t.FILTER,
@@ -33,19 +33,19 @@ export const filterTodos: t.FilterTodos = (visibilityFilter) => {
   };
 };
 
-export const getTodos: t.GetTodos = () => {
+export const get: t.Get = () => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.GET });
   };
 };
 
-export const saveTodo: t.SaveTodo = () => {
+export const save: t.Save = () => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.SAVE });
   };
 };
 
-export const searchTodos: t.SearchTodos = (searchTerm) => {
+export const search: t.Search = (searchTerm) => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.SEARCH, searchTerm: searchTerm });
   };
@@ -63,13 +63,13 @@ export const showSearch: t.ShowSearch = () => {
   };
 };
 
-export const toggleTodo: t.ToggleTodo = (todo) => {
+export const toggle: t.Toggle = (todo) => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.TOGGLE, todo: todo });
   };
 };
 
-export const toggleTodos: t.ToggleTodos = (isAllCompleted) => {
+export const toggleAll: t.ToggleAll = (isAllCompleted) => {
   return (dispatch: t.Dispatch) => {
     dispatch({
       type: t.TOGGLE_ALL,
@@ -78,7 +78,7 @@ export const toggleTodos: t.ToggleTodos = (isAllCompleted) => {
   };
 };
 
-export const updateTodos: t.UpdateTodos = () => {
+export const updateAll: t.UpdateAll = () => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.UPDATE });
   };

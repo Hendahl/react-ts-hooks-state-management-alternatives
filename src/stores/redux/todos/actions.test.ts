@@ -1,7 +1,7 @@
 import * as actions from "./actions";
 
 describe("Actions", () => {
-  it("addTodo", () => {
-    expect(actions.addTodo("test title")).toBeDefined();
+  it("add", () => {
+    expect(actions.add("test title")).toBeDefined();
   });
 });

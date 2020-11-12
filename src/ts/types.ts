@@ -31,20 +31,20 @@ export type ActionTypes =
   | { type: typeof TOGGLE_ALL; isAllCompleted: boolean }
   | { type: typeof UPDATE };
 
-export type AddTodo = (title: string) => void;
-export type RemoveTodo = (todo: TodoT) => void;
-export type RemoveTodos = () => void;
+export type Add = (title: string) => void;
+export type Remove = (todo: TodoT) => void;
+export type RemoveAll = () => void;
 export type Dispatch = (arg: ActionTypes) => void;
-export type EditTodo = (todo: TodoT) => void;
-export type FilterTodos = (visibiltityFilter: string) => void;
-export type GetTodos = () => void;
-export type SaveTodo = () => void;
-export type SearchTodos = (searchTerm: string) => void;
+export type Edit = (todo: TodoT) => void;
+export type Filter = (visibiltityFilter: string) => void;
+export type Get = () => void;
+export type Save = () => void;
+export type Search = (searchTerm: string) => void;
 export type ShowEdit = (todo: TodoT) => void;
 export type ShowSearch = () => void;
-export type ToggleTodo = (todo: TodoT) => void;
-export type ToggleTodos = (completed: boolean) => void;
-export type UpdateTodos = () => void;
+export type Toggle = (todo: TodoT) => void;
+export type ToggleAll = (completed: boolean) => void;
+export type UpdateAll = () => void;
 
 export type TodoT = {
   completed: boolean;

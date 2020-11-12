@@ -8,11 +8,11 @@ import * as t from "../ts/types";
 
 const SearchComponent: FC<{
   showSearch: t.ShowSearch;
-  searchTodos: t.SearchTodos;
+  search: t.Search;
   visibleTodosLength: number;
 }> = (props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    props.searchTodos(e.target.value);
+    props.search(e.target.value);
   };
 
   return (

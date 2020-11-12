@@ -9,15 +9,15 @@ import TextField from "@material-ui/core/TextField";
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from "react";
 
 const EditComponent: FC<{
-  editTodo: t.EditTodo;
-  saveTodo: t.SaveTodo;
+  edit: t.Edit;
+  save: t.Save;
   showEdit: t.ShowEdit;
   todo: t.TodoT;
 }> = (props) => {
   const [stateTitle] = useState<string>(props.todo.title);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    props.editTodo({
+    props.edit({
       ...props.todo,
       title: e.target.value,
     });
@@ -29,12 +29,12 @@ const EditComponent: FC<{
       props.todo.title !== "" &&
       props.todo.title !== stateTitle
     ) {
-      props.saveTodo();
+      props.save();
     }
   };
 
   const handleUndo = () => {
-    props.editTodo({
+    props.edit({
       ...props.todo,
       title: stateTitle,
     });
@@ -79,7 +79,7 @@ const EditComponent: FC<{
         <Button
           color="primary"
           disabled={props.todo.title === "" || props.todo.title === stateTitle}
-          onClick={() => props.saveTodo()}
+          onClick={() => props.save()}
         >
           Save
         </Button>

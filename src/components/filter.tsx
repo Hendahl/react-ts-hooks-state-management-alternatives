@@ -15,10 +15,10 @@ import Select from "@material-ui/core/Select";
 import { useStyles } from "../theme";
 
 const FilterComponent: FC<{
-  removeTodos: t.RemoveTodos;
-  filterTodos: t.FilterTodos;
+  removeAll: t.RemoveAll;
+  filter: t.Filter;
   showSearch: t.ShowSearch;
-  toggleTodos: t.ToggleTodos;
+  toggleAll: t.ToggleAll;
   todos: t.TodosT;
 }> = (props) => {
   const classes = useStyles();
@@ -36,19 +36,19 @@ const FilterComponent: FC<{
 
   const handleChange = (e: ChangeEvent<{ value: unknown }>) => {
     setStateFilter(e.target.value as string);
-    props.filterTodos(e.target.value as string);
+    props.filter(e.target.value as string);
   };
 
-  const handleFilterTodos = (e: FormEvent<HTMLButtonElement>): void => {
+  const handleFilter = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    props.filterTodos(e.currentTarget.id);
+    props.filter(e.currentTarget.id);
   };
 
-  const handleToggleTodos = (): void => {
+  const handleToggleAll = (): void => {
     if (props.todos.data[0]) {
       setStateIsAllCompleted(!stateIsAllCompleted);
     }
-    props.toggleTodos(stateIsAllCompleted);
+    props.toggleAll(stateIsAllCompleted);
   };
 
   return (
@@ -61,7 +61,7 @@ const FilterComponent: FC<{
               color={stateIsAllCompleted ? "primary" : "inherit"}
               disabled={props.todos.countAll === 0}
               edge="end"
-              onClick={handleToggleTodos}
+              onClick={handleToggleAll}
             >
               <KeyboardArrowDownIcon />
             </IconButton>
@@ -79,7 +79,7 @@ const FilterComponent: FC<{
                   props.todos.countAll === 0
                 }
                 id={t.FILTER_ALL}
-                onClick={handleFilterTodos}
+                onClick={handleFilter}
               >
                 ALL ({props.todos.countAll})
               </Button>
@@ -89,7 +89,7 @@ const FilterComponent: FC<{
                   props.todos.countAll === 0
                 }
                 id={t.FILTER_ACTIVE}
-                onClick={handleFilterTodos}
+                onClick={handleFilter}
               >
                 ACTIVE ({props.todos.countAll - props.todos.countCompleted})
               </Button>
@@ -99,7 +99,7 @@ const FilterComponent: FC<{
                   props.todos.countAll === 0
                 }
                 id={t.FILTER_COMPLETED}
-                onClick={handleFilterTodos}
+                onClick={handleFilter}
               >
                 COMPLETEDED ({props.todos.countCompleted})
               </Button>
@@ -128,7 +128,7 @@ const FilterComponent: FC<{
             color="primary"
             edge="end"
             aria-label="Delete all"
-            onClick={props.removeTodos}
+            onClick={props.removeAll}
           >
             <DeleteIcon />
           </IconButton>

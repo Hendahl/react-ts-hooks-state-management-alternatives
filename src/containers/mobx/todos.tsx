@@ -15,31 +15,31 @@ const TodosContainer: FC = observer(() => {
   const { todos } = useStore();
 
   useMemo(() => {
-    todos.getTodos();
+    todos.get();
   }, [todos]);
 
-  const handleAddTodo = (title: string) => {
-    todos.addTodo(title);
+  const handleAdd = (title: string) => {
+    todos.add(title);
   };
 
-  const handleRemoveTodo: t.RemoveTodo = (todo) => {
-    todos.removeTodo(todo);
+  const handleRemove: t.Remove = (todo) => {
+    todos.remove(todo);
   };
 
   const handleShowEdit: t.ShowEdit = (todo) => {
     todos.showEdit(todo);
   };
 
-  const handleToggleTodo: t.ToggleTodo = (todo) => {
-    todos.toggleTodo(todo);
+  const handleToggle: t.Toggle = (todo) => {
+    todos.toggle(todo);
   };
 
-  const handleSaveTodo: t.SaveTodo = () => {
-    todos.saveTodo();
+  const handleSave: t.Save = () => {
+    todos.save();
   };
 
-  const handleEditTodo: t.EditTodo = (todo) => {
-    todos.editTodo(todo);
+  const handleEdit: t.Edit = (todo) => {
+    todos.edit(todo);
   };
 
   return (
@@ -52,20 +52,20 @@ const TodosContainer: FC = observer(() => {
       <ProgressComponent isUpdating={todos.isUpdating} />
       {todos.editing.length !== 0 && (
         <EditComponent
-          editTodo={handleEditTodo}
-          saveTodo={handleSaveTodo}
+          edit={handleEdit}
+          save={handleSave}
           showEdit={handleShowEdit}
           todo={todos.editing[0]}
         />
       )}
       <List>
-        <AddComponent addTodo={handleAddTodo} />
+        <AddComponent add={handleAdd} />
         {todos.visibleTodosView.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
-            removeTodo={handleRemoveTodo}
+            remove={handleRemove}
             showEdit={handleShowEdit}
-            toggleTodo={handleToggleTodo}
+            toggle={handleToggle}
             todo={_todo}
           />
         ))}

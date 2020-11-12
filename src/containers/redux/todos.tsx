@@ -19,57 +19,57 @@ const TodosContainer: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.getTodos());
+    dispatch(actions.get());
   }, [dispatch]);
 
   useEffect(() => {
     if (storeTodos.isUpdating) {
-      dispatch(actions.updateTodos());
+      dispatch(actions.updateAll());
     }
   }, [storeTodos, dispatch]);
 
-  const handleAddTodo = (title: string) => {
-    dispatch(actions.addTodo(title));
+  const handleAdd = (title: string) => {
+    dispatch(actions.add(title));
   };
 
   const handleShowSearch: t.ShowSearch = () => {
     dispatch({ type: t.SHOW_SEARCH });
   };
 
-  const handleSearchTodos: t.SearchTodos = (searchTerm) => {
-    dispatch(actions.searchTodos(searchTerm));
+  const handleSearch: t.Search = (searchTerm) => {
+    dispatch(actions.search(searchTerm));
   };
 
-  const handleRemoveTodo: t.RemoveTodo = (todo) => {
-    dispatch(actions.removeTodo(todo));
+  const handleRemove: t.Remove = (todo) => {
+    dispatch(actions.remove(todo));
   };
 
   const handleShowEdit: t.ShowEdit = (todo) => {
     dispatch(actions.showEdit(todo));
   };
 
-  const handleToggleTodo: t.ToggleTodo = (todo) => {
-    dispatch(actions.toggleTodo(todo));
+  const handleToggle: t.Toggle = (todo) => {
+    dispatch(actions.toggle(todo));
   };
 
-  const handleRemoveTodos: t.RemoveTodos = () => {
-    dispatch(actions.removeTodos());
+  const handleRemoveAll: t.RemoveAll = () => {
+    dispatch(actions.removeAll());
   };
 
-  const handleFilterTodos: t.FilterTodos = (visibilityFilter) => {
-    dispatch(actions.filterTodos(visibilityFilter));
+  const handleFilter: t.Filter = (visibilityFilter) => {
+    dispatch(actions.filter(visibilityFilter));
   };
 
-  const handleToggleTodos: t.ToggleTodos = (isAllCompleted) => {
-    dispatch(actions.toggleTodos(isAllCompleted));
+  const handleToggleAll: t.ToggleAll = (isAllCompleted) => {
+    dispatch(actions.toggleAll(isAllCompleted));
   };
 
-  const handleSaveTodo: t.SaveTodo = () => {
-    dispatch(actions.saveTodo());
+  const handleSave: t.Save = () => {
+    dispatch(actions.save());
   };
 
-  const handleEditTodo: t.EditTodo = (todo) => {
-    dispatch(actions.editTodo(todo));
+  const handleEdit: t.Edit = (todo) => {
+    dispatch(actions.edit(todo));
   };
 
   return (
@@ -82,8 +82,8 @@ const TodosContainer: FC = () => {
       <ProgressComponent isUpdating={storeTodos.isUpdating} />
       {storeTodos.editing.length !== 0 && (
         <EditComponent
-          editTodo={handleEditTodo}
-          saveTodo={handleSaveTodo}
+          edit={handleEdit}
+          save={handleSave}
           showEdit={handleShowEdit}
           todo={storeTodos.editing[0]}
         />
@@ -92,17 +92,17 @@ const TodosContainer: FC = () => {
         {storeTodos.isSearching ? (
           <SearchComponent
             showSearch={handleShowSearch}
-            searchTodos={handleSearchTodos}
+            search={handleSearch}
             visibleTodosLength={storeTodos.visibleTodos.length}
           />
         ) : (
           <>
-            <AddComponent addTodo={handleAddTodo} />
+            <AddComponent add={handleAdd} />
             <FilterComponent
-              removeTodos={handleRemoveTodos}
-              filterTodos={handleFilterTodos}
+              removeAll={handleRemoveAll}
+              filter={handleFilter}
               showSearch={handleShowSearch}
-              toggleTodos={handleToggleTodos}
+              toggleAll={handleToggleAll}
               todos={storeTodos}
             />
           </>
@@ -110,9 +110,9 @@ const TodosContainer: FC = () => {
         {storeTodos.visibleTodos.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
-            removeTodo={handleRemoveTodo}
+            remove={handleRemove}
             showEdit={handleShowEdit}
-            toggleTodo={handleToggleTodo}
+            toggle={handleToggle}
             todo={_todo}
           />
         ))}

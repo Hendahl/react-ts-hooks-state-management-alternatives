@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from "react";
 import * as t from "../ts/types";
 
-const AddComponent: FC<{ addTodo: t.AddTodo }> = (props) => {
+const AddComponent: FC<{ add: t.Add }> = (props) => {
   const [stateTitle, setStateTitle] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -12,7 +12,7 @@ const AddComponent: FC<{ addTodo: t.AddTodo }> = (props) => {
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && stateTitle !== "") {
-      props.addTodo(stateTitle);
+      props.add(stateTitle);
       setStateTitle("");
     }
   };

@@ -39,7 +39,7 @@ const TodosT: FC = () => {
     }
   }, [stateTodos]);
 
-  const addTodo: t.AddTodo = (title) => {
+  const add: t.Add = (title) => {
     const statePayload = [
       { id: utils.uuid(), completed: false, title: title },
       ...stateTodos.data,
@@ -53,7 +53,7 @@ const TodosT: FC = () => {
     });
   };
 
-  const handleRemoveTodo: t.RemoveTodo = (todo) => {
+  const handleRemove: t.Remove = (todo) => {
     const statePayload = stateTodos.data.filter(
       (_todo) => _todo.id !== todo.id
     );
@@ -66,7 +66,7 @@ const TodosT: FC = () => {
     });
   };
 
-  const handleRemoveTodos: t.RemoveTodos = () => {
+  const handleRemoveAll: t.RemoveAll = () => {
     setTodosApi({
       ...t.initialTodos,
     });
@@ -75,7 +75,7 @@ const TodosT: FC = () => {
     });
   };
 
-  const handleEditTodo: t.EditTodo = (todo) => {
+  const handleEdit: t.Edit = (todo) => {
     const stateEditing = stateTodos.editing.map((_todo) =>
       _todo.id === todo.id ? { ..._todo, title: todo.title } : _todo
     );
@@ -85,7 +85,7 @@ const TodosT: FC = () => {
     });
   };
 
-  const handleFilterTodos: t.FilterTodos = (visibilityFilter) => {
+  const handleFilter: t.Filter = (visibilityFilter) => {
     setStateTodos({
       ...stateTodos,
       isUpdating: true,
@@ -93,7 +93,7 @@ const TodosT: FC = () => {
     });
   };
 
-  const handleSaveTodo: t.SaveTodo = () => {
+  const handleSave: t.Save = () => {
     const stateTodo = stateTodos.editing[0];
     const statePayload: t.TodoT[] = [
       ...stateTodos.data.map((_todo) =>
@@ -108,7 +108,7 @@ const TodosT: FC = () => {
     });
   };
 
-  const handleSearchTodos: t.SearchTodos = (searchTerm) => {
+  const handleSearch: t.Search = (searchTerm) => {
     const stateVisible = stateTodos.data.filter((_todo) =>
       _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -136,7 +136,7 @@ const TodosT: FC = () => {
     });
   };
 
-  const handleToggleTodo: t.ToggleTodo = (todo) => {
+  const handleToggle: t.Toggle = (todo) => {
     const statePayload = stateTodos.data.map((_todo) =>
       _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
     );
@@ -148,7 +148,7 @@ const TodosT: FC = () => {
     });
   };
 
-  const handleToggleTodos: t.ToggleTodos = (isAllCompleted) => {
+  const handleToggleAll: t.ToggleAll = (isAllCompleted) => {
     const statePayload = stateTodos.data.map((_todo) =>
       _todo.completed === !isAllCompleted
         ? { ..._todo, completed: isAllCompleted }
@@ -172,8 +172,8 @@ const TodosT: FC = () => {
       <ProgressComponent isUpdating={stateTodos.isUpdating} />
       {stateTodos.editing.length !== 0 && (
         <EditComponent
-          editTodo={handleEditTodo}
-          saveTodo={handleSaveTodo}
+          edit={handleEdit}
+          save={handleSave}
           showEdit={handleShowEdit}
           todo={stateTodos.editing[0]}
         />
@@ -182,17 +182,17 @@ const TodosT: FC = () => {
         {stateTodos.isSearching ? (
           <SearchComponent
             showSearch={handleShowSearch}
-            searchTodos={handleSearchTodos}
+            search={handleSearch}
             visibleTodosLength={stateTodos.visibleTodos.length}
           />
         ) : (
           <>
-            <AddComponent addTodo={addTodo} />
+            <AddComponent add={add} />
             <FilterComponent
-              removeTodos={handleRemoveTodos}
-              filterTodos={handleFilterTodos}
+              removeAll={handleRemoveAll}
+              filter={handleFilter}
               showSearch={handleShowSearch}
-              toggleTodos={handleToggleTodos}
+              toggleAll={handleToggleAll}
               todos={stateTodos}
             />
           </>
@@ -200,9 +200,9 @@ const TodosT: FC = () => {
         {stateTodos.visibleTodos.map((_todo) => (
           <TodoComponent
             key={_todo.id}
-            removeTodo={handleRemoveTodo}
+            remove={handleRemove}
             showEdit={handleShowEdit}
-            toggleTodo={handleToggleTodo}
+            toggle={handleToggle}
             todo={_todo}
           />
         ))}

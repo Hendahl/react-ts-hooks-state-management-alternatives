@@ -11,9 +11,9 @@ import Switch from "@material-ui/core/Switch";
 import { useStyles } from "../theme";
 
 const TodoComponent: FC<{
-  removeTodo: t.RemoveTodo;
+  remove: t.Remove;
   showEdit: t.ShowEdit;
-  toggleTodo: t.ToggleTodo;
+  toggle: t.Toggle;
   todo: t.TodoT;
 }> = (props) => {
   const classes = useStyles();
@@ -24,7 +24,7 @@ const TodoComponent: FC<{
           <Switch
             checked={props.todo.completed}
             color="primary"
-            onChange={() => props.toggleTodo(props.todo)}
+            onChange={() => props.toggle(props.todo)}
             value="completed"
             size="small"
           />
@@ -42,7 +42,7 @@ const TodoComponent: FC<{
           <IconButton
             edge="end"
             aria-label="remove"
-            onClick={() => props.removeTodo(props.todo)}
+            onClick={() => props.remove(props.todo)}
           >
             <DeleteIcon />
           </IconButton>
