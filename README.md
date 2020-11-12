@@ -10,7 +10,7 @@ For education and demonstrations to easily show alternative solutions for managi
 
 ## Note:
 
-This is a demo with several state solutions in the same App, which means that structures are not optimal in all parts, duplicated code and deviations from common patterns exists. There is a branch for every solution that is more optimal.
+This is a demo with several state solutions in the same App, which means that structures are not optimal in all parts, duplicated code and deviations from common patterns exists.
 
 ## Alternatives:
 
@@ -18,6 +18,8 @@ This is a demo with several state solutions in the same App, which means that st
 - Context: React [Context](https://reactjs.org/docs/context.html) and [Reducer](https://reactjs.org/docs/hooks-reference.html#usereducer) to pass data and actions through the
   components.
 - [Redux](https://redux.js.org/): Store, Actions and Reducers to pass data and actions through
+  components.
+- [Redux Toolkit](https://redux-toolkit.js.org/): Store and Slices to pass data and actions through - with immer
   components.
 - [MobX State management](https://mobx.js.org/README.html): React Context as Store for [MobX-state-Tree ](https://github.com/mobxjs/mobx-state-tree) Models and Actions to pass
   data and actions through components.
@@ -35,6 +37,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Runs Jest Tests
 
-### `npm e2e` or `yarn e2e`
-
-Runs Puppeter Test
