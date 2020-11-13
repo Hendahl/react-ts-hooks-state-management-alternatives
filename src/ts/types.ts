@@ -34,12 +34,12 @@ export type Get = () => void;
 export type Search = (searchTerm: string) => void;
 export type ShowSearch = () => void;
 export type Toggle = (todo: TodoT) => void;
-export type ToggleAll = (completed: boolean) => void;
+export type ToggleAll = (isCompleted: boolean) => void;
 export type UpdateAll = () => void;
 
 export type TodoT = {
-  completed: boolean;
   id: number;
+  isCompleted: boolean;
   title: string;
 };
 

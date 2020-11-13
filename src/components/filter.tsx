@@ -30,7 +30,7 @@ const FilterComponent: FC<{
 
   useEffect(() => {
     if (props.todos.data[0]) {
-      setStateIsAllCompleted(!props.todos.data[0].completed);
+      setStateIsAllCompleted(!props.todos.data[0].isCompleted);
     }
   }, [props.todos]);
 

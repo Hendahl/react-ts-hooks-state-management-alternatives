@@ -13,7 +13,7 @@ import {
 
 export const TodoT = types
   .model({
-    completed: types.boolean,
+    isCompleted: types.boolean,
     id: types.identifierNumber,
     title: types.string,
   })
@@ -39,7 +39,7 @@ export const TodosT = types
   })
   .views((self) => ({
     get countCompletedView() {
-      return self.data.filter((_todo) => _todo.completed).length;
+      return self.data.filter((_todo) => _todo.isCompleted).length;
     },
     get countAllView() {
       return self.data.length;
@@ -49,8 +49,8 @@ export const TodosT = types
         ? self.data
         : self.data.filter((_todo) =>
             self.visibilityFilter === t.FILTER_COMPLETED
-              ? _todo.completed
-              : !_todo.completed
+              ? _todo.isCompleted
+              : !_todo.isCompleted
           );
     },
   }))
@@ -60,7 +60,7 @@ export const TodosT = types
       const newTodo = {
         id,
         title,
-        completed: false,
+        isCompleted: false,
       };
       self.isUpdating = true;
       self.data.unshift(newTodo);
@@ -86,15 +86,17 @@ export const TodosT = types
     },
     toggle(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
       const statePayload = self.data.map((_todo) =>
-        _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
+        _todo.id === todo.id
+          ? { ..._todo, isCompleted: !_todo.isCompleted }
+          : _todo
       );
       self.data.replace(statePayload);
       self.isUpdating = true;
     },
     toggleAll(isAllCompleted: boolean) {
       const statePayload = self.data.map((_todo) =>
-        _todo.completed === !isAllCompleted
-          ? { ..._todo, completed: isAllCompleted }
+        _todo.isCompleted === !isAllCompleted
+          ? { ..._todo, isCompleted: isAllCompleted }
           : _todo
       );
       self.data.replace(statePayload);
@@ -116,8 +118,8 @@ export const TodosT = types
               ? self.data
               : self.data.filter((_todo: t.TodoT) =>
                   self.visibilityFilter === t.FILTER_COMPLETED
-                    ? _todo.completed
-                    : !_todo.completed
+                    ? _todo.isCompleted
+                    : !_todo.isCompleted
                 ),
         };
         setTodosApi(stateUpdated);

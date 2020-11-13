@@ -6,7 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import React, { FC } from "react";
-import ViewListIcon from "@material-ui/icons/ViewList";
+import StoreIcon from "@material-ui/icons/Store";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useStyles } from "../theme";
@@ -38,7 +38,7 @@ const MenuComponent: FC = () => {
           to="/basic"
         >
           <ListItemIcon>
-            <ViewListIcon color="primary" />
+            <StoreIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="Basic" />
         </ListItem>
@@ -49,7 +49,7 @@ const MenuComponent: FC = () => {
           to="/context"
         >
           <ListItemIcon>
-            <ViewListIcon color="primary" />
+            <StoreIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="Context" />
         </ListItem>
@@ -60,7 +60,7 @@ const MenuComponent: FC = () => {
           to="/redux"
         >
           <ListItemIcon>
-            <ViewListIcon color="primary" />
+            <StoreIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="Redux" />
         </ListItem>
@@ -71,7 +71,7 @@ const MenuComponent: FC = () => {
           to="/reduxtoolkit"
         >
           <ListItemIcon>
-            <ViewListIcon color="primary" />
+            <StoreIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="Redux Toolkit" />
         </ListItem>
@@ -82,7 +82,7 @@ const MenuComponent: FC = () => {
           to="/mobx"
         >
           <ListItemIcon>
-            <ViewListIcon color="primary" />
+            <StoreIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="MobX" />
         </ListItem>

@@ -20,16 +20,16 @@ const TodoComponent: FC<{
       <ListItem role={undefined} button divider={true}>
         <ListItemIcon>
           <Switch
-            checked={props.todo.completed}
+            checked={props.todo.isCompleted}
             color="primary"
             onChange={() => props.toggle(props.todo)}
-            value="completed"
+            value="isCompleted"
             size="small"
           />
         </ListItemIcon>
         <ListItemText
           className={
-            props.todo.completed
+            props.todo.isCompleted
               ? classes.listItemTextCompleted
               : classes.listItemText
           }

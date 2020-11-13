@@ -29,8 +29,8 @@ const TodosContainer: FC = () => {
             ? stateTodos.data
             : stateTodos.data.filter((_todo) =>
                 stateTodos.visibilityFilter === t.FILTER_COMPLETED
-                  ? _todo.completed
-                  : !_todo.completed
+                  ? _todo.isCompleted
+                  : !_todo.isCompleted
               ),
       };
       setTodosApi(stateUpdated);
@@ -40,7 +40,7 @@ const TodosContainer: FC = () => {
 
   const add: t.Add = (title) => {
     const statePayload = [
-      { id: utils.uuid(), completed: false, title: title },
+      { id: utils.uuid(), isCompleted: false, title: title },
       ...stateTodos.data,
     ];
     setStateTodos({
@@ -59,7 +59,7 @@ const TodosContainer: FC = () => {
     setStateTodos({
       ...stateTodos,
       countAll: --stateTodos.countAll,
-      countCompleted: statePayload.filter((_todo) => _todo.completed).length,
+      countCompleted: statePayload.filter((_todo) => _todo.isCompleted).length,
       isUpdating: true,
       data: statePayload.filter((_todo) => _todo.id !== todo.id),
     });
@@ -103,11 +103,13 @@ const TodosContainer: FC = () => {
 
   const handleToggle: t.Toggle = (todo) => {
     const statePayload = stateTodos.data.map((_todo) =>
-      _todo.id === todo.id ? { ..._todo, completed: !_todo.completed } : _todo
+      _todo.id === todo.id
+        ? { ..._todo, isCompleted: !_todo.isCompleted }
+        : _todo
     );
     setStateTodos({
       ...stateTodos,
-      countCompleted: statePayload.filter((_todo) => _todo.completed).length,
+      countCompleted: statePayload.filter((_todo) => _todo.isCompleted).length,
       isUpdating: true,
       data: statePayload,
     });
@@ -115,13 +117,13 @@ const TodosContainer: FC = () => {
 
   const handleToggleAll: t.ToggleAll = (isAllCompleted) => {
     const statePayload = stateTodos.data.map((_todo) =>
-      _todo.completed === !isAllCompleted
-        ? { ..._todo, completed: isAllCompleted }
+      _todo.isCompleted === !isAllCompleted
+        ? { ..._todo, isCompleted: isAllCompleted }
         : _todo
     );
     setStateTodos({
       ...stateTodos,
-      countCompleted: statePayload.filter((_todo) => _todo.completed).length,
+      countCompleted: statePayload.filter((_todo) => _todo.isCompleted).length,
       data: statePayload,
       isUpdating: true,
     });

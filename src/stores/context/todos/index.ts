@@ -6,7 +6,7 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
   switch (action.type) {
     case t.ADD: {
       const statePayload = [
-        { id: utils.uuid(), completed: false, title: action.title },
+        { id: utils.uuid(), isCompleted: false, title: action.title },
         ...todos.data,
       ];
       return {
@@ -23,8 +23,9 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
       return {
         ...todos,
         countAll: --todos.countAll,
-        countCompleted: statePayload.filter((_todo: t.TodoT) => _todo.completed)
-          .length,
+        countCompleted: statePayload.filter(
+          (_todo: t.TodoT) => _todo.isCompleted
+        ).length,
         isUpdating: true,
         data: statePayload.filter((_todo) => _todo.id !== action.id),
       };
@@ -67,12 +68,13 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
     case t.TOGGLE: {
       const statePayload = todos.data.map((_todo: t.TodoT) =>
         _todo.id === action.todo.id
-          ? { ..._todo, completed: !_todo.completed }
+          ? { ..._todo, isCompleted: !_todo.isCompleted }
           : _todo
       );
       return {
         ...todos,
-        countCompleted: statePayload.filter((_todo) => _todo.completed).length,
+        countCompleted: statePayload.filter((_todo) => _todo.isCompleted)
+          .length,
         isUpdating: true,
         data: statePayload,
       };
@@ -80,13 +82,14 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
 
     case t.TOGGLE_ALL: {
       const statePayload = todos.data.map((_todo) =>
-        _todo.completed === !action.isAllCompleted
-          ? { ..._todo, completed: action.isAllCompleted }
+        _todo.isCompleted === !action.isAllCompleted
+          ? { ..._todo, isCompleted: action.isAllCompleted }
           : _todo
       );
       return {
         ...todos,
-        countCompleted: statePayload.filter((_todo) => _todo.completed).length,
+        countCompleted: statePayload.filter((_todo) => _todo.isCompleted)
+          .length,
         isUpdating: true,
         data: statePayload,
       };
@@ -101,8 +104,8 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
             ? todos.data
             : todos.data.filter((_todo) =>
                 todos.visibilityFilter === t.FILTER_COMPLETED
-                  ? _todo.completed
-                  : !_todo.completed
+                  ? _todo.isCompleted
+                  : !_todo.isCompleted
               ),
       };
       setTodosApi(stateUpdated);

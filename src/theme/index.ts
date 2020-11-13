@@ -15,7 +15,7 @@ export const themeOverrides = (darkMode: boolean) =>
   createMuiTheme({
     appDrawer: { breakpoint: "md" },
     palette: {
-      type: darkMode ? "dark" : "light",
+      type: darkMode ? "light" : "dark",
       primary: {
         main: orange[500],
       },

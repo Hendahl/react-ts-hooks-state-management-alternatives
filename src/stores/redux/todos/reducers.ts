@@ -8,7 +8,7 @@ export default function reducer(
   switch (action.type) {
     case t.ADD: {
       const statePayload = [
-        { id: utils.uuid(), completed: false, title: action.title },
+        { id: utils.uuid(), isCompleted: false, title: action.title },
         ...todos.data,
       ];
       return {
@@ -26,8 +26,9 @@ export default function reducer(
       return {
         ...todos,
         countAll: --todos.countAll,
-        countCompleted: statePayload.filter((_todo: t.TodoT) => _todo.completed)
-          .length,
+        countCompleted: statePayload.filter(
+          (_todo: t.TodoT) => _todo.isCompleted
+        ).length,
         isUpdating: true,
         data: statePayload.filter((_todo: t.TodoT) => _todo.id !== action.id),
       };
@@ -71,27 +72,29 @@ export default function reducer(
     case t.TOGGLE: {
       const statePayload = todos.data.map((_todo: t.TodoT) =>
         _todo.id === action.todo.id
-          ? { ..._todo, completed: !_todo.completed }
+          ? { ..._todo, isCompleted: !_todo.isCompleted }
           : _todo
       );
       return {
         ...todos,
-        countCompleted: statePayload.filter((_todo: t.TodoT) => _todo.completed)
-          .length,
+        countCompleted: statePayload.filter(
+          (_todo: t.TodoT) => _todo.isCompleted
+        ).length,
         isUpdating: true,
         data: statePayload,
       };
     }
     case t.TOGGLE_ALL: {
       const statePayload = todos.data.map((_todo: t.TodoT) =>
-        _todo.completed === !action.isAllCompleted
-          ? { ..._todo, completed: action.isAllCompleted }
+        _todo.isCompleted === !action.isAllCompleted
+          ? { ..._todo, isCompleted: action.isAllCompleted }
           : _todo
       );
       return {
         ...todos,
-        countCompleted: statePayload.filter((_todo: t.TodoT) => _todo.completed)
-          .length,
+        countCompleted: statePayload.filter(
+          (_todo: t.TodoT) => _todo.isCompleted
+        ).length,
         isUpdating: true,
         data: statePayload,
       };
@@ -106,8 +109,8 @@ export default function reducer(
             ? todos.data
             : todos.data.filter((_todo: t.TodoT) =>
                 todos.visibilityFilter === t.FILTER_COMPLETED
-                  ? _todo.completed
-                  : !_todo.completed
+                  ? _todo.isCompleted
+                  : !_todo.isCompleted
               ),
       };
       setTodosApi(stateUpdated);
