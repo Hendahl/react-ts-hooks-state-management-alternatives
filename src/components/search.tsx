@@ -7,7 +7,7 @@ import React, { ChangeEvent, FC } from "react";
 import TextField from "@material-ui/core/TextField";
 
 const SearchComponent: FC<{
-  showSearch: t.ShowSearch;
+  showSearch: t.Show;
   search: t.Search;
   visibleTodosLength: number;
 }> = (props) => {

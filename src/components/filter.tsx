@@ -17,7 +17,7 @@ import { useStyles } from "../theme";
 const FilterComponent: FC<{
   removeAll: t.RemoveAll;
   filter: t.Filter;
-  showSearch: t.ShowSearch;
+  showSearch: t.Show;
   toggleAll: t.ToggleAll;
   todos: t.TodosT;
 }> = (props) => {
@@ -126,7 +126,7 @@ const FilterComponent: FC<{
           </Hidden>
           <IconButton
             color="primary"
-            disabled={props.todos.isSearching}
+            disabled={props.todos.isShowSearch}
             edge="end"
             aria-label="Search"
             onClick={props.showSearch}

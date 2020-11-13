@@ -38,8 +38,13 @@ export const search: t.Search = (searchTerm) => {
     dispatch({ type: t.SEARCH, searchTerm: searchTerm });
   };
 };
+export const showPayload: t.Show = () => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.SHOW_PAYLOAD });
+  };
+};
 
-export const showSearch: t.ShowSearch = () => {
+export const showSearch: t.Show = () => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.SHOW_SEARCH });
   };

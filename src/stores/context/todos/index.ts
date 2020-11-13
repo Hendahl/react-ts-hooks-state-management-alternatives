@@ -57,10 +57,18 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
         visibilityFilter: t.FILTER_ALL,
       };
     }
+    case t.SHOW_PAYLOAD: {
+      return {
+        ...todos,
+        isShowPayload: !todos.isShowPayload,
+        isUpdating: true,
+      };
+    }
+
     case t.SHOW_SEARCH: {
       return {
         ...todos,
-        isSearching: !todos.isSearching,
+        isShowSearch: !todos.isShowSearch,
         isUpdating: true,
       };
     }

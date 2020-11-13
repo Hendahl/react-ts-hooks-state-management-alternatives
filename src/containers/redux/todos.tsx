@@ -3,7 +3,7 @@ import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import DataComponent from "../../components/data";
+import PayloadComponent from "../../components/payload";
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import ProgressComponent from "../../components/progress";
@@ -32,7 +32,11 @@ const TodosContainer: FC = () => {
     dispatch(actions.add(title));
   };
 
-  const handleShowSearch: t.ShowSearch = () => {
+  const handleShowPayload: t.Show = () => {
+    dispatch({ type: t.SHOW_PAYLOAD });
+  };
+
+  const handleShowSearch: t.Show = () => {
     dispatch({ type: t.SHOW_SEARCH });
   };
 
@@ -69,7 +73,7 @@ const TodosContainer: FC = () => {
       </Typography>
       <ProgressComponent isUpdating={storeTodos.isUpdating} />
       <List>
-        {storeTodos.isSearching ? (
+        {storeTodos.isShowSearch ? (
           <SearchComponent
             showSearch={handleShowSearch}
             search={handleSearch}
@@ -95,7 +99,7 @@ const TodosContainer: FC = () => {
             todo={_todo}
           />
         ))}
-        <DataComponent todos={storeTodos} />
+        <PayloadComponent todos={storeTodos} showPayload={handleShowPayload} />
       </List>
     </Container>
   );

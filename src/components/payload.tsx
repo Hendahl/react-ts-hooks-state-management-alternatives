@@ -4,17 +4,13 @@ import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import StorageIcon from "@material-ui/icons/Storage";
 import Typography from "@material-ui/core/Typography";
 
-const DataComponent: FC<{ todos: t.TodosT }> = (props) => {
-  const [showDataState, setShowDataState] = useState(false);
-
-  const handleShowData = () => {
-    setShowDataState(!showDataState);
-  };
-
+const PayloadComponent: FC<{ showPayload: t.Show; todos: t.TodosT }> = (
+  props
+) => {
   return (
     <>
       {props.todos.countAll !== 0 && (
@@ -24,12 +20,12 @@ const DataComponent: FC<{ todos: t.TodosT }> = (props) => {
               color="primary"
               edge="end"
               aria-label="Show Data"
-              onClick={handleShowData}
+              onClick={props.showPayload}
             >
               <StorageIcon />
             </IconButton>
           </ListItem>
-          <Collapse in={showDataState} timeout="auto" unmountOnExit>
+          <Collapse in={props.todos.isShowPayload} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button divider={true}>
                 <ListItemText>
@@ -48,4 +44,4 @@ const DataComponent: FC<{ todos: t.TodosT }> = (props) => {
   );
 };
 
-export default DataComponent;
+export default PayloadComponent;

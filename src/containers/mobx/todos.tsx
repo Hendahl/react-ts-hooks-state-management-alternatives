@@ -17,7 +17,7 @@ const TodosContainer: FC = observer(() => {
     todos.get();
   }, [todos]);
 
-  const handleAdd = (title: string) => {
+  const handleAdd: t.Add = (title) => {
     todos.add(title);
   };
 

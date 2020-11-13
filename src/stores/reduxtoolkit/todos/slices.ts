@@ -52,8 +52,11 @@ const todosSlice = createSlice({
       );
       state.visibilityFilter = t.FILTER_ALL;
     },
+    showPayload(state) {
+      state.isShowPayload = !state.isShowPayload;
+    },
     showSearch(state) {
-      state.isSearching = !state.isSearching;
+      state.isShowSearch = !state.isShowSearch;
       state.isUpdating = true;
     },
     toggle(state, { payload }: PayloadAction<t.TodoT>) {
@@ -105,6 +108,7 @@ export const {
   remove,
   removeAll,
   search,
+  showPayload,
   showSearch,
   toggle,
   toggleAll,
