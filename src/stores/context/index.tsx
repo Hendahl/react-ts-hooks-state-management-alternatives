@@ -1,6 +1,6 @@
-import React, { createContext, useReducer, Dispatch, ReactNode } from "react";
-import reducer from "./todos";
 import * as t from "../../ts/types";
+import React, { createContext, Dispatch, ReactNode, useReducer } from "react";
+import reducer from "./todos";
 import { getTodosApi } from "../../api";
 
 type ContextType = {

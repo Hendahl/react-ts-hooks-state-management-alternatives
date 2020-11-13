@@ -33,7 +33,7 @@ const TodosContainer: FC = observer(() => {
     <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
-          TodosT - MobX
+          Todos - MobX
         </Box>
       </Typography>
       <ProgressComponent isUpdating={todos.isUpdating} />

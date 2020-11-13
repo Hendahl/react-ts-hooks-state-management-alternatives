@@ -3,7 +3,7 @@ import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-
+import DataComponent from "../../components/data";
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import ProgressComponent from "../../components/progress";
@@ -64,7 +64,7 @@ const TodosContainer: FC = () => {
     <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
-          TodosT - Redux
+          Todos - Redux
         </Box>
       </Typography>
       <ProgressComponent isUpdating={storeTodos.isUpdating} />
@@ -95,6 +95,7 @@ const TodosContainer: FC = () => {
             todo={_todo}
           />
         ))}
+        <DataComponent todos={storeTodos} />
       </List>
     </Container>
   );

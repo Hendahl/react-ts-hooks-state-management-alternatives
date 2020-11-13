@@ -1,4 +1,3 @@
-import { Route, Switch } from "react-router-dom";
 import Home from "../home";
 import NotFound from "../notfound";
 import React, { FC } from "react";
@@ -7,6 +6,7 @@ import TodosContext from "../context";
 import TodosMobx from "../mobx";
 import TodosRedux from "../redux";
 import TodosReduxToolkit from "../reduxtoolkit";
+import { Route, Switch } from "react-router-dom";
 
 const AppRoutes: FC = () => {
   return (

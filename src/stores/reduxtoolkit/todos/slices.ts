@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import * as t from "../../../ts/types";
-import { setTodosApi } from "../../../api";
 import * as utils from "../../../utils";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { setTodosApi } from "../../../api";
 
 //  Immer is used here
 const todosSlice = createSlice({

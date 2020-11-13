@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
+import { getTodosApi } from "../../api";
 import { Instance, onSnapshot, types } from "mobx-state-tree";
 import { TodosT } from "./todos";
-import { getTodosApi } from "../../api";
 
 const RootModel = types.model({
   todos: TodosT,

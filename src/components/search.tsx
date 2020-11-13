@@ -1,10 +1,10 @@
+import * as t from "../ts/types";
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import React, { ChangeEvent, FC } from "react";
 import TextField from "@material-ui/core/TextField";
-import * as t from "../ts/types";
 
 const SearchComponent: FC<{
   showSearch: t.ShowSearch;

@@ -57,7 +57,7 @@ const FilterComponent: FC<{
         <>
           <ListItemIcon>
             <IconButton
-              aria-label="Edit Completed"
+              aria-label="Filter"
               color={stateIsAllCompleted ? "primary" : "inherit"}
               disabled={props.todos.countAll === 0}
               edge="end"

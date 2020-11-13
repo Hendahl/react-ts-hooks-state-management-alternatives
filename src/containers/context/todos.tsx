@@ -1,9 +1,8 @@
-import { Context } from "../../stores/context";
 import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-
+import DataComponent from "../../components/data";
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import ProgressComponent from "../../components/progress";
@@ -11,6 +10,7 @@ import React, { FC, useContext, useEffect } from "react";
 import SearchComponent from "../../components/search";
 import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";
+import { Context } from "../../stores/context";
 
 const TodosContainer: FC = () => {
   const { todos, dispatch } = useContext(Context);
@@ -63,7 +63,7 @@ const TodosContainer: FC = () => {
     <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
-          TodosT - Context
+          Todos - Context
         </Box>
       </Typography>
       <ProgressComponent isUpdating={todos.isUpdating} />
@@ -94,6 +94,7 @@ const TodosContainer: FC = () => {
             todo={_todo}
           />
         ))}
+        <DataComponent todos={todos} />
       </List>
     </Container>
   );

@@ -3,6 +3,7 @@ import * as utils from "../../utils";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
+import DataComponent from "../../components/data";
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import ProgressComponent from "../../components/progress";
@@ -12,9 +13,8 @@ import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";
 import { getTodosApi, setTodosApi } from "../../api";
 
-const TodosT: FC = () => {
+const TodosContainer: FC = () => {
   const [stateTodos, setStateTodos] = useState<t.TodosT>(t.initialTodos);
-
   useEffect(() => {
     setStateTodos(getTodosApi());
   }, []);
@@ -131,7 +131,7 @@ const TodosT: FC = () => {
     <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
-          TodosT - Basic
+          Todos - Basic
         </Box>
       </Typography>
       <ProgressComponent isUpdating={stateTodos.isUpdating} />
@@ -162,9 +162,10 @@ const TodosT: FC = () => {
             todo={_todo}
           />
         ))}
+        <DataComponent todos={stateTodos} />
       </List>
     </Container>
   );
 };
 
-export default TodosT;
+export default TodosContainer;

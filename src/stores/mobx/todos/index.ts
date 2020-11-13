@@ -1,5 +1,6 @@
 import * as t from "../../../ts/types";
 import * as utils from "../../../utils";
+import { getTodosApi, setTodosApi } from "../../../api";
 import {
   applySnapshot,
   destroy,
@@ -9,7 +10,6 @@ import {
   SnapshotIn,
   types,
 } from "mobx-state-tree";
-import { getTodosApi, setTodosApi } from "../../../api";
 
 export const TodoT = types
   .model({

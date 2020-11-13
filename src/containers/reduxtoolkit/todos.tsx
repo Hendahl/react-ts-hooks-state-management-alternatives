@@ -2,7 +2,7 @@ import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-
+import DataComponent from "../../components/data";
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import ProgressComponent from "../../components/progress";
@@ -10,6 +10,9 @@ import React, { FC, useEffect } from "react";
 import SearchComponent from "../../components/search";
 import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";
+import { getTodosApi } from "../../api";
+import { RootState } from "../../stores/reduxtoolkit/rootReducer";
+import { useDispatch, useSelector } from "react-redux";
 import {
   add,
   filter,
@@ -22,9 +25,6 @@ import {
   toggleAll,
   update,
 } from "../../stores/reduxtoolkit/todos/slices";
-import { getTodosApi } from "../../api";
-import { RootState } from "../../stores/reduxtoolkit/rootReducer";
-import { useDispatch, useSelector } from "react-redux";
 
 const TodosContainer: FC = () => {
   const dispatch = useDispatch();
@@ -75,7 +75,7 @@ const TodosContainer: FC = () => {
     <Container>
       <Typography variant="h3" component="h2">
         <Box textAlign="center" m={1}>
-          TodosT - Redux - Toolkit
+          Todos - Redux - Toolkit
         </Box>
       </Typography>
       <ProgressComponent isUpdating={storeTodos.isUpdating} />
@@ -106,6 +106,7 @@ const TodosContainer: FC = () => {
             todo={_todo}
           />
         ))}
+        <DataComponent todos={storeTodos} />
       </List>
     </Container>
   );

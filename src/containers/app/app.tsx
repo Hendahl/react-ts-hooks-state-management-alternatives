@@ -1,5 +1,4 @@
 import AppBar from "@material-ui/core/AppBar";
-import MenuComponent from "../../components/menu";
 import AppRoutes from "./routes";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,6 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
+import MenuComponent from "../../components/menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { FC, useState } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -49,7 +49,7 @@ const App: FC = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              React Hooks TodosT
+              React Hooks Todos
             </Typography>
           </Toolbar>
         </AppBar>

@@ -1,7 +1,7 @@
+import orange from "@material-ui/core/colors/orange";
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { createMuiTheme } from "@material-ui/core";
-import orange from "@material-ui/core/colors/orange";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 declare module "@material-ui/core/styles/createMuiTheme" {
   interface ThemeOptions {
