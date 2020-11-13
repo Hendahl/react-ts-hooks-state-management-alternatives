@@ -1,7 +1,7 @@
 import * as t from "../../../ts/types";
 import * as utils from "../../../utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { setTodosApi } from "../../../api";
+import { setTodosApi, getVisibleApi } from "../../../api";
 
 //  Immer is used here
 const todosSlice = createSlice({
@@ -24,12 +24,8 @@ const todosSlice = createSlice({
       state.visibilityFilter = filter;
     },
     get(state, { payload }: PayloadAction<t.TodosT>) {
-      const stateUpdated: t.TodosT = {
-        ...payload,
-        isUpdating: true,
-      };
-      setTodosApi(stateUpdated);
-      return stateUpdated;
+      setTodosApi(payload);
+      return payload;
     },
     remove(state, { payload }: PayloadAction<t.TodoT>) {
       const { id } = payload;
@@ -81,22 +77,8 @@ const todosSlice = createSlice({
       ).length;
       state.isUpdating = true;
     },
-
-    update(state) {
-      const stateUpdated: t.TodosT = {
-        ...state,
-        isUpdating: false,
-        visibleTodos:
-          state.visibilityFilter === t.FILTER_ALL
-            ? state.data
-            : state.data.filter((_todo: t.TodoT) =>
-                state.visibilityFilter === t.FILTER_COMPLETED
-                  ? _todo.isCompleted
-                  : !_todo.isCompleted
-              ),
-      };
-      setTodosApi(stateUpdated);
-      return stateUpdated;
+    updateAll(state) {
+      return getVisibleApi(state);
     },
   },
 });
@@ -112,7 +94,7 @@ export const {
   showSearch,
   toggle,
   toggleAll,
-  update,
+  updateAll,
 } = todosSlice.actions;
 
 export default todosSlice.reducer;

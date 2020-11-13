@@ -11,7 +11,7 @@ import React, { FC, useEffect, useState } from "react";
 import SearchComponent from "../../components/search";
 import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";
-import { getTodosApi, setTodosApi } from "../../api";
+import { getVisibleApi, getTodosApi, setTodosApi } from "../../api";
 
 const TodosContainer: FC = () => {
   const [stateTodos, setStateTodos] = useState<t.TodosT>(t.initialTodos);
@@ -21,20 +21,7 @@ const TodosContainer: FC = () => {
 
   useEffect(() => {
     if (stateTodos.isUpdating) {
-      const stateUpdated: t.TodosT = {
-        ...stateTodos,
-        isUpdating: false,
-        visibleTodos:
-          stateTodos.visibilityFilter === t.FILTER_ALL
-            ? stateTodos.data
-            : stateTodos.data.filter((_todo) =>
-                stateTodos.visibilityFilter === t.FILTER_COMPLETED
-                  ? _todo.isCompleted
-                  : !_todo.isCompleted
-              ),
-      };
-      setTodosApi(stateUpdated);
-      setStateTodos(stateUpdated);
+      setStateTodos(getVisibleApi(stateTodos));
     }
   }, [stateTodos]);
 

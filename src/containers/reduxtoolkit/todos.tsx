@@ -24,7 +24,7 @@ import {
   showSearch,
   toggle,
   toggleAll,
-  update,
+  updateAll,
 } from "../../stores/reduxtoolkit/todos/slices";
 
 const TodosContainer: FC = () => {
@@ -37,7 +37,7 @@ const TodosContainer: FC = () => {
 
   useEffect(() => {
     if (storeTodos.isUpdating) {
-      dispatch(update());
+      dispatch(updateAll());
     }
   }, [storeTodos.isUpdating, dispatch]);
 

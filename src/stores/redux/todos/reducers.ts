@@ -1,6 +1,6 @@
 import * as t from "../../../ts/types";
 import * as utils from "../../../utils";
-import { getTodosApi, setTodosApi } from "../../../api";
+import { getVisibleApi, getTodosApi, setTodosApi } from "../../../api";
 export default function reducer(
   todos = t.initialTodos,
   action: t.ActionTypes
@@ -18,6 +18,16 @@ export default function reducer(
         data: statePayload,
         visibilityFilter: t.FILTER_ALL,
       };
+    }
+    case t.FILTER: {
+      return {
+        ...todos,
+        isUpdating: true,
+        visibilityFilter: action.visibiltityFilter,
+      };
+    }
+    case t.GET: {
+      return getTodosApi();
     }
     case t.REMOVE: {
       const statePayload = todos.data.filter(
@@ -41,17 +51,6 @@ export default function reducer(
         ...t.initialTodos,
       };
     }
-    case t.FILTER: {
-      return {
-        ...todos,
-        isUpdating: true,
-        visibilityFilter: action.visibiltityFilter,
-      };
-    }
-    case t.GET: {
-      return getTodosApi();
-    }
-
     case t.SEARCH: {
       const stateVisible = todos.data.filter((_todo: t.TodoT) =>
         _todo.title.toLowerCase().includes(action.searchTerm.toLowerCase())
@@ -110,20 +109,7 @@ export default function reducer(
     }
 
     case t.UPDATE: {
-      const stateUpdated: t.TodosT = {
-        ...todos,
-        isUpdating: false,
-        visibleTodos:
-          todos.visibilityFilter === t.FILTER_ALL
-            ? todos.data
-            : todos.data.filter((_todo: t.TodoT) =>
-                todos.visibilityFilter === t.FILTER_COMPLETED
-                  ? _todo.isCompleted
-                  : !_todo.isCompleted
-              ),
-      };
-      setTodosApi(stateUpdated);
-      return stateUpdated;
+      return getVisibleApi(todos);
     }
     default:
       return todos;

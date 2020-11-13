@@ -1,6 +1,6 @@
 import * as t from "../../../ts/types";
 import * as utils from "../../../utils";
-import { setTodosApi } from "../../../api";
+import { getVisibleApi, setTodosApi } from "../../../api";
 
 const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
   switch (action.type) {
@@ -104,20 +104,7 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
     }
 
     case t.UPDATE: {
-      const stateUpdated: t.TodosT = {
-        ...todos,
-        isUpdating: false,
-        visibleTodos:
-          todos.visibilityFilter === t.FILTER_ALL
-            ? todos.data
-            : todos.data.filter((_todo) =>
-                todos.visibilityFilter === t.FILTER_COMPLETED
-                  ? _todo.isCompleted
-                  : !_todo.isCompleted
-              ),
-      };
-      setTodosApi(stateUpdated);
-      return stateUpdated;
+      return getVisibleApi(todos);
     }
 
     default:
