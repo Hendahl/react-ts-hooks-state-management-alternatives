@@ -8,8 +8,8 @@ export const REMOVE_ALL = "REMOVE_ALL";
 export const FILTER = "FILTER";
 export const GET = "GET";
 export const SEARCH = "SEARCH";
-export const SHOW_PAYLOAD = "SHOW_PAYLOAD";
-export const SHOW_SEARCH = "SHOW_SEARCH";
+export const VISIBILITY_PAYLOAD = "VISIBILITY_PAYLOAD";
+export const VISIBILITY_SEARCH = "VISIBILITY_SEARCH";
 export const TOGGLE = "TOGGLE";
 export const TOGGLE_ALL = "TOGGLE_ALL";
 export const UPDATE = "UPDATE";
@@ -21,23 +21,23 @@ export type ActionTypes =
   | { type: typeof FILTER; visibiltityFilter: string }
   | { type: typeof GET }
   | { type: typeof SEARCH; searchTerm: string }
-  | { type: typeof SHOW_PAYLOAD }
-  | { type: typeof SHOW_SEARCH }
+  | { type: typeof VISIBILITY_PAYLOAD }
+  | { type: typeof VISIBILITY_SEARCH }
   | { type: typeof TOGGLE; todo: TodoT }
   | { type: typeof TOGGLE_ALL; isAllCompleted: boolean }
   | { type: typeof UPDATE };
 
 export type Add = (title: string) => void;
-export type Remove = (todo: TodoT) => void;
-export type RemoveAll = () => void;
 export type Dispatch = (arg: ActionTypes) => void;
 export type Filter = (visibiltityFilter: string) => void;
 export type Get = () => void;
+export type Remove = (todo: TodoT) => void;
+export type RemoveAll = () => void;
 export type Search = (searchTerm: string) => void;
-export type Show = () => void;
 export type Toggle = (todo: TodoT) => void;
 export type ToggleAll = (isCompleted: boolean) => void;
 export type UpdateAll = () => void;
+export type Visibility = () => void;
 
 export type TodoT = {
   id: number;
@@ -49,11 +49,11 @@ export type TodosT = {
   countAll: number;
   countCompleted: number;
   data: TodoT[];
-  isShowPayload: boolean;
-  isShowSearch: boolean;
+  dataFilter: string;
+  filteredData: TodoT[];
+  isPayloadVisible: boolean;
+  isSearchVisible: boolean;
   isUpdating: boolean;
-  visibilityFilter: string;
-  visibleTodos: TodoT[];
 };
 
 export interface TodosI {
@@ -64,11 +64,11 @@ export let initialTodos: TodosT = {
   countAll: 0,
   countCompleted: 0,
   data: [],
-  isShowPayload: false,
-  isShowSearch: false,
+  dataFilter: FILTER_ALL,
+  filteredData: [],
+  isPayloadVisible: false,
+  isSearchVisible: false,
   isUpdating: false,
-  visibilityFilter: FILTER_ALL,
-  visibleTodos: [],
 };
 
 export const LSKEY = "react-hooks-todos-all";

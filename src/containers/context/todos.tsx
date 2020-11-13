@@ -21,48 +21,6 @@ const TodosContainer: FC = () => {
     }
   }, [todos, dispatch]);
 
-  const handleAdd = (title: string) => {
-    dispatch({ type: t.ADD, title: title });
-  };
-
-  const handleShowPayload: t.Show = () => {
-    dispatch({ type: t.SHOW_PAYLOAD });
-  };
-
-  const handleShowSearch: t.Show = () => {
-    dispatch({ type: t.SHOW_SEARCH });
-  };
-
-  const handleSearch: t.Search = (searchTerm) => {
-    dispatch({ type: t.SEARCH, searchTerm });
-  };
-
-  const handleRemove: t.Remove = (todo) => {
-    dispatch({ type: t.REMOVE, id: todo.id });
-  };
-
-  const handleToggle: t.Toggle = (todo) => {
-    dispatch({ type: t.TOGGLE, todo: todo });
-  };
-
-  const handleRemoveAll: t.RemoveAll = () => {
-    dispatch({ type: t.REMOVE_ALL });
-  };
-
-  const handleFilter: t.Filter = (visibilityFilter) => {
-    dispatch({
-      type: t.FILTER,
-      visibiltityFilter: visibilityFilter,
-    });
-  };
-
-  const handleToggleAll: t.ToggleAll = (isAllCompleted) => {
-    dispatch({
-      type: t.TOGGLE_ALL,
-      isAllCompleted: isAllCompleted,
-    });
-  };
-
   return (
     <Container>
       <Typography variant="h3" component="h2">
@@ -72,33 +30,48 @@ const TodosContainer: FC = () => {
       </Typography>
       <ProgressComponent isUpdating={todos.isUpdating} />
       <List>
-        {todos.isShowSearch ? (
+        {todos.isSearchVisible ? (
           <SearchComponent
-            showSearch={handleShowSearch}
-            search={handleSearch}
-            visibleTodosLength={todos.visibleTodos.length}
+            search={(searchTerm) => dispatch({ type: t.SEARCH, searchTerm })}
+            filteredDataLength={todos.filteredData.length}
+            showSearch={() => dispatch({ type: t.VISIBILITY_SEARCH })}
           />
         ) : (
           <>
-            <AddComponent add={handleAdd} />
+            <AddComponent
+              add={(title) => dispatch({ type: t.ADD, title: title })}
+            />
             <FilterComponent
-              removeAll={handleRemoveAll}
-              filter={handleFilter}
-              showSearch={handleShowSearch}
-              toggleAll={handleToggleAll}
+              filter={(dataFilter) =>
+                dispatch({
+                  type: t.FILTER,
+                  visibiltityFilter: dataFilter,
+                })
+              }
+              removeAll={() => dispatch({ type: t.REMOVE_ALL })}
+              showSearch={() => dispatch({ type: t.VISIBILITY_SEARCH })}
               todos={todos}
+              toggleAll={(isAllCompleted) =>
+                dispatch({
+                  type: t.TOGGLE_ALL,
+                  isAllCompleted: isAllCompleted,
+                })
+              }
             />
           </>
         )}
-        {todos.visibleTodos.map((_todo: t.TodoT) => (
+        {todos.filteredData.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
-            remove={handleRemove}
-            toggle={handleToggle}
+            remove={(todo) => dispatch({ type: t.REMOVE, id: todo.id })}
             todo={_todo}
+            toggle={(todo) => dispatch({ type: t.TOGGLE, todo: todo })}
           />
         ))}
-        <PayloadComponent todos={todos} showPayload={handleShowPayload} />
+        <PayloadComponent
+          showPayload={() => dispatch({ type: t.VISIBILITY_PAYLOAD })}
+          todos={todos}
+        />
       </List>
     </Container>
   );

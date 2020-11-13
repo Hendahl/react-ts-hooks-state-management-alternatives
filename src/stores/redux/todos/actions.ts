@@ -18,11 +18,11 @@ export const removeAll: t.RemoveAll = () => {
   };
 };
 
-export const filter: t.Filter = (visibilityFilter) => {
+export const filter: t.Filter = (dataFilter) => {
   return (dispatch: t.Dispatch) => {
     dispatch({
       type: t.FILTER,
-      visibiltityFilter: visibilityFilter,
+      visibiltityFilter: dataFilter,
     });
   };
 };
@@ -38,15 +38,15 @@ export const search: t.Search = (searchTerm) => {
     dispatch({ type: t.SEARCH, searchTerm: searchTerm });
   };
 };
-export const showPayload: t.Show = () => {
+export const showPayload: t.Visibility = () => {
   return (dispatch: t.Dispatch) => {
-    dispatch({ type: t.SHOW_PAYLOAD });
+    dispatch({ type: t.VISIBILITY_PAYLOAD });
   };
 };
 
-export const showSearch: t.Show = () => {
+export const showSearch: t.Visibility = () => {
   return (dispatch: t.Dispatch) => {
-    dispatch({ type: t.SHOW_SEARCH });
+    dispatch({ type: t.VISIBILITY_SEARCH });
   };
 };
 

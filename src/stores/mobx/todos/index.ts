@@ -32,11 +32,11 @@ export const TodoT = types
 export const TodosT = types
   .model({
     data: types.optional(types.array(TodoT), []),
-    isShowPayload: types.boolean,
-    isShowSearch: types.boolean,
+    isPayloadVisible: types.boolean,
+    isSearchVisible: types.boolean,
     isUpdating: types.boolean,
-    visibilityFilter: types.string,
-    visibleTodos: types.optional(types.array(TodoT), []),
+    dataFilter: types.string,
+    filteredData: types.optional(types.array(TodoT), []),
   })
   .views((self) => ({
     get countCompletedView() {
@@ -45,11 +45,11 @@ export const TodosT = types
     get countAllView() {
       return self.data.length;
     },
-    get visibleTodosView() {
-      return self.visibilityFilter === t.FILTER_ALL
+    get filteredDataView() {
+      return self.dataFilter === t.FILTER_ALL
         ? self.data
         : self.data.filter((_todo) =>
-            self.visibilityFilter === t.FILTER_COMPLETED
+            self.dataFilter === t.FILTER_COMPLETED
               ? _todo.isCompleted
               : !_todo.isCompleted
           );
@@ -65,7 +65,7 @@ export const TodosT = types
       };
       self.isUpdating = true;
       self.data.unshift(newTodo);
-      self.visibilityFilter = t.FILTER_ALL;
+      self.dataFilter = t.FILTER_ALL;
     },
     remove(todo: SnapshotIn<TodoModel>) {
       self.data.replace(self.data.filter((_todo) => _todo.id !== todo.id));
@@ -79,7 +79,7 @@ export const TodosT = types
       applySnapshot(self, t.initialTodos);
     },
     filter(visibiltityFilter: string) {
-      self.visibilityFilter = visibiltityFilter;
+      self.dataFilter = visibiltityFilter;
       self.isUpdating = true;
     },
     get() {
@@ -111,15 +111,15 @@ export const TodosT = types
           countAll: self.countAllView,
           countCompleted: self.countCompletedView,
           data: getSnapshot(self).data,
-          visibilityFilter: self.visibilityFilter,
-          isShowPayload: self.isShowPayload,
-          isShowSearch: self.isShowSearch,
+          dataFilter: self.dataFilter,
+          isPayloadVisible: self.isPayloadVisible,
+          isSearchVisible: self.isSearchVisible,
           isUpdating: false,
-          visibleTodos:
-            self.visibilityFilter === t.FILTER_ALL
+          filteredData:
+            self.dataFilter === t.FILTER_ALL
               ? self.data
               : self.data.filter((_todo: t.TodoT) =>
-                  self.visibilityFilter === t.FILTER_COMPLETED
+                  self.dataFilter === t.FILTER_COMPLETED
                     ? _todo.isCompleted
                     : !_todo.isCompleted
                 ),

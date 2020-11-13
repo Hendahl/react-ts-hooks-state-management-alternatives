@@ -14,8 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const TodosContainer: FC = () => {
-  const typedUseSelector: TypedUseSelectorHook<t.TodosI> = useSelector;
-  const storeTodos = typedUseSelector((state) => state.todos);
+  const typedTodosSelector: TypedUseSelectorHook<t.TodosI> = useSelector;
+  const storeTodos = typedTodosSelector((state) => state.todos);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,43 +27,6 @@ const TodosContainer: FC = () => {
       dispatch(actions.updateAll());
     }
   }, [storeTodos, dispatch]);
-
-  const handleAdd = (title: string) => {
-    dispatch(actions.add(title));
-  };
-
-  const handleShowPayload: t.Show = () => {
-    dispatch({ type: t.SHOW_PAYLOAD });
-  };
-
-  const handleShowSearch: t.Show = () => {
-    dispatch({ type: t.SHOW_SEARCH });
-  };
-
-  const handleSearch: t.Search = (searchTerm) => {
-    dispatch(actions.search(searchTerm));
-  };
-
-  const handleRemove: t.Remove = (todo) => {
-    dispatch(actions.remove(todo));
-  };
-
-  const handleToggle: t.Toggle = (todo) => {
-    dispatch(actions.toggle(todo));
-  };
-
-  const handleRemoveAll: t.RemoveAll = () => {
-    dispatch(actions.removeAll());
-  };
-
-  const handleFilter: t.Filter = (visibilityFilter) => {
-    dispatch(actions.filter(visibilityFilter));
-  };
-
-  const handleToggleAll: t.ToggleAll = (isAllCompleted) => {
-    dispatch(actions.toggleAll(isAllCompleted));
-  };
-
   return (
     <Container>
       <Typography variant="h3" component="h2">
@@ -73,33 +36,38 @@ const TodosContainer: FC = () => {
       </Typography>
       <ProgressComponent isUpdating={storeTodos.isUpdating} />
       <List>
-        {storeTodos.isShowSearch ? (
+        {storeTodos.isSearchVisible ? (
           <SearchComponent
-            showSearch={handleShowSearch}
-            search={handleSearch}
-            visibleTodosLength={storeTodos.visibleTodos.length}
+            search={(searchTerm) => dispatch(actions.search(searchTerm))}
+            filteredDataLength={storeTodos.filteredData.length}
+            showSearch={() => dispatch(actions.showSearch())}
           />
         ) : (
           <>
-            <AddComponent add={handleAdd} />
+            <AddComponent add={(title) => dispatch(actions.add(title))} />
             <FilterComponent
-              removeAll={handleRemoveAll}
-              filter={handleFilter}
-              showSearch={handleShowSearch}
-              toggleAll={handleToggleAll}
+              filter={(dataFilter) => dispatch(actions.filter(dataFilter))}
+              removeAll={() => dispatch(actions.removeAll())}
+              showSearch={() => dispatch(actions.showSearch())}
               todos={storeTodos}
+              toggleAll={(isAllCompleted) =>
+                dispatch(actions.toggleAll(isAllCompleted))
+              }
             />
           </>
         )}
-        {storeTodos.visibleTodos.map((_todo: t.TodoT) => (
+        {storeTodos.filteredData.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
-            remove={handleRemove}
-            toggle={handleToggle}
+            remove={(todo) => dispatch(actions.remove(todo))}
             todo={_todo}
+            toggle={(todo) => dispatch(actions.toggle(todo))}
           />
         ))}
-        <PayloadComponent todos={storeTodos} showPayload={handleShowPayload} />
+        <PayloadComponent
+          showPayload={() => dispatch(actions.showPayload())}
+          todos={storeTodos}
+        />
       </List>
     </Container>
   );

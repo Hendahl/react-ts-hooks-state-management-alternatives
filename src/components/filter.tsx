@@ -17,7 +17,7 @@ import { useStyles } from "../theme";
 const FilterComponent: FC<{
   removeAll: t.RemoveAll;
   filter: t.Filter;
-  showSearch: t.Show;
+  showSearch: t.Visibility;
   toggleAll: t.ToggleAll;
   todos: t.TodosT;
 }> = (props) => {
@@ -75,7 +75,7 @@ const FilterComponent: FC<{
             >
               <Button
                 disabled={
-                  props.todos.visibilityFilter === t.FILTER_ALL ||
+                  props.todos.dataFilter === t.FILTER_ALL ||
                   props.todos.countAll === 0
                 }
                 id={t.FILTER_ALL}
@@ -85,7 +85,7 @@ const FilterComponent: FC<{
               </Button>
               <Button
                 disabled={
-                  props.todos.visibilityFilter === t.FILTER_ACTIVE ||
+                  props.todos.dataFilter === t.FILTER_ACTIVE ||
                   props.todos.countAll === 0
                 }
                 id={t.FILTER_ACTIVE}
@@ -95,7 +95,7 @@ const FilterComponent: FC<{
               </Button>
               <Button
                 disabled={
-                  props.todos.visibilityFilter === t.FILTER_COMPLETED ||
+                  props.todos.dataFilter === t.FILTER_COMPLETED ||
                   props.todos.countAll === 0
                 }
                 id={t.FILTER_COMPLETED}
@@ -126,7 +126,7 @@ const FilterComponent: FC<{
           </Hidden>
           <IconButton
             color="primary"
-            disabled={props.todos.isShowSearch}
+            disabled={props.todos.isSearchVisible}
             edge="end"
             aria-label="Search"
             onClick={props.showSearch}

@@ -7,9 +7,9 @@ import React, { ChangeEvent, FC } from "react";
 import TextField from "@material-ui/core/TextField";
 
 const SearchComponent: FC<{
-  showSearch: t.Show;
+  showSearch: t.Visibility;
   search: t.Search;
-  visibleTodosLength: number;
+  filteredDataLength: number;
 }> = (props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     props.search(e.target.value);
@@ -19,7 +19,7 @@ const SearchComponent: FC<{
     <ListItem>
       <TextField
         autoComplete="off"
-        error={props.visibleTodosLength === 0}
+        error={props.filteredDataLength === 0}
         fullWidth
         id="title"
         label="Search todos"

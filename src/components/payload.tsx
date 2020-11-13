@@ -8,7 +8,7 @@ import React, { FC } from "react";
 import StorageIcon from "@material-ui/icons/Storage";
 import Typography from "@material-ui/core/Typography";
 
-const PayloadComponent: FC<{ showPayload: t.Show; todos: t.TodosT }> = (
+const PayloadComponent: FC<{ showPayload: t.Visibility; todos: t.TodosT }> = (
   props
 ) => {
   return (
@@ -25,7 +25,11 @@ const PayloadComponent: FC<{ showPayload: t.Show; todos: t.TodosT }> = (
               <StorageIcon />
             </IconButton>
           </ListItem>
-          <Collapse in={props.todos.isShowPayload} timeout="auto" unmountOnExit>
+          <Collapse
+            in={props.todos.isPayloadVisible}
+            timeout="auto"
+            unmountOnExit
+          >
             <List component="div" disablePadding>
               <ListItem button divider={true}>
                 <ListItemText>

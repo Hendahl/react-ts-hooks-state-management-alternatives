@@ -17,18 +17,6 @@ const TodosContainer: FC = observer(() => {
     todos.get();
   }, [todos]);
 
-  const handleAdd: t.Add = (title) => {
-    todos.add(title);
-  };
-
-  const handleRemove: t.Remove = (todo) => {
-    todos.remove(todo);
-  };
-
-  const handleToggle: t.Toggle = (todo) => {
-    todos.toggle(todo);
-  };
-
   return (
     <Container>
       <Typography variant="h3" component="h2">
@@ -38,13 +26,13 @@ const TodosContainer: FC = observer(() => {
       </Typography>
       <ProgressComponent isUpdating={todos.isUpdating} />
       <List>
-        <AddComponent add={handleAdd} />
-        {todos.visibleTodosView.map((_todo: t.TodoT) => (
+        <AddComponent add={(title) => todos.add(title)} />
+        {todos.filteredDataView.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
-            remove={handleRemove}
-            toggle={handleToggle}
+            remove={(todo) => todos.remove(todo)}
             todo={_todo}
+            toggle={(todo) => todos.toggle(todo)}
           />
         ))}
       </List>

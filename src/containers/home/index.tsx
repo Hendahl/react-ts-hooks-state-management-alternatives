@@ -44,8 +44,8 @@ const Home: FC = () => {
             </Link>
           </Typography>
           <Typography variant="body1" gutterBottom paragraph={true}>
-            Redux ToolKit, Actions and Reducers to pass data and actions through
-            the components by slices and storeconfig. Immer is used here...
+            Redux ToolKit, Store to pass data and actions through the components
+            by slices and storeconfig. Immer is used here...
           </Typography>
           <Typography variant="h5" component="h3" gutterBottom>
             <Link color="primary" component={RouterLink} to="/Mobx">

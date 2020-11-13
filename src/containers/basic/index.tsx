@@ -15,6 +15,7 @@ import { getVisibleApi, getTodosApi, setTodosApi } from "../../api";
 
 const TodosContainer: FC = () => {
   const [stateTodos, setStateTodos] = useState<t.TodosT>(t.initialTodos);
+
   useEffect(() => {
     setStateTodos(getTodosApi());
   }, []);
@@ -35,7 +36,23 @@ const TodosContainer: FC = () => {
       countAll: stateTodos.countAll + 1,
       isUpdating: true,
       data: statePayload,
-      visibilityFilter: t.FILTER_ALL,
+      dataFilter: t.FILTER_ALL,
+    });
+  };
+
+  const handleFilter: t.Filter = (dataFilter) => {
+    setStateTodos({
+      ...stateTodos,
+      isUpdating: true,
+      dataFilter: dataFilter,
+    });
+  };
+
+  const handlePayloadVisibility: t.Visibility = () => {
+    setStateTodos({
+      ...stateTodos,
+      isPayloadVisible: !stateTodos.isPayloadVisible,
+      isUpdating: true,
     });
   };
 
@@ -61,37 +78,21 @@ const TodosContainer: FC = () => {
     });
   };
 
-  const handleFilter: t.Filter = (visibilityFilter) => {
-    setStateTodos({
-      ...stateTodos,
-      isUpdating: true,
-      visibilityFilter: visibilityFilter,
-    });
-  };
-
   const handleSearch: t.Search = (searchTerm) => {
     const stateVisible = stateTodos.data.filter((_todo) =>
       _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setStateTodos({
       ...stateTodos,
-      visibilityFilter: t.FILTER_ALL,
-      visibleTodos: stateVisible,
+      dataFilter: t.FILTER_ALL,
+      filteredData: stateVisible,
     });
   };
 
-  const handleShowPayload: t.Show = () => {
+  const handleSearchVisibility: t.Visibility = () => {
     setStateTodos({
       ...stateTodos,
-      isShowPayload: !stateTodos.isShowPayload,
-      isUpdating: true,
-    });
-  };
-
-  const handleShowSearch: t.Show = () => {
-    setStateTodos({
-      ...stateTodos,
-      isShowSearch: !stateTodos.isShowSearch,
+      isSearchVisible: !stateTodos.isSearchVisible,
       isUpdating: true,
     });
   };
@@ -133,11 +134,11 @@ const TodosContainer: FC = () => {
       </Typography>
       <ProgressComponent isUpdating={stateTodos.isUpdating} />
       <List>
-        {stateTodos.isShowSearch ? (
+        {stateTodos.isSearchVisible ? (
           <SearchComponent
-            showSearch={handleShowSearch}
+            showSearch={handleSearchVisibility}
             search={handleSearch}
-            visibleTodosLength={stateTodos.visibleTodos.length}
+            filteredDataLength={stateTodos.filteredData.length}
           />
         ) : (
           <>
@@ -145,13 +146,13 @@ const TodosContainer: FC = () => {
             <FilterComponent
               removeAll={handleRemoveAll}
               filter={handleFilter}
-              showSearch={handleShowSearch}
+              showSearch={handleSearchVisibility}
               toggleAll={handleToggleAll}
               todos={stateTodos}
             />
           </>
         )}
-        {stateTodos.visibleTodos.map((_todo) => (
+        {stateTodos.filteredData.map((_todo) => (
           <TodoComponent
             key={_todo.id}
             remove={handleRemove}
@@ -159,7 +160,10 @@ const TodosContainer: FC = () => {
             todo={_todo}
           />
         ))}
-        <PayloadComponent todos={stateTodos} showPayload={handleShowPayload} />
+        <PayloadComponent
+          todos={stateTodos}
+          showPayload={handlePayloadVisibility}
+        />
       </List>
     </Container>
   );

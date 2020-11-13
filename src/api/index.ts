@@ -15,11 +15,11 @@ export const getVisibleApi = (todos: any) => {
   const stateUpdated = {
     ...todos,
     isUpdating: false,
-    visibleTodos:
-      todos.visibilityFilter === t.FILTER_ALL
+    filteredData:
+      todos.dataFilter === t.FILTER_ALL
         ? todos.data
         : todos.data.filter((_todo: t.TodoT) =>
-            todos.visibilityFilter === t.FILTER_COMPLETED
+            todos.dataFilter === t.FILTER_COMPLETED
               ? _todo.isCompleted
               : !_todo.isCompleted
           ),

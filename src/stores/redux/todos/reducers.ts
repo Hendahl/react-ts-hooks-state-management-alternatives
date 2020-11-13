@@ -16,14 +16,14 @@ export default function reducer(
         countAll: todos.countAll + 1,
         isUpdating: true,
         data: statePayload,
-        visibilityFilter: t.FILTER_ALL,
+        dataFilter: t.FILTER_ALL,
       };
     }
     case t.FILTER: {
       return {
         ...todos,
         isUpdating: true,
-        visibilityFilter: action.visibiltityFilter,
+        dataFilter: action.visibiltityFilter,
       };
     }
     case t.GET: {
@@ -57,23 +57,23 @@ export default function reducer(
       );
       return {
         ...todos,
-        visibleTodos: stateVisible,
-        visibilityFilter: t.FILTER_ALL,
+        filteredData: stateVisible,
+        dataFilter: t.FILTER_ALL,
       };
     }
 
-    case t.SHOW_PAYLOAD: {
+    case t.VISIBILITY_PAYLOAD: {
       return {
         ...todos,
-        isShowPayload: !todos.isShowPayload,
+        isPayloadVisible: !todos.isPayloadVisible,
         isUpdating: true,
       };
     }
 
-    case t.SHOW_SEARCH: {
+    case t.VISIBILITY_SEARCH: {
       return {
         ...todos,
-        isShowSearch: !todos.isShowSearch,
+        isSearchVisible: !todos.isSearchVisible,
         isUpdating: true,
       };
     }

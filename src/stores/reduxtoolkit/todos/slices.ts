@@ -16,12 +16,12 @@ const todosSlice = createSlice({
         { id: utils.uuid(), isCompleted: false, title: title },
         ...state.data,
       ];
-      state.visibilityFilter = t.FILTER_ALL;
+      state.dataFilter = t.FILTER_ALL;
     },
     filter(state, { payload }: PayloadAction<{ filter: string }>) {
       const { filter } = payload;
       state.isUpdating = true;
-      state.visibilityFilter = filter;
+      state.dataFilter = filter;
     },
     get(state, { payload }: PayloadAction<t.TodosT>) {
       setTodosApi(payload);
@@ -43,16 +43,16 @@ const todosSlice = createSlice({
 
     search(state, { payload }: PayloadAction<{ searchTerm: string }>) {
       const { searchTerm } = payload;
-      state.visibleTodos = state.data.filter((_todo: t.TodoT) =>
+      state.filteredData = state.data.filter((_todo: t.TodoT) =>
         _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      state.visibilityFilter = t.FILTER_ALL;
+      state.dataFilter = t.FILTER_ALL;
     },
     showPayload(state) {
-      state.isShowPayload = !state.isShowPayload;
+      state.isPayloadVisible = !state.isPayloadVisible;
     },
     showSearch(state) {
-      state.isShowSearch = !state.isShowSearch;
+      state.isSearchVisible = !state.isSearchVisible;
       state.isUpdating = true;
     },
     toggle(state, { payload }: PayloadAction<t.TodoT>) {
