@@ -1,15 +1,16 @@
+import { Link as RouterLink } from "react-router-dom";
+import * as t from "../../ts/types";
 import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 import React, { FC } from "react";
 import Typography from "@material-ui/core/Typography";
-import { Link as RouterLink } from "react-router-dom";
 
 const Home: FC = () => {
   return (
     <>
       <Box textAlign="center" m={1}>
         <Typography variant="h3" component="h2">
-          Home
+          Homex
         </Typography>
         <Box m={3}>
           <Typography variant="h5" component="h3" gutterBottom>
@@ -56,6 +57,16 @@ const Home: FC = () => {
             React Context as Store for MobX-state-Tree Models and Actions to
             pass data and actions through the components.
           </Typography>
+          <Typography variant="h5" component="h3" gutterBottom>
+            <Link color="primary" component={RouterLink} to="/Mobx">
+              Default data structure
+            </Link>
+          </Typography>
+          <pre>
+            <Typography variant="body1" gutterBottom paragraph={true}>
+              {JSON.stringify(t.initialTodos, null, 4)}
+            </Typography>
+          </pre>
         </Box>
       </Box>
     </>

@@ -11,7 +11,7 @@ import React, { FC, useEffect, useState } from "react";
 import SearchComponent from "../../components/search";
 import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";
-import { getVisibleApi, getTodosApi, setTodosApi } from "../../api";
+import { getFilteredDataApi, getTodosApi, setTodosApi } from "../../api";
 
 const TodosContainer: FC = () => {
   const [stateTodos, setStateTodos] = useState<t.TodosT>(t.initialTodos);
@@ -22,11 +22,11 @@ const TodosContainer: FC = () => {
 
   useEffect(() => {
     if (stateTodos.isUpdating) {
-      setStateTodos(getVisibleApi(stateTodos));
+      setStateTodos(getFilteredDataApi(stateTodos));
     }
   }, [stateTodos]);
 
-  const add: t.Add = (title) => {
+  const handleAdd: t.Add = (title) => {
     const statePayload = [
       { id: utils.uuid(), isCompleted: false, title: title },
       ...stateTodos.data,
@@ -142,7 +142,7 @@ const TodosContainer: FC = () => {
           />
         ) : (
           <>
-            <AddComponent add={add} />
+            <AddComponent add={handleAdd} />
             <FilterComponent
               removeAll={handleRemoveAll}
               filter={handleFilter}

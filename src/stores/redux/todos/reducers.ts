@@ -1,6 +1,6 @@
 import * as t from "../../../ts/types";
 import * as utils from "../../../utils";
-import { getVisibleApi, getTodosApi, setTodosApi } from "../../../api";
+import { getFilteredDataApi, getTodosApi, setTodosApi } from "../../../api";
 export default function reducer(
   todos = t.initialTodos,
   action: t.ActionTypes
@@ -109,7 +109,7 @@ export default function reducer(
     }
 
     case t.UPDATE: {
-      return getVisibleApi(todos);
+      return getFilteredDataApi(todos);
     }
     default:
       return todos;

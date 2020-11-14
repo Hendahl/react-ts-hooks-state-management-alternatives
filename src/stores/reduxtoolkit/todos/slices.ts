@@ -1,7 +1,7 @@
 import * as t from "../../../ts/types";
 import * as utils from "../../../utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { setTodosApi, getVisibleApi } from "../../../api";
+import { setTodosApi, getFilteredDataApi } from "../../../api";
 
 //  Immer is used here
 const todosSlice = createSlice({
@@ -78,7 +78,7 @@ const todosSlice = createSlice({
       state.isUpdating = true;
     },
     updateAll(state) {
-      return getVisibleApi(state);
+      return getFilteredDataApi(state);
     },
   },
 });

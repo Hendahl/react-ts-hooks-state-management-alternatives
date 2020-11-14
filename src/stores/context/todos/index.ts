@@ -1,6 +1,6 @@
 import * as t from "../../../ts/types";
 import * as utils from "../../../utils";
-import { getVisibleApi, setTodosApi } from "../../../api";
+import { getFilteredDataApi, setTodosApi } from "../../../api";
 
 const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
   switch (action.type) {
@@ -14,7 +14,7 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
         countAll: todos.countAll + 1,
         isUpdating: true,
         data: statePayload,
-        visibilityFilter: t.FILTER_ALL,
+        dataFilter: t.FILTER_ALL,
       };
     }
 
@@ -43,7 +43,7 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
       return {
         ...todos,
         isUpdating: true,
-        visibilityFilter: action.visibiltityFilter,
+        dataFilter: action.visibiltityFilter,
       };
     }
 
@@ -53,8 +53,8 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
       );
       return {
         ...todos,
-        visibleTodos: stateVisible,
-        visibilityFilter: t.FILTER_ALL,
+        filteredData: stateVisible,
+        dataFilter: t.FILTER_ALL,
       };
     }
     case t.VISIBILITY_PAYLOAD: {
@@ -104,7 +104,7 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
     }
 
     case t.UPDATE: {
-      return getVisibleApi(todos);
+      return getFilteredDataApi(todos);
     }
 
     default:

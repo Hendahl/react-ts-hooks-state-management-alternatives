@@ -11,7 +11,7 @@ export const setTodosApi = (data: t.TodosT) => {
   return localStorage.setItem(t.LSKEY, JSON.stringify(data));
 };
 
-export const getVisibleApi = (todos: any) => {
+export const getFilteredDataApi = (todos: any) => {
   const stateUpdated = {
     ...todos,
     isUpdating: false,
