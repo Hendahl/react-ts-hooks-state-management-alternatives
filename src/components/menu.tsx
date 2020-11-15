@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useStyles } from "../theme";
 import { withRouter } from "react-router-dom";
-
 const MenuComponent: FC = () => {
   const classes = useStyles();
   const currentPath = useLocation().pathname;
@@ -74,6 +73,17 @@ const MenuComponent: FC = () => {
             <StoreIcon color="primary" />
           </ListItemIcon>
           <ListItemText primary="Redux Toolkit" />
+        </ListItem>
+        <ListItem
+          component={Link}
+          className={classes.listItem}
+          selected={currentPath === "/pullstate" ? true : false}
+          to="/pullstate"
+        >
+          <ListItemIcon>
+            <StoreIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="Pullstate" />
         </ListItem>
         <ListItem
           component={Link}

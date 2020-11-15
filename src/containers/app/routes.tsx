@@ -5,6 +5,7 @@ import TodosBasic from "../basic";
 import TodosContext from "../context";
 import TodosMobx from "../mobx";
 import TodosRedux from "../redux";
+import TodosPullstate from "../pullstate";
 import TodosReduxToolkit from "../reduxtoolkit";
 import { Route, Switch } from "react-router-dom";
 
@@ -17,6 +18,7 @@ const AppRoutes: FC = () => {
       <Route component={TodosRedux} exact path="/redux" />
       <Route component={TodosReduxToolkit} exact path="/reduxtoolkit" />
       <Route component={TodosMobx} exact path="/mobx" />
+      <Route component={TodosPullstate} exact path="/pullstate" />
       <Route component={NotFound} path="*" />
     </Switch>
   );

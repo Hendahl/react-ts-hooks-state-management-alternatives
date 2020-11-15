@@ -49,6 +49,15 @@ const Home: FC = () => {
             by slices and storeconfig. Immer is used here...
           </Typography>
           <Typography variant="h5" component="h3" gutterBottom>
+            <Link color="primary" component={RouterLink} to="/reduxtoolkit">
+              Pullstate (Immer)
+            </Link>
+          </Typography>
+          <Typography variant="body1" gutterBottom paragraph={true}>
+            Pullstate, Store and update to pass data through the components.
+            Immer is used here...
+          </Typography>
+          <Typography variant="h5" component="h3" gutterBottom>
             <Link color="primary" component={RouterLink} to="/Mobx">
               MobX
             </Link>
