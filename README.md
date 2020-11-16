@@ -1,6 +1,6 @@
 # React-Hooks-State-Management-Alternatives...
 
-A classic React TypeScript TodoT App with alternative state management side by side.
+A classic React TypeScript Todo App with alternative state management side by side.
 
 [Demo](https://master.d39k33h7v1r5p9.amplifyapp.com/)
 
@@ -21,6 +21,8 @@ This is a demo with several state solutions in the same App, which means that st
   components.
 - [Redux Toolkit](https://redux-toolkit.js.org/): Store and Slices to pass data and actions through - with immer
   components.
+  - [Pullstate](https://lostpebble.github.io/pullstate/): Ridiculously simple state stores with performant retrieval anywhere in your React tree using React hooks.
+  data and actions through components.
 - [MobX State management](https://mobx.js.org/README.html): React Context as Store for [MobX-state-Tree ](https://github.com/mobxjs/mobx-state-tree) Models and Actions to pass
   data and actions through components.
 
