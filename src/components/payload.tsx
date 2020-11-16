@@ -8,9 +8,10 @@ import React, { FC } from "react";
 import StorageIcon from "@material-ui/icons/Storage";
 import Typography from "@material-ui/core/Typography";
 
-const PayloadComponent: FC<{ showPayload: t.Visibility; todos: t.TodosT }> = (
-  props
-) => {
+const PayloadComponent: FC<{
+  payloadVisible: t.Visibility;
+  todos: t.TodosT;
+}> = (props) => {
   return (
     <>
       {props.todos.countAll !== 0 && (
@@ -20,7 +21,7 @@ const PayloadComponent: FC<{ showPayload: t.Visibility; todos: t.TodosT }> = (
               color="primary"
               edge="end"
               aria-label="Show Data"
-              onClick={props.showPayload}
+              onClick={props.payloadVisible}
             >
               <StorageIcon />
             </IconButton>

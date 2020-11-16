@@ -3,9 +3,9 @@ import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import PayloadComponent from "../../components/payload";
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
+import PayloadComponent from "../../components/payload";
 import ProgressComponent from "../../components/progress";
 import React, { FC, useEffect } from "react";
 import SearchComponent from "../../components/search";
@@ -40,7 +40,7 @@ const TodosContainer: FC = () => {
           <SearchComponent
             search={(searchTerm) => dispatch(actions.search(searchTerm))}
             filteredDataLength={storeTodos.filteredData.length}
-            showSearch={() => dispatch(actions.showSearch())}
+            searchVisible={() => dispatch(actions.searchVisible())}
           />
         ) : (
           <>
@@ -48,7 +48,7 @@ const TodosContainer: FC = () => {
             <FilterComponent
               filter={(dataFilter) => dispatch(actions.filter(dataFilter))}
               removeAll={() => dispatch(actions.removeAll())}
-              showSearch={() => dispatch(actions.showSearch())}
+              searchVisible={() => dispatch(actions.searchVisible())}
               todos={storeTodos}
               toggleAll={(isAllCompleted) =>
                 dispatch(actions.toggleAll(isAllCompleted))
@@ -65,7 +65,7 @@ const TodosContainer: FC = () => {
           />
         ))}
         <PayloadComponent
-          showPayload={() => dispatch(actions.showPayload())}
+          payloadVisible={() => dispatch(actions.payloadVisible())}
           todos={storeTodos}
         />
       </List>

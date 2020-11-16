@@ -13,8 +13,8 @@ import {
 
 export const TodoT = types
   .model({
-    isCompleted: types.boolean,
     id: types.identifierNumber,
+    isCompleted: types.boolean,
     title: types.string,
   })
   .actions((self) => ({
@@ -32,11 +32,11 @@ export const TodoT = types
 export const TodosT = types
   .model({
     data: types.optional(types.array(TodoT), []),
+    dataFilter: types.string,
+    filteredData: types.optional(types.array(TodoT), []),
     isPayloadVisible: types.boolean,
     isSearchVisible: types.boolean,
     isUpdating: types.boolean,
-    dataFilter: types.string,
-    filteredData: types.optional(types.array(TodoT), []),
   })
   .views((self) => ({
     get countCompletedView() {

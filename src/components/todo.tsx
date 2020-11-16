@@ -11,8 +11,8 @@ import { useStyles } from "../theme";
 
 const TodoComponent: FC<{
   remove: t.Remove;
-  toggle: t.Toggle;
   todo: t.TodoT;
+  toggle: t.Toggle;
 }> = (props) => {
   const classes = useStyles();
   return (

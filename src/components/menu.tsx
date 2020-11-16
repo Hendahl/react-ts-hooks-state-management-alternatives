@@ -1,3 +1,7 @@
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useStyles } from "../theme";
+import { withRouter } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import HomeIcon from "@material-ui/icons/Home";
@@ -7,10 +11,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import React, { FC } from "react";
 import StoreIcon from "@material-ui/icons/Store";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { useStyles } from "../theme";
-import { withRouter } from "react-router-dom";
+
 const MenuComponent: FC = () => {
   const classes = useStyles();
   const currentPath = useLocation().pathname;

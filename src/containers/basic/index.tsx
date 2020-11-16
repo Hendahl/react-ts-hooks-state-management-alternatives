@@ -3,9 +3,9 @@ import * as utils from "../../utils";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import PayloadComponent from "../../components/payload";
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
+import PayloadComponent from "../../components/payload";
 import ProgressComponent from "../../components/progress";
 import React, { FC, useEffect, useState } from "react";
 import SearchComponent from "../../components/search";
@@ -14,55 +14,55 @@ import Typography from "@material-ui/core/Typography";
 import { getFilteredDataApi, getTodosApi, setTodosApi } from "../../api";
 
 const TodosContainer: FC = () => {
-  const [stateTodos, setStateTodos] = useState<t.TodosT>(t.initialTodos);
+  const [todosState, setTodosState] = useState<t.TodosT>(t.initialTodos);
 
   useEffect(() => {
-    setStateTodos(getTodosApi());
+    setTodosState(getTodosApi());
   }, []);
 
   useEffect(() => {
-    if (stateTodos.isUpdating) {
-      setStateTodos(getFilteredDataApi(stateTodos));
+    if (todosState.isUpdating) {
+      setTodosState(getFilteredDataApi(todosState));
     }
-  }, [stateTodos]);
+  }, [todosState]);
 
   const handleAdd: t.Add = (title) => {
     const statePayload = [
       { id: utils.uuid(), isCompleted: false, title: title },
-      ...stateTodos.data,
+      ...todosState.data,
     ];
-    setStateTodos({
-      ...stateTodos,
-      countAll: stateTodos.countAll + 1,
-      isUpdating: true,
+    setTodosState({
+      ...todosState,
+      countAll: todosState.countAll + 1,
       data: statePayload,
       dataFilter: t.FILTER_ALL,
+      isUpdating: true,
     });
   };
 
   const handleFilter: t.Filter = (dataFilter) => {
-    setStateTodos({
-      ...stateTodos,
-      isUpdating: true,
+    setTodosState({
+      ...todosState,
       dataFilter: dataFilter,
+      isUpdating: true,
     });
   };
 
   const handlePayloadVisibility: t.Visibility = () => {
-    setStateTodos({
-      ...stateTodos,
-      isPayloadVisible: !stateTodos.isPayloadVisible,
+    setTodosState({
+      ...todosState,
+      isPayloadVisible: !todosState.isPayloadVisible,
       isUpdating: true,
     });
   };
 
   const handleRemove: t.Remove = (todo) => {
-    const statePayload = stateTodos.data.filter(
+    const statePayload = todosState.data.filter(
       (_todo) => _todo.id !== todo.id
     );
-    setStateTodos({
-      ...stateTodos,
-      countAll: --stateTodos.countAll,
+    setTodosState({
+      ...todosState,
+      countAll: --todosState.countAll,
       countCompleted: statePayload.filter((_todo) => _todo.isCompleted).length,
       isUpdating: true,
       data: statePayload.filter((_todo) => _todo.id !== todo.id),
@@ -73,38 +73,38 @@ const TodosContainer: FC = () => {
     setTodosApi({
       ...t.initialTodos,
     });
-    setStateTodos({
+    setTodosState({
       ...t.initialTodos,
     });
   };
 
   const handleSearch: t.Search = (searchTerm) => {
-    const stateVisible = stateTodos.data.filter((_todo) =>
+    const stateVisible = todosState.data.filter((_todo) =>
       _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setStateTodos({
-      ...stateTodos,
+    setTodosState({
+      ...todosState,
       dataFilter: t.FILTER_ALL,
       filteredData: stateVisible,
     });
   };
 
   const handleSearchVisibility: t.Visibility = () => {
-    setStateTodos({
-      ...stateTodos,
-      isSearchVisible: !stateTodos.isSearchVisible,
+    setTodosState({
+      ...todosState,
+      isSearchVisible: !todosState.isSearchVisible,
       isUpdating: true,
     });
   };
 
   const handleToggle: t.Toggle = (todo) => {
-    const statePayload = stateTodos.data.map((_todo) =>
+    const statePayload = todosState.data.map((_todo) =>
       _todo.id === todo.id
         ? { ..._todo, isCompleted: !_todo.isCompleted }
         : _todo
     );
-    setStateTodos({
-      ...stateTodos,
+    setTodosState({
+      ...todosState,
       countCompleted: statePayload.filter((_todo) => _todo.isCompleted).length,
       isUpdating: true,
       data: statePayload,
@@ -112,13 +112,13 @@ const TodosContainer: FC = () => {
   };
 
   const handleToggleAll: t.ToggleAll = (isAllCompleted) => {
-    const statePayload = stateTodos.data.map((_todo) =>
+    const statePayload = todosState.data.map((_todo) =>
       _todo.isCompleted === !isAllCompleted
         ? { ..._todo, isCompleted: isAllCompleted }
         : _todo
     );
-    setStateTodos({
-      ...stateTodos,
+    setTodosState({
+      ...todosState,
       countCompleted: statePayload.filter((_todo) => _todo.isCompleted).length,
       data: statePayload,
       isUpdating: true,
@@ -132,13 +132,13 @@ const TodosContainer: FC = () => {
           Todos - Basic
         </Box>
       </Typography>
-      <ProgressComponent isUpdating={stateTodos.isUpdating} />
+      <ProgressComponent isUpdating={todosState.isUpdating} />
       <List>
-        {stateTodos.isSearchVisible ? (
+        {todosState.isSearchVisible ? (
           <SearchComponent
-            showSearch={handleSearchVisibility}
+            searchVisible={handleSearchVisibility}
             search={handleSearch}
-            filteredDataLength={stateTodos.filteredData.length}
+            filteredDataLength={todosState.filteredData.length}
           />
         ) : (
           <>
@@ -146,13 +146,13 @@ const TodosContainer: FC = () => {
             <FilterComponent
               removeAll={handleRemoveAll}
               filter={handleFilter}
-              showSearch={handleSearchVisibility}
+              searchVisible={handleSearchVisibility}
               toggleAll={handleToggleAll}
-              todos={stateTodos}
+              todos={todosState}
             />
           </>
         )}
-        {stateTodos.filteredData.map((_todo) => (
+        {todosState.filteredData.map((_todo) => (
           <TodoComponent
             key={_todo.id}
             remove={handleRemove}
@@ -161,8 +161,8 @@ const TodosContainer: FC = () => {
           />
         ))}
         <PayloadComponent
-          todos={stateTodos}
-          showPayload={handlePayloadVisibility}
+          todos={todosState}
+          payloadVisible={handlePayloadVisibility}
         />
       </List>
     </Container>

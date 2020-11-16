@@ -6,18 +6,6 @@ export const add: t.Add = (title) => {
   };
 };
 
-export const remove: t.Remove = (todo) => {
-  return (dispatch: t.Dispatch) => {
-    dispatch({ type: t.REMOVE, id: todo.id });
-  };
-};
-
-export const removeAll: t.RemoveAll = () => {
-  return (dispatch: t.Dispatch) => {
-    dispatch({ type: t.REMOVE_ALL });
-  };
-};
-
 export const filter: t.Filter = (dataFilter) => {
   return (dispatch: t.Dispatch) => {
     dispatch({
@@ -33,18 +21,31 @@ export const get: t.Get = () => {
   };
 };
 
-export const search: t.Search = (searchTerm) => {
-  return (dispatch: t.Dispatch) => {
-    dispatch({ type: t.SEARCH, searchTerm: searchTerm });
-  };
-};
-export const showPayload: t.Visibility = () => {
+export const payloadVisible: t.Visibility = () => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.VISIBILITY_PAYLOAD });
   };
 };
 
-export const showSearch: t.Visibility = () => {
+export const remove: t.Remove = (todo) => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.REMOVE, id: todo.id });
+  };
+};
+
+export const removeAll: t.RemoveAll = () => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.REMOVE_ALL });
+  };
+};
+
+export const search: t.Search = (searchTerm) => {
+  return (dispatch: t.Dispatch) => {
+    dispatch({ type: t.SEARCH, searchTerm: searchTerm });
+  };
+};
+
+export const searchVisible: t.Visibility = () => {
   return (dispatch: t.Dispatch) => {
     dispatch({ type: t.VISIBILITY_SEARCH });
   };

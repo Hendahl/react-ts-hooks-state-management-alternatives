@@ -48,10 +48,10 @@ const todosSlice = createSlice({
       );
       state.dataFilter = t.FILTER_ALL;
     },
-    showPayload(state) {
+    payloadVisible(state) {
       state.isPayloadVisible = !state.isPayloadVisible;
     },
-    showSearch(state) {
+    searchVisible(state) {
       state.isSearchVisible = !state.isSearchVisible;
       state.isUpdating = true;
     },
@@ -90,8 +90,8 @@ export const {
   remove,
   removeAll,
   search,
-  showPayload,
-  showSearch,
+  payloadVisible,
+  searchVisible,
   toggle,
   toggleAll,
   updateAll,

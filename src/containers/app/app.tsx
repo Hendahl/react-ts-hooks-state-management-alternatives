@@ -18,10 +18,10 @@ import { useTheme } from "@material-ui/core/styles";
 const App: FC = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpenState, setMobileOpenState] = useState(false);
 
   const handleDrawerEdit = () => {
-    setMobileOpen(!mobileOpen);
+    setMobileOpenState(!mobileOpenState);
   };
 
   const drawer = (
@@ -58,7 +58,7 @@ const App: FC = () => {
             <Drawer
               variant="temporary"
               anchor={theme.direction === "rtl" ? "right" : "left"}
-              open={mobileOpen}
+              open={mobileOpenState}
               onClose={handleDrawerEdit}
               classes={{
                 paper: classes.drawerPaper,

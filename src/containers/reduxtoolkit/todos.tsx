@@ -20,8 +20,8 @@ import {
   remove,
   removeAll,
   search,
-  showPayload,
-  showSearch,
+  payloadVisible,
+  searchVisible,
   toggle,
   toggleAll,
   updateAll,
@@ -56,7 +56,7 @@ const TodosContainer: FC = () => {
               dispatch(search({ searchTerm: searchTerm }))
             }
             filteredDataLength={storeTodos.filteredData.length}
-            showSearch={() => dispatch(showSearch())}
+            searchVisible={() => dispatch(searchVisible())}
           />
         ) : (
           <>
@@ -64,7 +64,7 @@ const TodosContainer: FC = () => {
             <FilterComponent
               filter={(dataFilter) => dispatch(filter({ filter: dataFilter }))}
               removeAll={() => dispatch(removeAll())}
-              showSearch={() => dispatch(showSearch())}
+              searchVisible={() => dispatch(searchVisible())}
               todos={storeTodos}
               toggleAll={(isAllCompleted) =>
                 dispatch(toggleAll({ isAllCompleted: isAllCompleted }))
@@ -81,7 +81,7 @@ const TodosContainer: FC = () => {
           />
         ))}
         <PayloadComponent
-          showPayload={() => dispatch(showPayload())}
+          payloadVisible={() => dispatch(payloadVisible())}
           todos={storeTodos}
         />
       </List>

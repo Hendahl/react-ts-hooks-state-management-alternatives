@@ -7,7 +7,7 @@ import React, { ChangeEvent, FC } from "react";
 import TextField from "@material-ui/core/TextField";
 
 const SearchComponent: FC<{
-  showSearch: t.Visibility;
+  searchVisible: t.Visibility;
   search: t.Search;
   filteredDataLength: number;
 }> = (props) => {
@@ -32,7 +32,7 @@ const SearchComponent: FC<{
           aria-label="Search"
           color="primary"
           edge="end"
-          onClick={props.showSearch}
+          onClick={props.searchVisible}
         >
           <ClearIcon />
         </IconButton>

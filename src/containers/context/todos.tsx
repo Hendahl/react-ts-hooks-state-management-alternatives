@@ -2,9 +2,9 @@ import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import PayloadComponent from "../../components/payload";
 import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
+import PayloadComponent from "../../components/payload";
 import ProgressComponent from "../../components/progress";
 import React, { FC, useContext, useEffect } from "react";
 import SearchComponent from "../../components/search";
@@ -32,9 +32,9 @@ const TodosContainer: FC = () => {
       <List>
         {todos.isSearchVisible ? (
           <SearchComponent
-            search={(searchTerm) => dispatch({ type: t.SEARCH, searchTerm })}
             filteredDataLength={todos.filteredData.length}
-            showSearch={() => dispatch({ type: t.VISIBILITY_SEARCH })}
+            search={(searchTerm) => dispatch({ type: t.SEARCH, searchTerm })}
+            searchVisible={() => dispatch({ type: t.VISIBILITY_SEARCH })}
           />
         ) : (
           <>
@@ -49,7 +49,7 @@ const TodosContainer: FC = () => {
                 })
               }
               removeAll={() => dispatch({ type: t.REMOVE_ALL })}
-              showSearch={() => dispatch({ type: t.VISIBILITY_SEARCH })}
+              searchVisible={() => dispatch({ type: t.VISIBILITY_SEARCH })}
               todos={todos}
               toggleAll={(isAllCompleted) =>
                 dispatch({
@@ -69,7 +69,7 @@ const TodosContainer: FC = () => {
           />
         ))}
         <PayloadComponent
-          showPayload={() => dispatch({ type: t.VISIBILITY_PAYLOAD })}
+          payloadVisible={() => dispatch({ type: t.VISIBILITY_PAYLOAD })}
           todos={todos}
         />
       </List>

@@ -4,8 +4,8 @@ import React, { FC } from "react";
 import TodosBasic from "../basic";
 import TodosContext from "../context";
 import TodosMobx from "../mobx";
-import TodosRedux from "../redux";
 import TodosPullstate from "../pullstate";
+import TodosRedux from "../redux";
 import TodosReduxToolkit from "../reduxtoolkit";
 import { Route, Switch } from "react-router-dom";
 

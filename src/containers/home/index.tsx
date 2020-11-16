@@ -1,9 +1,9 @@
-import { Link as RouterLink } from "react-router-dom";
 import * as t from "../../ts/types";
 import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 import React, { FC } from "react";
 import Typography from "@material-ui/core/Typography";
+import { Link as RouterLink } from "react-router-dom";
 
 const Home: FC = () => {
   return (
@@ -49,7 +49,7 @@ const Home: FC = () => {
             by slices and storeconfig. Immer is used here...
           </Typography>
           <Typography variant="h5" component="h3" gutterBottom>
-            <Link color="primary" component={RouterLink} to="/reduxtoolkit">
+            <Link color="primary" component={RouterLink} to="/pullstate">
               Pullstate (Immer)
             </Link>
           </Typography>
@@ -67,9 +67,7 @@ const Home: FC = () => {
             pass data and actions through the components.
           </Typography>
           <Typography variant="h5" component="h3" gutterBottom>
-            <Link color="primary" component={RouterLink} to="/Mobx">
-              Default data structure
-            </Link>
+            Default data structure
           </Typography>
           <pre>
             <Typography variant="body1" gutterBottom paragraph={true}>

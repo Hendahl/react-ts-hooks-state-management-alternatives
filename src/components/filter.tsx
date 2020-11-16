@@ -15,11 +15,11 @@ import Select from "@material-ui/core/Select";
 import { useStyles } from "../theme";
 
 const FilterComponent: FC<{
-  removeAll: t.RemoveAll;
   filter: t.Filter;
-  showSearch: t.Visibility;
-  toggleAll: t.ToggleAll;
+  removeAll: t.RemoveAll;
+  searchVisible: t.Visibility;
   todos: t.TodosT;
+  toggleAll: t.ToggleAll;
 }> = (props) => {
   const classes = useStyles();
 
@@ -129,7 +129,7 @@ const FilterComponent: FC<{
             disabled={props.todos.isSearchVisible}
             edge="end"
             aria-label="Search"
-            onClick={props.showSearch}
+            onClick={props.searchVisible}
           >
             <SearchIcon />
           </IconButton>
