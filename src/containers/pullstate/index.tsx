@@ -58,7 +58,7 @@ const TodosContainer: FC = () => {
 
   const handleSearch: t.Search = (searchTerm) => {
     pullStateStore.update((s) => {
-      s.filteredData = s.data.filter((_todo: t.TodoT) =>
+      s.dataFiltered = s.data.filter((_todo: t.TodoT) =>
         _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
       s.dataFilter = t.FILTER_ALL;
@@ -129,7 +129,7 @@ const TodosContainer: FC = () => {
           <SearchComponent
             searchVisible={handleSearchVisibility}
             search={handleSearch}
-            filteredDataLength={todosStore.filteredData.length}
+            dataFilteredLength={todosStore.dataFiltered.length}
           />
         ) : (
           <>
@@ -143,7 +143,7 @@ const TodosContainer: FC = () => {
             />
           </>
         )}
-        {todosStore.filteredData.map((_todo) => (
+        {todosStore.dataFiltered.map((_todo) => (
           <TodoComponent
             key={_todo.id}
             remove={handleRemove}

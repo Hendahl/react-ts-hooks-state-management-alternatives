@@ -27,7 +27,7 @@ const TodosContainer: FC = observer(() => {
       <ProgressComponent isUpdating={todos.isUpdating} />
       <List>
         <AddComponent add={(title) => todos.add(title)} />
-        {todos.filteredDataView.map((_todo: t.TodoT) => (
+        {todos.dataFilteredView.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
             remove={(todo) => todos.remove(todo)}

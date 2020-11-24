@@ -85,7 +85,7 @@ const TodosContainer: FC = () => {
     setTodosState({
       ...todosState,
       dataFilter: t.FILTER_ALL,
-      filteredData: stateVisible,
+      dataFiltered: stateVisible,
     });
   };
 
@@ -138,7 +138,7 @@ const TodosContainer: FC = () => {
           <SearchComponent
             searchVisible={handleSearchVisibility}
             search={handleSearch}
-            filteredDataLength={todosState.filteredData.length}
+            dataFilteredLength={todosState.dataFiltered.length}
           />
         ) : (
           <>
@@ -152,7 +152,7 @@ const TodosContainer: FC = () => {
             />
           </>
         )}
-        {todosState.filteredData.map((_todo) => (
+        {todosState.dataFiltered.map((_todo) => (
           <TodoComponent
             key={_todo.id}
             remove={handleRemove}

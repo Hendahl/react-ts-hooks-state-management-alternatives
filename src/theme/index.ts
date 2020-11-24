@@ -29,14 +29,19 @@ const drawerWidth = 240;
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: "flex",
-    },
     appBar: {
       [theme.breakpoints.up("sm")]: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
       },
+    },
+    buttonGroup: {
+      margin: "0 auto",
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+      marginTop: "4rem",
     },
     drawer: {
       [theme.breakpoints.up("sm")]: {
@@ -44,20 +49,8 @@ export const useStyles = makeStyles((theme: Theme) =>
         flexShrink: 0,
       },
     },
-    menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up("sm")]: {
-        display: "none",
-      },
-    },
-    toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: drawerWidth,
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-      marginTop: "4rem",
     },
     listItem: {
       color: orange[500],
@@ -65,12 +58,18 @@ export const useStyles = makeStyles((theme: Theme) =>
     listItemText: {
       textDecoration: "inherit",
     },
-
+    menuButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up("sm")]: {
+        display: "none",
+      },
+    },
     listItemTextCompleted: {
       textDecoration: "line-through",
     },
-    buttonGroup: {
-      margin: "0 auto",
+    toolbar: theme.mixins.toolbar,
+    root: {
+      display: "flex",
     },
   })
 );

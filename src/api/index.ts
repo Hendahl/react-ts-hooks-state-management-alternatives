@@ -15,7 +15,7 @@ export const getFilteredDataApi = (todos: any) => {
   const stateUpdated = {
     ...todos,
     isUpdating: false,
-    filteredData:
+    dataFiltered:
       todos.dataFilter === t.FILTER_ALL
         ? todos.data
         : todos.data.filter((_todo: t.TodoT) =>

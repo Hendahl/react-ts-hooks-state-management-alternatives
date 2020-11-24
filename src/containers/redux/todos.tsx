@@ -39,7 +39,7 @@ const TodosContainer: FC = () => {
         {storeTodos.isSearchVisible ? (
           <SearchComponent
             search={(searchTerm) => dispatch(actions.search(searchTerm))}
-            filteredDataLength={storeTodos.filteredData.length}
+            dataFilteredLength={storeTodos.dataFiltered.length}
             searchVisible={() => dispatch(actions.searchVisible())}
           />
         ) : (
@@ -56,7 +56,7 @@ const TodosContainer: FC = () => {
             />
           </>
         )}
-        {storeTodos.filteredData.map((_todo: t.TodoT) => (
+        {storeTodos.dataFiltered.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
             remove={(todo) => dispatch(actions.remove(todo))}

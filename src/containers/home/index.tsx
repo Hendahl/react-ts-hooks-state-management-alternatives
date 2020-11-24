@@ -10,7 +10,7 @@ const Home: FC = () => {
     <>
       <Box textAlign="center" m={1}>
         <Typography variant="h3" component="h2">
-          Homex
+          Home
         </Typography>
         <Box m={3}>
           <Typography variant="h5" component="h3" gutterBottom>
@@ -66,9 +66,11 @@ const Home: FC = () => {
             React Context as Store for MobX-state-Tree Models and Actions to
             pass data and actions through the components.
           </Typography>
-          <Typography variant="h5" component="h3" gutterBottom>
+                   <Typography variant="h5" component="h3" gutterBottom>
             Default data structure
           </Typography>
+        </Box>
+        <Box textAlign="left">
           <pre>
             <Typography variant="body1" gutterBottom paragraph={true}>
               {JSON.stringify(t.initialTodos, null, 4)}
