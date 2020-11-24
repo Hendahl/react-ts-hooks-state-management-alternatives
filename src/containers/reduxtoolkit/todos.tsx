@@ -55,7 +55,7 @@ const TodosContainer: FC = () => {
             search={(searchTerm) =>
               dispatch(search({ searchTerm: searchTerm }))
             }
-            filteredDataLength={storeTodos.filteredData.length}
+            dataFilteredLength={storeTodos.dataFiltered.length}
             searchVisible={() => dispatch(searchVisible())}
           />
         ) : (
@@ -72,7 +72,7 @@ const TodosContainer: FC = () => {
             />
           </>
         )}
-        {storeTodos.filteredData.map((_todo: t.TodoT) => (
+        {storeTodos.dataFiltered.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
             remove={(todo) => dispatch(remove(todo))}

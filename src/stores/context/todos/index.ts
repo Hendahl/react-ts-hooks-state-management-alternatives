@@ -53,7 +53,7 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
       );
       return {
         ...todos,
-        filteredData: stateVisible,
+        dataFiltered: stateVisible,
         dataFilter: t.FILTER_ALL,
       };
     }

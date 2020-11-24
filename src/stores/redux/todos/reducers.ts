@@ -57,7 +57,7 @@ export default function reducer(
       );
       return {
         ...todos,
-        filteredData: stateVisible,
+        dataFiltered: stateVisible,
         dataFilter: t.FILTER_ALL,
       };
     }

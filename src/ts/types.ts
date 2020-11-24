@@ -50,7 +50,7 @@ export type TodosT = {
   countCompleted: number;
   data: TodoT[];
   dataFilter: string;
-  filteredData: TodoT[];
+  dataFiltered: TodoT[];
   isPayloadVisible: boolean;
   isSearchVisible: boolean;
   isUpdating: boolean;
@@ -65,7 +65,7 @@ export let initialTodos: TodosT = {
   countCompleted: 0,
   data: [],
   dataFilter: FILTER_ALL,
-  filteredData: [],
+  dataFiltered: [],
   isPayloadVisible: false,
   isSearchVisible: false,
   isUpdating: false,

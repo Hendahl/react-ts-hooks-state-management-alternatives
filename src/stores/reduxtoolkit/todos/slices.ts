@@ -43,7 +43,7 @@ const todosSlice = createSlice({
 
     search(state, { payload }: PayloadAction<{ searchTerm: string }>) {
       const { searchTerm } = payload;
-      state.filteredData = state.data.filter((_todo: t.TodoT) =>
+      state.dataFiltered = state.data.filter((_todo: t.TodoT) =>
         _todo.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
       state.dataFilter = t.FILTER_ALL;

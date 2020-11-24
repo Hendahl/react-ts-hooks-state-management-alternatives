@@ -32,7 +32,7 @@ const TodosContainer: FC = () => {
       <List>
         {todos.isSearchVisible ? (
           <SearchComponent
-            filteredDataLength={todos.filteredData.length}
+            dataFilteredLength={todos.dataFiltered.length}
             search={(searchTerm) => dispatch({ type: t.SEARCH, searchTerm })}
             searchVisible={() => dispatch({ type: t.VISIBILITY_SEARCH })}
           />
@@ -60,7 +60,7 @@ const TodosContainer: FC = () => {
             />
           </>
         )}
-        {todos.filteredData.map((_todo: t.TodoT) => (
+        {todos.dataFiltered.map((_todo: t.TodoT) => (
           <TodoComponent
             key={_todo.id}
             remove={(todo) => dispatch({ type: t.REMOVE, id: todo.id })}

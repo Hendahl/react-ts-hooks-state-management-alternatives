@@ -33,7 +33,7 @@ export const TodosT = types
   .model({
     data: types.optional(types.array(TodoT), []),
     dataFilter: types.string,
-    filteredData: types.optional(types.array(TodoT), []),
+    dataFiltered: types.optional(types.array(TodoT), []),
     isPayloadVisible: types.boolean,
     isSearchVisible: types.boolean,
     isUpdating: types.boolean,
@@ -45,7 +45,7 @@ export const TodosT = types
     get countAllView() {
       return self.data.length;
     },
-    get filteredDataView() {
+    get dataFilteredView() {
       return self.dataFilter === t.FILTER_ALL
         ? self.data
         : self.data.filter((_todo) =>
@@ -115,7 +115,7 @@ export const TodosT = types
           isPayloadVisible: self.isPayloadVisible,
           isSearchVisible: self.isSearchVisible,
           isUpdating: false,
-          filteredData:
+          dataFiltered:
             self.dataFilter === t.FILTER_ALL
               ? self.data
               : self.data.filter((_todo: t.TodoT) =>
