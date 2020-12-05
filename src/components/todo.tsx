@@ -5,15 +5,18 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import Switch from "@material-ui/core/Switch";
 import { useStyles } from "../theme";
+import FormDialogComponent from "./form";
+import EditIcon from "@material-ui/icons/Edit";
 
 const TodoComponent: FC<{
   remove: t.Remove;
   todo: t.TodoT;
   toggle: t.Toggle;
 }> = (props) => {
+  const [showDialogState, setShowDialogState] = useState(false);
   const classes = useStyles();
   return (
     <>
@@ -39,6 +42,13 @@ const TodoComponent: FC<{
         <ListItemSecondaryAction>
           <IconButton
             edge="end"
+            aria-label="edit"
+            onClick={() => setShowDialogState(true)}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            edge="end"
             aria-label="remove"
             onClick={() => props.remove(props.todo)}
           >
@@ -46,6 +56,11 @@ const TodoComponent: FC<{
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
+      <FormDialogComponent
+        showDialogState={showDialogState}
+        setShowDialogState={setShowDialogState}
+        todo={props.todo}
+      />
     </>
   );
 };

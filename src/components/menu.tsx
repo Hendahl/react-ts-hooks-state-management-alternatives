@@ -1,3 +1,4 @@
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useStyles } from "../theme";
@@ -9,7 +10,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, { FC } from "react";
 import StoreIcon from "@material-ui/icons/Store";
 
 const MenuComponent: FC = () => {

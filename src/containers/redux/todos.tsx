@@ -1,3 +1,4 @@
+import React, { FC, useEffect } from "react";
 import * as actions from "../../stores/redux/todos/actions";
 import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
@@ -7,7 +8,6 @@ import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import PayloadComponent from "../../components/payload";
 import ProgressComponent from "../../components/progress";
-import React, { FC, useEffect } from "react";
 import SearchComponent from "../../components/search";
 import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";

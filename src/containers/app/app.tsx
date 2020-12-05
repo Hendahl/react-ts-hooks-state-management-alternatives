@@ -1,3 +1,4 @@
+import React, { FC, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import AppRoutes from "./routes";
 import Container from "@material-ui/core/Container";
@@ -8,7 +9,6 @@ import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuComponent from "../../components/menu";
 import MenuIcon from "@material-ui/icons/Menu";
-import React, { FC, useState } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { BrowserRouter as Router } from "react-router-dom";
