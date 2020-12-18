@@ -3,6 +3,7 @@ export const FILTER_ALL = "FILTER_ALL";
 export const FILTER_COMPLETED = "FILTER_COMPLETED";
 
 export const ADD = "ADD";
+export const EDIT = "EDIT";
 export const REMOVE = "REMOVE";
 export const REMOVE_ALL = "REMOVE_ALL";
 export const FILTER = "FILTER";
@@ -16,6 +17,7 @@ export const UPDATE = "UPDATE";
 
 export type ActionTypes =
   | { type: typeof ADD; title: string }
+  | { type: typeof EDIT; todo: TodoT }
   | { type: typeof REMOVE; id: number }
   | { type: typeof REMOVE_ALL }
   | { type: typeof FILTER; visibiltityFilter: string }
@@ -28,6 +30,7 @@ export type ActionTypes =
   | { type: typeof UPDATE };
 
 export type Add = (title: string) => void;
+export type Edit = (todo: TodoT) => void;
 export type Dispatch = (arg: ActionTypes) => void;
 export type Filter = (visibiltityFilter: string) => void;
 export type Get = () => void;

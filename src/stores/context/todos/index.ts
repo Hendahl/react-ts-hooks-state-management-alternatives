@@ -17,6 +17,11 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
         dataFilter: t.FILTER_ALL,
       };
     }
+    case t.EDIT: {
+      return {
+        ...todos,
+      };
+    }
 
     case t.REMOVE: {
       const statePayload = todos.data.filter((_todo) => _todo.id !== action.id);

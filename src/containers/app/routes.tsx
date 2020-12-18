@@ -8,6 +8,7 @@ import TodosPullstate from "../pullstate";
 import TodosRedux from "../redux";
 import TodosReduxToolkit from "../reduxtoolkit";
 import { Route, Switch } from "react-router-dom";
+import TodoFormComponent from "../../components/todoForm";
 
 const AppRoutes: FC = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes: FC = () => {
       <Route component={TodosReduxToolkit} exact path="/reduxtoolkit" />
       <Route component={TodosMobx} exact path="/mobx" />
       <Route component={TodosPullstate} exact path="/pullstate" />
+      <Route path="/todo/:id" exact children={<TodoFormComponent />} />
       <Route component={NotFound} path="*" />
     </Switch>
   );

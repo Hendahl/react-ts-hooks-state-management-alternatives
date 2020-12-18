@@ -24,8 +24,8 @@ export const TodoT = types
     remove() {
       getRoot<TodosModel>(self).remove(self);
     },
-    showEdit() {
-      getRoot<TodosModel>(self).showEdit(self);
+    edit() {
+      getRoot<TodosModel>(self).edit(self);
     },
   }));
 
@@ -67,6 +67,7 @@ export const TodosT = types
       self.data.unshift(newTodo);
       self.dataFilter = t.FILTER_ALL;
     },
+    edit(todo: SnapshotIn<TodoModel>) {},
     remove(todo: SnapshotIn<TodoModel>) {
       self.data.replace(self.data.filter((_todo) => _todo.id !== todo.id));
       self.isUpdating = true;

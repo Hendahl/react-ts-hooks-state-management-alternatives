@@ -1,23 +1,28 @@
+import { useHistory } from "react-router-dom";
+import { useStyles } from "../theme";
 import * as t from "../ts/types";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import Switch from "@material-ui/core/Switch";
-import { useStyles } from "../theme";
-import FormDialogComponent from "./form";
-import EditIcon from "@material-ui/icons/Edit";
 
 const TodoComponent: FC<{
   remove: t.Remove;
   todo: t.TodoT;
   toggle: t.Toggle;
 }> = (props) => {
-  const [showDialogState, setShowDialogState] = useState(false);
   const classes = useStyles();
+  let history = useHistory();
+
+  const handleToggle = () => {
+    const toggledTodo = { ...props.todo, isCompleted: !props.todo.isCompleted };
+    props.toggle(toggledTodo);
+  };
   return (
     <>
       <ListItem role={undefined} button divider={true}>
@@ -25,7 +30,7 @@ const TodoComponent: FC<{
           <Switch
             checked={props.todo.isCompleted}
             color="primary"
-            onChange={() => props.toggle(props.todo)}
+            onChange={handleToggle}
             value="isCompleted"
             size="small"
           />
@@ -43,7 +48,7 @@ const TodoComponent: FC<{
           <IconButton
             edge="end"
             aria-label="edit"
-            onClick={() => setShowDialogState(true)}
+            onClick={() => history.push(`/todo/${props.todo.id}`)}
           >
             <EditIcon />
           </IconButton>
@@ -56,11 +61,6 @@ const TodoComponent: FC<{
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
-      <FormDialogComponent
-        showDialogState={showDialogState}
-        setShowDialogState={setShowDialogState}
-        todo={props.todo}
-      />
     </>
   );
 };

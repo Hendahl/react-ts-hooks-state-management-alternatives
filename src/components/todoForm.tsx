@@ -6,17 +6,23 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Switch from "@material-ui/core/Switch";
 import React, { FC, useState, ChangeEvent } from "react";
-import * as t from "../ts/types";
+//import * as t from "../ts/types";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useStyles } from "../theme";
 
-const FormDialogComponent: FC<{
-  showDialogState: boolean;
-  setShowDialogState: (showDialogState: boolean) => void;
-  todo: t.TodoT;
-}> = (props) => {
-  const [dataState, setDataState] = useState(props.todo);
+const TodoFormComponent: FC = () => {
+  const { id } = useParams<Record<string, string | undefined>>();
+  let history = useHistory();
+  const [dataState, setDataState] = useState({
+    id: id,
+    isCompleted: false,
+    title: "title",
+  });
+  const classes = useStyles();
 
   const handleChangeText = (e: ChangeEvent<HTMLInputElement>): void => {
     setDataState({ ...dataState, [e.target.id]: e.target.value });
@@ -26,12 +32,17 @@ const FormDialogComponent: FC<{
     setDataState({ ...dataState, [e.target.id]: e.target.checked });
   };
 
+  const handleSubmit = (): void => {
+    console.log(dataState);
+    history.goBack();
+  };
+
   return (
     <div>
-      <Dialog open={props.showDialogState} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Todo {dataState.id}</DialogTitle>
+      <Dialog open={true} fullWidth={true} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Todo: {dataState.id}</DialogTitle>
         <DialogContent>
-          <FormControl component="fieldset">
+          <FormControl component="fieldset" className={classes.form}>
             <FormGroup>
               <TextField
                 autoFocus
@@ -43,6 +54,7 @@ const FormDialogComponent: FC<{
                 onChange={handleChangeText}
               />
               <FormControlLabel
+                className={classes.label}
                 control={
                   <Switch
                     color="primary"
@@ -53,22 +65,21 @@ const FormDialogComponent: FC<{
                     value={dataState.isCompleted}
                   />
                 }
-                label="Genomförd"
+                label="Done"
               />
             </FormGroup>
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button
-            color="primary"
-            onClick={() => props.setShowDialogState(false)}
-          >
-            Avbryt
+          <Button color="primary" onClick={() => history.goBack()}>
+            Cancel
           </Button>
-          <Button color="primary">Spara</Button>
+          <Button color="primary" onClick={() => handleSubmit()}>
+            Submit
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 };
-export default FormDialogComponent;
+export default TodoFormComponent;

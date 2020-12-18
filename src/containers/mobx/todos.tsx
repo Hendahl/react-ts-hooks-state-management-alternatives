@@ -1,3 +1,5 @@
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../stores/mobx";
 import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
 import Box from "@material-ui/core/Box";
@@ -7,8 +9,6 @@ import ProgressComponent from "../../components/progress";
 import React, { FC, useMemo } from "react";
 import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";
-import { observer } from "mobx-react-lite";
-import { useStore } from "../../stores/mobx";
 
 const TodosContainer: FC = observer(() => {
   const { todos } = useStore();

@@ -97,6 +97,19 @@ const TodosContainer: FC = () => {
     });
   };
 
+  /*
+  const handleEdit: t.Toggle = (todo) => {
+    const statePayload = todosState.data.map((_todo) =>
+      _todo.id === todo.id ? { ..._todo, todo } : _todo
+    );
+    setTodosState({
+      ...todosState,
+      countCompleted: statePayload.filter((_todo) => _todo.isCompleted).length,
+      isUpdating: true,
+      data: statePayload,
+    });
+  };*/
+
   const handleToggle: t.Toggle = (todo) => {
     const statePayload = todosState.data.map((_todo) =>
       _todo.id === todo.id
@@ -156,8 +169,8 @@ const TodosContainer: FC = () => {
           <TodoComponent
             key={_todo.id}
             remove={handleRemove}
-            toggle={handleToggle}
             todo={_todo}
+            toggle={handleToggle}
           />
         ))}
         <PayloadComponent

@@ -71,5 +71,14 @@ export const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
     },
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      margin: "auto",
+      width: "100%",
+    },
+    label: {
+      marginTop: "1rem",
+    },
   })
 );
