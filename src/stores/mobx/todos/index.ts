@@ -18,8 +18,8 @@ export const TodoT = types
     title: types.string,
   })
   .actions((self) => ({
-    toggle() {
-      getRoot<TodosModel>(self).toggle(self);
+    save() {
+      getRoot<TodosModel>(self).save(self);
     },
     remove() {
       getRoot<TodosModel>(self).remove(self);
@@ -86,16 +86,17 @@ export const TodosT = types
     get() {
       applySnapshot(self, getTodosApi());
     },
-    toggle(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
+    save(todo: SnapshotIn<TodoModel> | Instance<TodoModel>) {
       const statePayload = self.data.map((_todo) =>
         _todo.id === todo.id
-          ? { ..._todo, isCompleted: !_todo.isCompleted }
+          ? { ..._todo, isCompleted: todo.isCompleted, title: todo.title }
           : _todo
       );
+
       self.data.replace(statePayload);
       self.isUpdating = true;
     },
-    toggleAll(isAllCompleted: boolean) {
+    saveAll(isAllCompleted: boolean) {
       const statePayload = self.data.map((_todo) =>
         _todo.isCompleted === !isAllCompleted
           ? { ..._todo, isCompleted: isAllCompleted }

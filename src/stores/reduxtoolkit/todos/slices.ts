@@ -55,10 +55,16 @@ const todosSlice = createSlice({
       state.isSearchVisible = !state.isSearchVisible;
       state.isUpdating = true;
     },
-    toggle(state, { payload }: PayloadAction<t.TodoT>) {
-      const { id } = payload;
+    save(state, { payload }: PayloadAction<t.TodoT>) {
+      const { id, isCompleted, title } = payload;
       state.data = state.data.map((_todo: t.TodoT) =>
-        _todo.id === id ? { ..._todo, isCompleted: !_todo.isCompleted } : _todo
+        _todo.id === id
+          ? {
+              ..._todo,
+              isCompleted: isCompleted,
+              title: title,
+            }
+          : _todo
       );
       state.countCompleted = state.data.filter(
         (todo) => todo.isCompleted
@@ -87,12 +93,12 @@ export const {
   add,
   filter,
   get,
+  payloadVisible,
   remove,
   removeAll,
+  save,
   search,
-  payloadVisible,
   searchVisible,
-  toggle,
   toggleAll,
   updateAll,
 } = todosSlice.actions;

@@ -51,9 +51,9 @@ export const searchVisible: t.Visibility = () => {
   };
 };
 
-export const toggle: t.Toggle = (todo) => {
+export const save: t.Save = (todo) => {
   return (dispatch: t.Dispatch) => {
-    dispatch({ type: t.TOGGLE, todo: todo });
+    dispatch({ type: t.SAVE, todo: todo });
   };
 };
 

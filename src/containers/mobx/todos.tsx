@@ -31,8 +31,8 @@ const TodosContainer: FC = observer(() => {
           <TodoComponent
             key={_todo.id}
             remove={(todo) => todos.remove(todo)}
+            save={(todo) => todos.save(todo)}
             todo={_todo}
-            toggle={(todo) => todos.toggle(todo)}
           />
         ))}
       </List>

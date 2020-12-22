@@ -1,4 +1,3 @@
-import React, { FC, useEffect } from "react";
 import * as t from "../../ts/types";
 import * as utils from "../../utils";
 import AddComponent from "../../components/add";
@@ -8,6 +7,7 @@ import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import PayloadComponent from "../../components/payload";
 import ProgressComponent from "../../components/progress";
+import React, { FC, useEffect } from "react";
 import SearchComponent from "../../components/search";
 import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";
@@ -90,11 +90,11 @@ const TodosContainer: FC = () => {
     });
   };
 
-  const handleToggle: t.Toggle = (todo) => {
+  const handleSave: t.Save = (todo) => {
     pullStateStore.update((s) => {
       s.data = s.data.map((_todo: t.TodoT) =>
         _todo.id === todo.id
-          ? { ..._todo, isCompleted: !_todo.isCompleted }
+          ? { ..._todo, isCompleted: todo.isCompleted, title: todo.title }
           : _todo
       );
       s.countCompleted = s.data.filter((todo) => todo.isCompleted).length;
@@ -147,10 +147,11 @@ const TodosContainer: FC = () => {
           <TodoComponent
             key={_todo.id}
             remove={handleRemove}
-            toggle={handleToggle}
+            save={handleSave}
             todo={_todo}
           />
         ))}
+
         <PayloadComponent
           todos={todosStore}
           payloadVisible={handlePayloadVisibility}
