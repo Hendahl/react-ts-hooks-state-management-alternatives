@@ -17,7 +17,6 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
         dataFilter: t.FILTER_ALL,
       };
     }
-
     case t.REMOVE: {
       const statePayload = todos.data.filter((_todo) => _todo.id !== action.id);
       return {
@@ -73,12 +72,17 @@ const reducer = (todos: t.TodosT, action: t.ActionTypes) => {
       };
     }
 
-    case t.TOGGLE: {
+    case t.SAVE: {
       const statePayload = todos.data.map((_todo: t.TodoT) =>
         _todo.id === action.todo.id
-          ? { ..._todo, isCompleted: !_todo.isCompleted }
+          ? {
+              ..._todo,
+              isCompleted: action.todo.isCompleted,
+              title: action.todo.title,
+            }
           : _todo
       );
+      console.log(statePayload);
       return {
         ...todos,
         countCompleted: statePayload.filter((_todo) => _todo.isCompleted)

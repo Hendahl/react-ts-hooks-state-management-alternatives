@@ -90,11 +90,11 @@ const TodosContainer: FC = () => {
     });
   };
 
-  const handleToggle: t.Toggle = (todo) => {
+  const handleSave: t.Save = (todo) => {
     pullStateStore.update((s) => {
       s.data = s.data.map((_todo: t.TodoT) =>
         _todo.id === todo.id
-          ? { ..._todo, isCompleted: !_todo.isCompleted }
+          ? { ..._todo, isCompleted: todo.isCompleted, title: todo.title }
           : _todo
       );
       s.countCompleted = s.data.filter((todo) => todo.isCompleted).length;
@@ -147,10 +147,11 @@ const TodosContainer: FC = () => {
           <TodoComponent
             key={_todo.id}
             remove={handleRemove}
-            toggle={handleToggle}
+            save={handleSave}
             todo={_todo}
           />
         ))}
+
         <PayloadComponent
           todos={todosStore}
           payloadVisible={handlePayloadVisibility}

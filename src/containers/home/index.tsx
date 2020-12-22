@@ -66,7 +66,7 @@ const Home: FC = () => {
             React Context as Store for MobX-state-Tree Models and Actions to
             pass data and actions through the components.
           </Typography>
-                   <Typography variant="h5" component="h3" gutterBottom>
+          <Typography variant="h5" component="h3" gutterBottom>
             Default data structure
           </Typography>
         </Box>

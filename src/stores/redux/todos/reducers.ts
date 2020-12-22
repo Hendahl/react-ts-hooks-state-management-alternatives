@@ -77,10 +77,14 @@ export default function reducer(
         isUpdating: true,
       };
     }
-    case t.TOGGLE: {
+    case t.SAVE: {
       const statePayload = todos.data.map((_todo: t.TodoT) =>
         _todo.id === action.todo.id
-          ? { ..._todo, isCompleted: !_todo.isCompleted }
+          ? {
+              ..._todo,
+              isCompleted: action.todo.isCompleted,
+              title: action.todo.title,
+            }
           : _todo
       );
       return {

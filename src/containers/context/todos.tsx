@@ -62,10 +62,10 @@ const TodosContainer: FC = () => {
         )}
         {todos.dataFiltered.map((_todo: t.TodoT) => (
           <TodoComponent
+            save={(todo) => dispatch({ type: t.SAVE, todo: todo })}
             key={_todo.id}
             remove={(todo) => dispatch({ type: t.REMOVE, id: todo.id })}
             todo={_todo}
-            toggle={(todo) => dispatch({ type: t.TOGGLE, todo: todo })}
           />
         ))}
         <PayloadComponent

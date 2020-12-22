@@ -1,3 +1,4 @@
+import React, { FC, useEffect } from "react";
 import * as actions from "../../stores/redux/todos/actions";
 import * as t from "../../ts/types";
 import AddComponent from "../../components/add";
@@ -7,14 +8,13 @@ import FilterComponent from "../../components/filter";
 import List from "@material-ui/core/List";
 import PayloadComponent from "../../components/payload";
 import ProgressComponent from "../../components/progress";
-import React, { FC, useEffect } from "react";
 import SearchComponent from "../../components/search";
 import TodoComponent from "../../components/todo";
 import Typography from "@material-ui/core/Typography";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { createSelectorHook, useDispatch } from "react-redux";
 
 const TodosContainer: FC = () => {
-  const typedTodosSelector: TypedUseSelectorHook<t.TodosI> = useSelector;
+  const typedTodosSelector = createSelectorHook<t.TodosI>();
   const storeTodos = typedTodosSelector((state) => state.todos);
   const dispatch = useDispatch();
 
@@ -27,6 +27,7 @@ const TodosContainer: FC = () => {
       dispatch(actions.updateAll());
     }
   }, [storeTodos, dispatch]);
+
   return (
     <Container>
       <Typography variant="h3" component="h2">
@@ -61,7 +62,7 @@ const TodosContainer: FC = () => {
             key={_todo.id}
             remove={(todo) => dispatch(actions.remove(todo))}
             todo={_todo}
-            toggle={(todo) => dispatch(actions.toggle(todo))}
+            save={(todo) => dispatch(actions.save(todo))}
           />
         ))}
         <PayloadComponent
